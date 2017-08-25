@@ -17,13 +17,11 @@ public class Sql2oQuestionDao implements QuestionDao {
 
     @Override
     public void add (Question question){
-        String sql = "INSERT INTO users (prompt, choices) VALUES (:prompt, :choices)";
+        String sql = "INSERT INTO questions (prompt) VALUES (:prompt)";
         try(Connection con = sql2o.open()) {
             int id = (int) con.createQuery(sql)
                     .addParameter("prompt", question.getPrompt())
-                    .addParameter("choices", question.getChoices())
                     .addColumnMapping("PROMPT", "prompt")
-                    .addColumnMapping("CHOICES", "choices")
                     .executeUpdate()
                     .getKey();
             question.setId(id);

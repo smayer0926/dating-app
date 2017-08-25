@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE TABLE IF NOT EXISTS questions (
  id int PRIMARY KEY auto_increment,
- prompt VARCHAR
+ prompt VARCHAR,
 );
 
 CREATE TABLE IF NOT EXISTS journalentries (

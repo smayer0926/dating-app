@@ -1,15 +1,14 @@
 package models;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class Question {
     private int id;
     private String prompt;
-    private String[] choices;
 
-    public Question(String prompt, String[] choices){
+    public Question(String prompt){
         this.prompt = prompt;
-        this.choices = choices;
     }
 
     @Override
@@ -20,16 +19,13 @@ public class Question {
         Question question = (Question) o;
 
         if (id != question.id) return false;
-        if (!prompt.equals(question.prompt)) return false;
-        // Probably incorrect - comparing Object[] arrays with Arrays.equals
-        return Arrays.equals(choices, question.choices);
+        return prompt.equals(question.prompt);
     }
 
     @Override
     public int hashCode() {
         int result = id;
         result = 31 * result + prompt.hashCode();
-        result = 31 * result + Arrays.hashCode(choices);
         return result;
     }
 
@@ -41,13 +37,7 @@ public class Question {
         this.prompt = prompt;
     }
 
-    public String[] getChoices() {
-        return choices;
-    }
 
-    public void setChoices(String[] choices) {
-        this.choices = choices;
-    }
 
     public int getId() {
         return id;
