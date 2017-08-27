@@ -17,4 +17,7 @@ public interface QuestionDao {
 
     //find
     Question findById(int id);
+
+    //count id matches
+    int countNumberOfQuestionIdMatches(int questionId);
 }

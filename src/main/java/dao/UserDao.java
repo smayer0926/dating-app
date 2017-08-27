@@ -17,4 +17,7 @@ public interface UserDao {
 
     //find
     User findById(int id);
+
+    //find matching user
+    int countNumberOfUserIdMatches(int userId);
 }

@@ -52,6 +52,17 @@ public class Sql2oUserDao implements UserDao {
     }
 
     @Override
+    public int countNumberOfUserIdMatches(int userId){
+        int matchCount = 0;
+        for(User eachUser : getAll()){
+            if(eachUser.getId() == userId){
+                matchCount ++;
+            }
+        }
+        return matchCount;
+    }
+
+    @Override
     public List<User> getAll(){
         try(Connection con = sql2o.open()) {
             return con.createQuery("SELECT * FROM users")

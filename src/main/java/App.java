@@ -84,31 +84,8 @@ public class App {
             return gson.toJson(foundQuestion);
         });
 
-        //READ ALL QUESTIONS ANSWERED BY SPECIFIC USER
-        get("user/:id/questions", "application/json", (req, res) -> {
-            res.type("application/json");
-            int userId = Integer.parseInt(req.params("id"));
-            List<Question> foundQuestions = userDao.getAllQuestionsAnsweredByUser(userId);
-            if (foundQuestions.size() == 0){
-                throw new ApiException(404, "This user hasn't answered any questions");
-            }
-            return gson.toJson(foundQuestions);
-        });
-
-        //USER ANSWERS QUESTION
-//        post("/users/:id/questions/:questionid", "application/json", (req, res) -> {
-//
-//            User user = userDao.findById(Integer.parseInt(req.params("id")));
-//            Question question = questionDao.findById(Integer.parseInt(req.params("questionid")));
-//            userDao.addUserToQuestion(user,question);
-//
-//            return null;
-//
-//
-//        });
-
-        //Add Question to User
-        post("users/:id/questions/:questionid/display-users", "application/json", (req,res)->{
+        //Create joiner table record
+        post("users/:id/questions/:questionid", "application/json", (req,res)->{
             User user = userDao.findById(Integer.parseInt(req.params("id")));
             Question question = questionDao.findById(Integer.parseInt(req.params("questionid")));
             questionDao.addQuestionToUser(user,question);
@@ -116,13 +93,35 @@ public class App {
             return gson.toJson(questionDao.getAllUsersThatAnsweredQuestion(Integer.parseInt(req.params("questionid"))));
         });
 
-        //Add Question to User
-        post("users/:id/questions/:questionid/display-questions", "application/json", (req,res)->{
-            User user = userDao.findById(Integer.parseInt(req.params("id")));
-            Question question = questionDao.findById(Integer.parseInt(req.params("questionid")));
-            questionDao.addQuestionToUser(user,question);
-            res.status(201);
-            return gson.toJson(userDao.getAllQuestionsAnsweredByUser(Integer.parseInt(req.params("id"))));
+        //READ ALL QUESTIONS ANSWERED BY SPECIFIC USER
+        get("users/:id/questions", "application/json", (req, res) -> {
+            res.type("application/json");
+            int userId = Integer.parseInt(req.params("id"));
+            List<Question> foundQuestions = userDao.getAllQuestionsAnsweredByUser(userId);
+            if (userDao.countNumberOfUserIdMatches(userId) == 0){
+                throw new ApiException(404, "This user doesn't exist");
+            }
+            if (foundQuestions.size() == 0){
+                throw new ApiException(404, "This user hasn't answered any questions");
+            }
+            return gson.toJson(foundQuestions);
+        });
+
+//        //Display all questions answered by user
+//        get("users/:id/questions", "application/json", (req,res)->{
+//            int userId = Integer.parseInt(req.params("id"));
+//            return gson.toJson(userDao.getAllQuestionsAnsweredByUser(userId));
+//        });
+
+        //Display all users that answered a question
+        get("questions/:id/users", "application/json", (req,res)->{
+            res.type("application/json");
+            int questionId = Integer.parseInt(req.params("id"));
+            List<User> foundUsers = questionDao.getAllUsersThatAnsweredQuestion(questionId);
+            if (foundUsers.size() == 0){
+                throw new ApiException(404, "No users have answered this question");
+            }
+            return gson.toJson(foundUsers);
         });
 
         exception(ApiException.class, (exc, req, res) -> {

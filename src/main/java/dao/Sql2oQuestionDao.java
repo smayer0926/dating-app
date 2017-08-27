@@ -32,6 +32,7 @@ public class Sql2oQuestionDao implements QuestionDao {
 
     @Override
     public void addQuestionToUser(User user, Question question){
+
         String sql = "INSERT INTO userquestions (userid, questionid) VALUES (:userId, :questionId)";
         try (Connection con = sql2o.open()) {
             con.createQuery(sql)
@@ -41,6 +42,17 @@ public class Sql2oQuestionDao implements QuestionDao {
         } catch (Sql2oException ex){
             System.out.println(ex);
         }
+    }
+
+    @Override
+    public int countNumberOfQuestionIdMatches(int questionId){
+        int matchCount = 0;
+        for(Question eachQuestion : getAll()){
+            if(eachQuestion.getId() == questionId){
+                matchCount ++;
+            }
+        }
+        return matchCount;
     }
 
     @Override
