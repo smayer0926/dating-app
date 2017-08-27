@@ -24,5 +24,5 @@ CREATE TABLE IF NOT EXISTS journalentries (
 CREATE TABLE IF NOT EXISTS userquestions (
  id int PRIMARY KEY auto_increment,
  userid INTEGER,
- questionid INTEGER
+ questionid INTEGER,
 );

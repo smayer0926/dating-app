@@ -82,7 +82,6 @@ public class Sql2oUserDao implements UserDao {
         return questions;
     }
 
-
     @Override
     public User findById(int id){
         try(Connection con = sql2o.open()) {

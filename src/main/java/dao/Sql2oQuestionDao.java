@@ -32,12 +32,11 @@ public class Sql2oQuestionDao implements QuestionDao {
 
     @Override
     public void addQuestionToUser(User user, Question question){
-        String sql = "INSERT INTO userquestions (userid, questionid, response) VALUES (:userId, :questionId, :response)";
+        String sql = "INSERT INTO userquestions (userid, questionid) VALUES (:userId, :questionId)";
         try (Connection con = sql2o.open()) {
             con.createQuery(sql)
                     .addParameter("userId", user.getId())
                     .addParameter("questionId", question.getId())
-                    .addParameter("response", "response")
                     .executeUpdate();
         } catch (Sql2oException ex){
             System.out.println(ex);
