@@ -13,4 +13,6 @@ public interface QuestionOptionDao {
 
     List<QuestionOption> getAll();
 
+    List<QuestionOption> getAllForSpecificQuestion(int questionId);
+
 }

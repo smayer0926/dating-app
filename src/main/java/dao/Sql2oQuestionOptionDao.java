@@ -18,7 +18,7 @@ public class Sql2oQuestionOptionDao implements QuestionOptionDao{
 
     @Override
     public void add (QuestionOption questionOption){
-        String sql = "INSERT INTO questionoption (choice, questionid) VALUES (:choice, :questionid)";
+        String sql = "INSERT INTO questionoptions (choice, questionid) VALUES (:choice, :questionid)";
         try(Connection con = sql2o.open()) {
             int id = (int) con.createQuery(sql)
                     .addParameter("choice", questionOption.getChoice())
@@ -32,9 +32,24 @@ public class Sql2oQuestionOptionDao implements QuestionOptionDao{
             System.out.println(ex);
         }
     }
+
     @Override
-    public List<QuestionOption> getAll() {
-        return null;
+    public List<QuestionOption> getAll(){
+        try (Connection con = sql2o.open()) {
+            return con.createQuery("SELECT * FROM questionoptions")
+                    .executeAndFetch(QuestionOption.class);
+        }
+    }
+
+
+    @Override
+    public List<QuestionOption> getAllForSpecificQuestion(int questionId) {
+        try (Connection con = sql2o.open()) {
+            return con.createQuery("SELECT * FROM questionoptions WHERE questionid = :questionid")
+                    .addParameter("questionid", questionId)
+                    .addColumnMapping("QUESTIONID", "questionid")
+                    .executeAndFetch(QuestionOption.class);
+        }
     }
 
 }

@@ -30,7 +30,7 @@ public class App {
         Connection conn;
         Gson gson = new Gson();
 
-        String connectionString = "jdbc:h2:~/datingapp8;INIT=RUNSCRIPT from 'classpath:db/create.sql'"; //check me!
+        String connectionString = "jdbc:h2:~/datingapp9;INIT=RUNSCRIPT from 'classpath:db/create.sql'"; //check me!
 
         Sql2o sql2o = new Sql2o(connectionString, "", "");
         userDao = new Sql2oUserDao(sql2o);
@@ -120,14 +120,23 @@ public class App {
         });
 
         //Get ALL questions (temporary-testing)
-        get("users/:id/questions", (req, res) -> {
+//        get("users/:id/questions", (req, res) -> {
+        get("/index", (req,res) -> {
+            Map<String, Object> model = new HashMap<String, Object>();
+
 
             List<Question> foundQuestions = questionDao.getAll();
-            List<QuestionOption> foundQuestionOptions = questionOptionDao.getAll();
+//            List<QuestionOption> allQuestionOptions = questionOptionDao.getAll();
+            List<QuestionOption> foundQuestionOptions = questionOptionDao.getAllForSpecificQuestion(1);
+
+            model.put("foundquestions", foundQuestions);
+//            model.put("allquestionoptions", allQuestionOptions);
+            model.put("foundquestionoptions", foundQuestionOptions);
 
 
-            return gson.toJson(foundQuestions);
-        });
+            return new ModelAndView(model, "index.hbs");
+        }, new HandlebarsTemplateEngine());
+
 
         //READ ALL QUESTIONS ANSWERED BY SPECIFIC USER
         get("users/:id/questions", (req, res) -> {
