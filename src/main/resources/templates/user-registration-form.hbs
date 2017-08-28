@@ -1,0 +1,55 @@
+{{#partial "content"}}
+<h1>Add a User!</h1>
+
+<form action="/users/new" method="post">
+
+
+    <label for="inputName">What is your Name?</label>
+    <input id="inputName" name="inputName" type="text">
+
+
+    <label for="inputAge">Age</label>
+    <input id="inputAge" name="inputAge" type="text">
+
+
+    <p>I'm a
+        <label><input type="radio" name="mode" value="off">Male</label><br>
+        <label><input type="radio" name="mode" value="off">Female</label><br>
+    </p>
+
+    <p>Interested in
+        <label><input type="radio" name="mode" value="off">Male</label><br>
+        <label><input type="radio" name="mode" value="off">Female</label><br>
+    </p>
+
+    <label for="inputMinimumAge">Minimum Age Preference</label>
+    <input id="inputMinimumAge" name="inputMinimumAge" type="text">
+
+    <label for="inputMaximumAge">Maximum Age Preference</label>
+    <input id="inputMaximumAge" name="inputMaximumAge" type="text">
+
+    <label for="inputZip">Zip Code</label>
+    <input id="inputZip" name="inputZip" type="text">
+
+    <label for="inputEmailAddress">Your Email Address</label>
+    <input id="inputEmailAddress" name="inputEmailAddress" type="text">
+
+    <label for="inputPassword">Password</label>
+    <input id="inputPassword" name="inputPassword" type="text">
+
+    <p>
+        <label>Select city</label>
+        <select id="city" name="city">
+            <option value="">-- Choose Test --</option>
+            <option value="1">Portland</option>
+            <option value="2">Salem</option>
+            <option value="3">Gresham</option>
+            <option value="4">Aloha</option>
+        </select>
+    </p>
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+</form>
+{{/partial}}
+
+{{> layout.hbs}}

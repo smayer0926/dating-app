@@ -5,8 +5,18 @@ CREATE TABLE IF NOT EXISTS users (
  name VARCHAR,
  age INTEGER,
  gender VARCHAR,
+ genderPreference VARCHAR,
  matchminage INTEGER,
- matchmaxage INTEGER
+ matchmaxage INTEGER,
+ zip VARCHAR,
+ email VARCHAR,
+ password VARCHAR
+);
+
+CREATE TABLE IF NOT EXISTS authentication (
+ id int PRIMARY KEY auto_increment,
+ email VARCHAR,
+  password VARCHAR
 );
 
 CREATE TABLE IF NOT EXISTS questions (
