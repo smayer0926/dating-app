@@ -22,7 +22,7 @@ public class Sql2oUserDaoTest {
         String connectionString = "jdbc:h2:mem:testing;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
         Sql2o sql2o = new Sql2o(connectionString, "", "");
         userDao = new Sql2oUserDao(sql2o);
-
+        questionDao = new Sql2oQuestionDao(sql2o);
         conn = sql2o.open();
     }
 
@@ -54,53 +54,24 @@ public class Sql2oUserDaoTest {
         assertEquals("Trevor Gill",foundUser.getName());
     }
 
-//    @Test
-//    public void update_EvaluateIfNameChanged_Whataburger() throws Exception {
-//        User test1 = setupTestUser();
-//        userDao.add(test1);
-//        userDao.update(1,"Whataburger","sdf","32421", "423-123-3252", "fdf", "sdfds", "sdf");
-//        User foundRestaurant = userDao.findById(1);
-//        assertEquals("Whataburger", foundRestaurant.getName());
-//    }
+    @Test
+    public void getAllQuestionsAnsweredByUserReturnsCorrectly() throws Exception {
+        Question testQuestion  = setupTestQuestion();
+        questionDao.add(testQuestion);
 
-//    @Test
-//    public void deleteingFoodTypeAlsoUpdatesJoinTable() throws Exception {
-//        Question testQuestion  = new Question("Seafood");
-//        questionDao.add(testQuestion);
-//
-//        Question testFoodtype2  = new Question("Italian");
-//        questionDao.add(testQuestion);
-//
-//        User testUser = setupTestUser();
-//        userDao.add(testUser);
-//
-//        User altRestaurant = setupTestUser2();
-//        userDao.add(altRestaurant);
-//
-//        questionDao.addFoodTypeToRestaurant(testQuestion,testUser);
-//        questionDao.addFoodTypeToRestaurant(testFoodtype2, testUser);
-//
-//        questionDao.deleteById(testQuestion.getId());
-//        assertEquals(0, questionDao.getAllRestaurantsForAFoodtype(testQuestion.getId()).size());
-//    }
+        Question testQuestion2  = setupTestQuestion2();
+        questionDao.add(testQuestion2);
 
-//    @Test
-//    public void getAllFoodtypesForARestaurantReturnsFoodtypesCorrectly() throws Exception {
-//        Question testQuestion  = new Question("Seafood");
-//        questionDao.add(testQuestion);
-//
-//        Question otherFoodtype  = new Question("Bar Food");
-//        questionDao.add(otherFoodtype);
-//
-//        User testUser = setupTestUser();
-//        userDao.add(testUser);
-//        userDao.addUserToQuestion(testUser,testQuestion);
-//        userDao.addUserToQuestion(testUser,otherFoodtype);
-//
-//        Question[] foodtypes = {testQuestion, otherFoodtype}; //oh hi what is this?
-//
-//        assertEquals(userDao.getAllFoodtypesForARestaurant(testUser.getId()), Arrays.asList(foodtypes));
-//    }
+        User testUser = setupTestUser();
+        userDao.add(testUser);
+
+        userDao.addUserToQuestion(testUser,testQuestion);
+        userDao.addUserToQuestion(testUser,testQuestion2);
+
+        Question[] questions = {testQuestion, testQuestion2};
+
+        assertEquals(userDao.getAllQuestionsAnsweredByUser(testUser.getId()), Arrays.asList(questions));
+    }
 
     //helper method
     public static User setupTestUser (){
@@ -108,6 +79,12 @@ public class Sql2oUserDaoTest {
     }
     public static User setupTestUser2 (){
         return new User("Stuart Gill", 34, "male", 26, 35);
+    }
+    public static Question setupTestQuestion(){
+        return new Question("Flight or invisibility?");
+    }
+    public static Question setupTestQuestion2 (){
+        return new Question("Snickers or Twix?");
     }
 
 }

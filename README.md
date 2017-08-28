@@ -31,9 +31,9 @@ RESTful routing to allow for accessing of dating website API. Users can access i
 
 ## Screenshots
 _Create new user_
-![Create new user](Images/New-user.jpg)
+![Create new user](images/new-user.jpg)
 _Create new question_
-![Create new question](Images/New-question.JPG)
+![Create new question](images/new-question.JPG)
 _Create new date review_
 ![Create new date review](images/new-date-review.JPG)
 _Link user and question_

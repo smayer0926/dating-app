@@ -45,7 +45,7 @@ public class Sql2oDateReviewDao implements DateReviewDao {
     @Override
     public List<DateReview> getAllDateReviewsOfSpecificUser(int dateUserId) {
         try (Connection con = sql2o.open()) {
-            return con.createQuery("SELECT * FROM datereviews WHERE userId = :dateUserId")
+            return con.createQuery("SELECT * FROM datereviews WHERE dateUserId = :dateUserId")
                     .addParameter("dateUserId", dateUserId)
                     .executeAndFetch(DateReview.class);
         }
