@@ -1,6 +1,7 @@
 package dao;
 
 import models.Question;
+import models.QuestionOption;
 import models.User;
 
 import java.util.List;
@@ -13,7 +14,11 @@ public interface QuestionDao {
 
     //get all
     List<Question> getAll();
-    List<User> getAllUsersThatAnsweredQuestion(int userId);
+
+    List<QuestionOption> getAllForSpecificQuestion(int questionId);
+//    List<Question> getAllAnswered();
+//    List<Question> getAllUnanswered();
+    List<User> getAllUsersThatAnsweredQuestion(int questionId);
 
     //find
     Question findById(int id);

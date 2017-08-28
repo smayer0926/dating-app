@@ -93,6 +93,7 @@ public class App {
             return null;
         });
 
+
         //READ ALL QUESTIONS
         get("/questions", "application/json", (req, res) -> {
             return gson.toJson(questionDao.getAll());
@@ -118,9 +119,19 @@ public class App {
             return gson.toJson(questionDao.getAllUsersThatAnsweredQuestion(Integer.parseInt(req.params("questionid"))));
         });
 
+        //Get ALL questions (temporary-testing)
+        get("users/:id/questions", (req, res) -> {
+
+            List<Question> foundQuestions = questionDao.getAll();
+            List<QuestionOption> foundQuestionOptions = questionOptionDao.getAll();
+
+
+            return gson.toJson(foundQuestions);
+        });
+
         //READ ALL QUESTIONS ANSWERED BY SPECIFIC USER
-        get("users/:id/questions", "application/json", (req, res) -> {
-            res.type("application/json");
+        get("users/:id/questions", (req, res) -> {
+
             int userId = Integer.parseInt(req.params("id"));
             List<Question> foundQuestions = userDao.getAllQuestionsAnsweredByUser(userId);
             if (userDao.countNumberOfUserIdMatches(userId) == 0){
