@@ -2,12 +2,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import dao.Sql2oDateReviewDao;
-import dao.Sql2oQuestionDao;
-import dao.Sql2oUserDao;
+import dao.*;
 import exceptions.ApiException;
 import models.DateReview;
 import models.Question;
+import models.QuestionOption;
 import models.User;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
@@ -27,6 +26,7 @@ public class App {
         Sql2oUserDao userDao;
         Sql2oQuestionDao questionDao;
         Sql2oDateReviewDao dateReviewDao;
+        Sql2oQuestionOptionDao questionOptionDao;
         Connection conn;
         Gson gson = new Gson();
 
@@ -36,6 +36,7 @@ public class App {
         userDao = new Sql2oUserDao(sql2o);
         questionDao = new Sql2oQuestionDao(sql2o);
         dateReviewDao = new Sql2oDateReviewDao(sql2o);
+        questionOptionDao = new Sql2oQuestionOptionDao(sql2o);
         conn = sql2o.open();
 
         //CREATE USER
@@ -76,7 +77,19 @@ public class App {
             int questionId = question.getId();
             question.setId(questionId);
             questionDao.add(question);
-
+            String optionString1 = req.queryParams("questionChoice1");
+            String optionString2 = req.queryParams("questionChoice2");
+            String optionString3 = req.queryParams("questionChoice3");
+            String optionString4 = req.queryParams("questionChoice4");
+            QuestionOption option1 = new QuestionOption(optionString1,questionId);
+            QuestionOption option2 = new QuestionOption(optionString2,questionId);
+            QuestionOption option3 = new QuestionOption(optionString3,questionId);
+            QuestionOption option4 = new QuestionOption(optionString4,questionId);
+            questionOptionDao.add(option1);
+            questionOptionDao.add(option2);
+            questionOptionDao.add(option3);
+            questionOptionDao.add(option4);
+            res.redirect("/questions/new");
             return null;
         });
 
