@@ -11,6 +11,8 @@ import models.Question;
 import models.User;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
+import spark.ModelAndView;
+import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
 import java.util.List;
@@ -60,12 +62,22 @@ public class App {
             return gson.toJson(foundUser);
         });
 
+        //LOAD FORM TO ADD NEW QUESTION
+        get("/questions/new", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            return new ModelAndView(model, "question-form.hbs");
+        }, new HandlebarsTemplateEngine());
+
         //CREATE QUESTION
-        post("/questions/new", "application/json", (req, res) -> {
-            Question question = gson.fromJson(req.body(), Question.class);
+        post("/questions/new", (req, res) -> {
+            Map<String, Object> model = new HashMap<String, Object>();
+            String prompt = req.queryParams("questionPrompt");
+            Question question = new Question(prompt);
+            int questionId = question.getId();
+            question.setId(questionId);
             questionDao.add(question);
-            res.status(201);
-            return gson.toJson(question);
+
+            return null;
         });
 
         //READ ALL QUESTIONS
