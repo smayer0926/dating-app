@@ -34,3 +34,9 @@ CREATE TABLE IF NOT EXISTS userquestions (
  userid INTEGER,
  questionid INTEGER,
 );
+
+CREATE TABLE IF NOT EXISTS questionoption (
+  id int PRIMARY KEY auto_increment,
+  choice VARCHAR,
+  questionid INTEGER
+);
