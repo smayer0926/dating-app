@@ -21,6 +21,14 @@ CREATE TABLE IF NOT EXISTS journalentries (
  postcontent VARCHAR,
 );
 
+CREATE TABLE IF NOT EXISTS datereviews (
+ id int PRIMARY KEY auto_increment,
+ userid INTEGER,
+ dateuserid INTEGER,
+ postcontent VARCHAR,
+ rating INTEGER,
+);
+
 CREATE TABLE IF NOT EXISTS userquestions (
  id int PRIMARY KEY auto_increment,
  userid INTEGER,

@@ -2,12 +2,12 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import dao.Sql2oDateReviewDao;
 import dao.Sql2oQuestionDao;
-import dao.Sql2oQuestionResponseDao;
 import dao.Sql2oUserDao;
 import exceptions.ApiException;
+import models.DateReview;
 import models.Question;
-import models.QuestionResponse;
 import models.User;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
@@ -24,7 +24,7 @@ public class App {
     public static void main(String[] args) {
         Sql2oUserDao userDao;
         Sql2oQuestionDao questionDao;
-        Sql2oQuestionResponseDao questionResponseDao;
+        Sql2oDateReviewDao dateReviewDao;
         Connection conn;
         Gson gson = new Gson();
 
@@ -33,7 +33,7 @@ public class App {
         Sql2o sql2o = new Sql2o(connectionString, "", "");
         userDao = new Sql2oUserDao(sql2o);
         questionDao = new Sql2oQuestionDao(sql2o);
-        questionResponseDao = new Sql2oQuestionResponseDao(sql2o);
+        dateReviewDao = new Sql2oDateReviewDao(sql2o);
         conn = sql2o.open();
 
         //CREATE USER
@@ -107,12 +107,6 @@ public class App {
             return gson.toJson(foundQuestions);
         });
 
-//        //Display all questions answered by user
-//        get("users/:id/questions", "application/json", (req,res)->{
-//            int userId = Integer.parseInt(req.params("id"));
-//            return gson.toJson(userDao.getAllQuestionsAnsweredByUser(userId));
-//        });
-
         //Display all users that answered a question
         get("questions/:id/users", "application/json", (req,res)->{
             res.type("application/json");
@@ -123,6 +117,24 @@ public class App {
             }
             return gson.toJson(foundUsers);
         });
+
+        //CREATE DATE REVIEW
+        post("/users/:id/reviewuser/:dateid/new", "application/json", (req, res) -> {
+            int userId = Integer.parseInt(req.params("id"));
+            int dateUserId = Integer.parseInt(req.params("dateid"));
+            DateReview dateReview = gson.fromJson(req.body(), DateReview.class);
+            dateReview.setUserId(userId);
+            dateReview.setDateUserId(dateUserId);
+            dateReviewDao.add(dateReview);
+            res.status(201);
+            return gson.toJson(dateReview);
+        });
+
+        //READ ALL DATE REVIEWS
+        get("/datereviews", "application/json", (req, res) -> {
+            return gson.toJson(dateReviewDao.getAll());
+        });
+
 
         exception(ApiException.class, (exc, req, res) -> {
             ApiException err = (ApiException) exc;

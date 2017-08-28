@@ -7,13 +7,16 @@ public class Post {
     private int userId;
     private String name;
     private String content;
-    private Timestamp postTime;
 
-    public Post(int userId, String name, String content, Timestamp postTime){
+    public Post(int userId, String name, String content){
         this.userId = userId;
         this.name = name;
         this.content = content;
-        this.postTime = postTime;
+    }
+
+    public Post(int userId, String content){
+        this.userId = userId;
+        this.content = content;
     }
 
     @Override
@@ -62,11 +65,11 @@ public class Post {
         this.content = content;
     }
 
-    public Timestamp getPostTime() {
-        return postTime;
+    public int getPostId() {
+        return postId;
     }
 
-    public void setPostTime(Timestamp postTime) {
-        this.postTime = postTime;
+    public void setPostId(int postId) {
+        this.postId = postId;
     }
 }

@@ -6,8 +6,8 @@ public class DateReview extends Post{
     private int dateUserId;
     private int rating;
 
-    public DateReview(int userId, String name, String content, Timestamp postTime, int dateUserId, int rating){
-        super(userId,name,content,postTime);
+    public DateReview(int userId, String content, int dateUserId, int rating){
+        super(userId,content);
         this.dateUserId = dateUserId;
         this.rating = rating;
     }
