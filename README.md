@@ -30,8 +30,8 @@ RESTful routing to allow for accessing of dating website API. Users can access i
 | The user shall be able to view details of all dating app date reviews |
 
 ## Screenshots
-![Create new user](images/new-user.JPG)
-![Create new question](images/new-question.JPG)
+![Create new user](Images/New-user.jpg)
+![Create new question](Images/New-question.JPG)
 ![Create new date review](images/new-date-review.JPG)
 ![Link user and question](images/link-user-and-question.JPG)
 ![Get all users](images/get-all-users.JPG)
