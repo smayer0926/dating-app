@@ -30,15 +30,15 @@ RESTful routing to allow for accessing of dating website API. Users can access i
 | The user shall be able to view details of all dating app date reviews |
 
 ## Screenshots
-![Create new user](/java/resources/images/new-user.JPG?raw=true "Create new user")
-![Create new question](/java/resources/images/new-question.JPG?raw=true "Create new question")
-![Create new date review](/java/resources/images/new-date-review.JPG?raw=true "Create new date review")
-![Link user and question](/java/resources/images/link-user-and-question.JPG,?raw=true "Link user and question")
-![Get all users](/java/resources/images/get-all-users.JPG?raw=true "Get all users")
-![Get all date reviews](/java/resources/images/get-all-date-reviews.JPG?raw=true "Get all date reviews")
-![Get specific user](/java/resources/images/get-specific-user.JPG?raw=true "Get specific user")
-![Get all users who answered specific question](/java/resources/images/get-all-users-who-answered-question.JPG?raw=true "Get all users who answered specific question")
-![Get all questions answered by specific user](/java/resources/images/get-all-questions-answered-by-user.JPG?raw=true "Get all questions answered by specific user")
+![Create new user](/src/main/java/resources/images/new-user.JPG?raw=true "Create new user")
+![Create new question](/src/main/java/resources/images/new-question.JPG?raw=true "Create new question")
+![Create new date review](/src/main/java/resources/images/new-date-review.JPG?raw=true "Create new date review")
+![Link user and question](/src/main/java/resources/images/link-user-and-question.JPG,?raw=true "Link user and question")
+![Get all users](/src/main/java/resources/images/get-all-users.JPG?raw=true "Get all users")
+![Get all date reviews](/src/main/java/resources/images/get-all-date-reviews.JPG?raw=true "Get all date reviews")
+![Get specific user](/src/main/java/resources/images/get-specific-user.JPG?raw=true "Get specific user")
+![Get all users who answered specific question](/src/main/java/resources/images/get-all-users-who-answered-question.JPG?raw=true "Get all users who answered specific question")
+![Get all questions answered by specific user](/src/main/java/resources/images/get-all-questions-answered-by-user.JPG?raw=true "Get all questions answered by specific user")
 
 # Known Bugs
 
