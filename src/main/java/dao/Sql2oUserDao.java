@@ -17,19 +17,21 @@ public class Sql2oUserDao implements UserDao {
 
     @Override
     public void add (User user){
-        String sql = "INSERT INTO users (name, age, gender, matchminage, matchmaxage) VALUES (:name, :age, :gender, :matchminage, :matchmaxage)";
+        String sql = "INSERT INTO users (name, age, gender,genderPreference, matchminage, matchmaxage, zip, email, password) VALUES (:name, :age, :gender,:genderPreference, :matchminage, :matchmaxage, :zip, :email, :password)";
         try(Connection con = sql2o.open()) {
             int id = (int) con.createQuery(sql)
                     .addParameter("name", user.getName())
                     .addParameter("age", user.getAge())
                     .addParameter("gender", user.getGender())
+                    .addParameter("genderPreference", user.getGenderPreference())
                     .addParameter("matchminage", user.getMatchMinAge())
-                    .addParameter("matchmaxage", user.getMatchMaxAge())
+                    .addParameter("matchmaxage", user.getMatchMaxAge())                               .addParameter("zip", user.getZip())                                               .addParameter("email", user.getEmail())                                           .addParameter("password", user.getPassword())
                     .addColumnMapping("NAME", "name")
                     .addColumnMapping("AGE", "age")
                     .addColumnMapping("GENDER", "gender")
+                    .addColumnMapping("GENDERPREFERENCE", "genderPreference")
                     .addColumnMapping("MATCHMINAGE", "matchminage")
-                    .addColumnMapping("MATCHMAXAGE", "matchmaxage")
+                    .addColumnMapping("MATCHMAXAGE", "matchmaxage")                                   .addColumnMapping("ZIP", "zip")                                                   .addColumnMapping("EMAIL", "email")                                               .addColumnMapping("PASSWORD", "password")
                     .executeUpdate()
                     .getKey();
             user.setId(id);
