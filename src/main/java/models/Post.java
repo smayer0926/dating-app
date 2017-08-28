@@ -3,20 +3,20 @@ package models;
 import java.sql.Timestamp;
 
 public class Post {
-    private int postId;
+    private int id;
     private int userId;
     private String name;
-    private String content;
+    private String postContent;
 
-    public Post(int userId, String name, String content){
+    public Post(int userId, String name, String postContent){
         this.userId = userId;
         this.name = name;
-        this.content = content;
+        this.postContent = postContent;
     }
 
-    public Post(int userId, String content){
+    public Post(int userId, String postContent){
         this.userId = userId;
-        this.content = content;
+        this.postContent = postContent;
     }
 
     @Override
@@ -26,18 +26,18 @@ public class Post {
 
         Post post = (Post) o;
 
-        if (postId != post.postId) return false;
+        if (id != post.id) return false;
         if (userId != post.userId) return false;
         if (!name.equals(post.name)) return false;
-        return content != null ? content.equals(post.content) : post.content == null;
+        return postContent.equals(post.postContent);
     }
 
     @Override
     public int hashCode() {
-        int result = postId;
+        int result = id;
         result = 31 * result + userId;
         result = 31 * result + name.hashCode();
-        result = 31 * result + (content != null ? content.hashCode() : 0);
+        result = 31 * result + postContent.hashCode();
         return result;
     }
 
@@ -57,19 +57,19 @@ public class Post {
         this.name = name;
     }
 
-    public String getContent() {
-        return content;
+    public String getPostContent() {
+        return postContent;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setContent(String postContent) {
+        this.postContent = postContent;
     }
 
-    public int getPostId() {
-        return postId;
+    public int getId() {
+        return id;
     }
 
-    public void setPostId(int postId) {
-        this.postId = postId;
+    public void setId(int id) {
+        this.id = id;
     }
 }
