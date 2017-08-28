@@ -25,13 +25,20 @@ public class Sql2oUserDao implements UserDao {
                     .addParameter("gender", user.getGender())
                     .addParameter("genderPreference", user.getGenderPreference())
                     .addParameter("matchminage", user.getMatchMinAge())
-                    .addParameter("matchmaxage", user.getMatchMaxAge())                               .addParameter("zip", user.getZip())                                               .addParameter("email", user.getEmail())                                           .addParameter("password", user.getPassword())
+                    .addParameter("matchmaxage", user.getMatchMaxAge())
+                    .addParameter("zip", user.getZip())
+                    .addParameter("email", user.getEmail())
+                    .addParameter("password", user.getPassword())
+
                     .addColumnMapping("NAME", "name")
                     .addColumnMapping("AGE", "age")
                     .addColumnMapping("GENDER", "gender")
                     .addColumnMapping("GENDERPREFERENCE", "genderPreference")
                     .addColumnMapping("MATCHMINAGE", "matchminage")
-                    .addColumnMapping("MATCHMAXAGE", "matchmaxage")                                   .addColumnMapping("ZIP", "zip")                                                   .addColumnMapping("EMAIL", "email")                                               .addColumnMapping("PASSWORD", "password")
+                    .addColumnMapping("MATCHMAXAGE", "matchmaxage")
+                    .addColumnMapping("ZIP", "zip")
+                    .addColumnMapping("EMAIL", "email")
+                    .addColumnMapping("PASSWORD", "password")
                     .executeUpdate()
                     .getKey();
             user.setId(id);

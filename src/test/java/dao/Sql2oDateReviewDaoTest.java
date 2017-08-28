@@ -53,13 +53,14 @@ public class Sql2oDateReviewDaoTest {
         dateReviewDao.add(test1);
         DateReview test2  = setupDateReview2();
         dateReviewDao.add(test2);
-        assertEquals(1, dateReviewDao.getAllDateReviewsOfSpecificUser(user1.getId()).size());
+        assertEquals(1, dateReviewDao.getAllDateReviewsOfSpecificUser(test1.getId()).size());
     }
 
     //helper method
     public static User setupTestUser (){
-        return new User("Trevor Gill", 30, "male", 24, 32);
+        return new User("Trevor Gill", 30, "male", "female" , 24, 32, "97214", "ph@gmail.com", "smoothtalker");
     }
+
     public static DateReview setupDateReview1(){
         return new DateReview(1,"Meh",2,2);
     }
