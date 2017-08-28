@@ -19,11 +19,15 @@ public class Sql2oQuestionDao implements QuestionDao {
 
     @Override
     public void add(Question question) {
-        String sql = "INSERT INTO questions (prompt) VALUES (:prompt)";
+        String sql = "INSERT INTO questions (prompt, choice1, choice2, choice3, choice4) VALUES (:prompt, :choice1, :choice2, :choice3, :choice4)";
         try (Connection con = sql2o.open()) {
             int id = (int) con.createQuery(sql)
                     .addParameter("prompt", question.getPrompt())
-                    .addColumnMapping("PROMPT", "prompt")
+                    .addParameter("choice1", question.getChoice1())
+                    .addParameter("choice2", question.getChoice2())
+                    .addParameter("choice3", question.getChoice3())
+                    .addParameter("choice4", question.getChoice4())
+                    .bind(question)
                     .executeUpdate()
                     .getKey();
             question.setId(id);
@@ -65,13 +69,13 @@ public class Sql2oQuestionDao implements QuestionDao {
         }
     }
 
-    @Override
-    public List<QuestionOption> getAllForSpecificQuestion(int questionId) {
-        try (Connection con = sql2o.open()) {
-            return con.createQuery("SELECT * FROM questionoptions WHERE questionid = :questionId")
-                    .executeAndFetch(QuestionOption.class);
-        }
-    }
+//    @Override
+//    public List<QuestionOption> getAllForSpecificQuestion(int questionId) {
+//        try (Connection con = sql2o.open()) {
+//            return con.createQuery("SELECT * FROM questionoptions WHERE questionid = :questionId")
+//                    .executeAndFetch(QuestionOption.class);
+//        }
+//    }
 
     @Override
     public List<User> getAllUsersThatAnsweredQuestion ( int questionId){
@@ -95,6 +99,18 @@ public class Sql2oQuestionDao implements QuestionDao {
         }
         return users;
     }
+    @Override
+    public void deleteById(int id) {
+        String sql = "DELETE from questions WHERE id=:id";
+        try (Connection con = sql2o.open()) {
+            con.createQuery(sql)
+                    .addParameter("id", id)
+                    .executeUpdate();
+        } catch (Sql2oException ex){
+            System.out.println(ex);
+        }
+    }
+
 
 //    @Override
 //    public List<Question> getAllAnswered(){

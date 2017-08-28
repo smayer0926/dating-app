@@ -5,11 +5,32 @@
 
     {{#each foundquestions}}
         {{prompt}}<br>
-        {{#each foundquestionoptions}}
-            {{if
-            {{choice}}<br>
-        {{/each}}
+        <div class="radio">
+            <label>
+                <input type="radio" name={{id}} value="1">
+                {{choice1}}
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name={{id}} value="2">
+                {{choice2}}
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name={{id}} value="3">
+                {{choice3}}
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name={{id}} value="4">
+                {{choice4}}
+            </label>
+        </div>
     {{/each}}
+
 
         <footer class="footer">
             <div class="container">

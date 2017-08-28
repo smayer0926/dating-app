@@ -11,9 +11,6 @@ import org.sql2o.Sql2o;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by Guest on 8/28/17.
- */
 public class Sql2oQuestionOptionDaoTest {
 private Sql2oQuestionOptionDao questionOptionDao;
 private Sql2oQuestionDao questionDao;
@@ -61,9 +58,9 @@ private Sql2oQuestionDao questionDao;
         return  new QuestionOption ("Invisibility",1);
     }
     public static Question setupTestQuestion(){
-        return new Question("Flight or invisibility?");
+        return new Question("Flight or invisibility?","none","flight", "invisibility", "both");
     }
     public static Question setupTestQuestion2 (){
-        return new Question("Snickers or Twix?");
+        return new Question("Snickers or Twix?", "none", "snickers", "twix", "both");
     }
 }

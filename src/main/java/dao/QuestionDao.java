@@ -15,7 +15,7 @@ public interface QuestionDao {
     //get all
     List<Question> getAll();
 
-    List<QuestionOption> getAllForSpecificQuestion(int questionId);
+//    List<QuestionOption> getAllForSpecificQuestion(int questionId);
 //    List<Question> getAllAnswered();
 //    List<Question> getAllUnanswered();
     List<User> getAllUsersThatAnsweredQuestion(int questionId);
@@ -25,4 +25,7 @@ public interface QuestionDao {
 
     //count id matches
     int countNumberOfQuestionIdMatches(int questionId);
+
+    //delete by id
+    void deleteById(int id);
 }

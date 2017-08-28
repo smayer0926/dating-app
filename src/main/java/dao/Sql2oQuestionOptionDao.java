@@ -51,5 +51,10 @@ public class Sql2oQuestionOptionDao implements QuestionOptionDao{
                     .executeAndFetch(QuestionOption.class);
         }
     }
+//    @Override
+//    public void deleteById(int id){
+//        try(Connection con = sql2o.open()){
+//            return con.createQuery("UPDATE * FROM questionoptions WHERE questionoptionid = :questionid")
+//        }
+    }
 
-}

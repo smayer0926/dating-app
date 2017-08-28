@@ -73,22 +73,14 @@ public class App {
         post("/questions/new", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
             String prompt = req.queryParams("questionPrompt");
-            Question question = new Question(prompt);
+            String choice1 = req.queryParams("choice1");
+            String choice2 = req.queryParams("choice2");
+            String choice3 = req.queryParams("choice3");
+            String choice4 = req.queryParams("choice4");
+            Question question = new Question(prompt,choice1, choice2, choice3, choice4);
             int questionId = question.getId();
             question.setId(questionId);
             questionDao.add(question);
-            String optionString1 = req.queryParams("questionChoice1");
-            String optionString2 = req.queryParams("questionChoice2");
-            String optionString3 = req.queryParams("questionChoice3");
-            String optionString4 = req.queryParams("questionChoice4");
-            QuestionOption option1 = new QuestionOption(optionString1,questionId);
-            QuestionOption option2 = new QuestionOption(optionString2,questionId);
-            QuestionOption option3 = new QuestionOption(optionString3,questionId);
-            QuestionOption option4 = new QuestionOption(optionString4,questionId);
-            questionOptionDao.add(option1);
-            questionOptionDao.add(option2);
-            questionOptionDao.add(option3);
-            questionOptionDao.add(option4);
             res.redirect("/questions/new");
             return null;
         });
@@ -123,15 +115,23 @@ public class App {
 //        get("users/:id/questions", (req, res) -> {
         get("/index", (req,res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
-
-
             List<Question> foundQuestions = questionDao.getAll();
 //            List<QuestionOption> allQuestionOptions = questionOptionDao.getAll();
-            List<QuestionOption> foundQuestionOptions = questionOptionDao.getAllForSpecificQuestion(1);
-
+//            List<String> questionPrompts = new List<String>();
+//
+//            for(Question question : foundQuestions){
+//                int questionId = question.getId();
+//                for(QuestionOption questionOption: allQuestionOptions){
+//                    if(questionOption.getQuestionId() == questionId){
+//                        return null;
+//                    }
+//                }
+//            }
+//            List<QuestionOption> foundQuestionOptions = questionOptionDao.getAllForSpecificQuestion(1);
+//
             model.put("foundquestions", foundQuestions);
 //            model.put("allquestionoptions", allQuestionOptions);
-            model.put("foundquestionoptions", foundQuestionOptions);
+//            model.put("foundquestionoptions", foundQuestionOptions);
 
 
             return new ModelAndView(model, "index.hbs");

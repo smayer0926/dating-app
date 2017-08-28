@@ -15,4 +15,7 @@ public interface QuestionOptionDao {
 
     List<QuestionOption> getAllForSpecificQuestion(int questionId);
 
+   //delete question
+//    void deleteById(int id);
+
 }
