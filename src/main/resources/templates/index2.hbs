@@ -1,0 +1,27 @@
+{{#partial "content"}}
+
+    <h1>Users</h1>
+
+    {{#if users}}
+        {{#each users }}
+         <div class="emphasized well">
+            <p>User name: {{name}}</p>
+            <p>age: {{age}}</p>
+            <p>gender: {{gender}}</p>
+            <p>gender preference: {{genderPreference}}</p>
+            <p>preferred minimum age: {{minAge}}</p>
+            <p>preferred maximum age: {{maxAge}}</p>
+            <p>area: {{zip}}</p>
+            <p>email: {{email}}</p>
+            <p>password: {{password}}</p>
+
+            <p>{{ name }} <a href="/users/{{id}}">read more...</a></p>
+         </div>
+        {{/each}}
+    {{else}}
+        <p>Please add a user!</p>
+    {{/if}}
+
+{{/partial}}
+
+{{> layout.hbs}}
