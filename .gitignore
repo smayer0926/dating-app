@@ -1,3 +1,4 @@
+
 # Compiled source #
 ############
 *.com
@@ -36,9 +37,15 @@ Thumbs.db
 ############
 build/
 .gradle/
-.iml/
-.iml
-Gradlew
-Gradlew.bat
+gradle/
+gradlew*
 settings.gradle
 gradle/wrapper/gradle-wrapper.properties
+
+# IntelliJ #
+############
+.idea
+.idea/
+.iml
+.iml/
+*.iml

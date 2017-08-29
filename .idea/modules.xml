@@ -4,6 +4,9 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/APIproject_main.iml" filepath="$PROJECT_DIR$/.idea/modules/APIproject_main.iml" group="APIproject" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/APIproject_test.iml" filepath="$PROJECT_DIR$/.idea/modules/APIproject_test.iml" group="APIproject" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Desktop-dating-app.iml" filepath="$PROJECT_DIR$/.idea/modules/Desktop-dating-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Desktop-dating-app_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Desktop-dating-app_main.iml" group="dating-app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Desktop-dating-app_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Desktop-dating-app_test.iml" group="dating-app" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/dating-app.iml" filepath="$PROJECT_DIR$/.idea/modules/dating-app.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/dating-app_main.iml" filepath="$PROJECT_DIR$/.idea/modules/dating-app_main.iml" group="dating-app" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/dating-app_test.iml" filepath="$PROJECT_DIR$/.idea/modules/dating-app_test.iml" group="dating-app" />
