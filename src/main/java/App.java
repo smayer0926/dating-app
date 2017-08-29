@@ -113,32 +113,19 @@ public class App {
             return gson.toJson(questionDao.getAllUsersThatAnsweredQuestion(Integer.parseInt(req.params("questionid"))));
         });
 
-        //Get ALL questions (temporary-testing)
-//        get("users/:id/questions", (req, res) -> {
+        //display ALL questions
         get("/index", (req,res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
-            List<Question> foundQuestions = questionDao.getAll();
-//            List<QuestionOption> allQuestionOptions = questionOptionDao.getAll();
-//            List<String> questionPrompts = new List<String>();
-//
-//            for(Question question : foundQuestions){
-//                int questionId = question.getId();
-//                for(QuestionOption questionOption: allQuestionOptions){
-//                    if(questionOption.getQuestionId() == questionId){
-//                        return null;
-//                    }
-//                }
-//            }
-//            List<QuestionOption> foundQuestionOptions = questionOptionDao.getAllForSpecificQuestion(1);
-//
-            model.put("foundquestions", foundQuestions);
-//            model.put("allquestionoptions", allQuestionOptions);
-//            model.put("foundquestionoptions", foundQuestionOptions);
-
-
             return new ModelAndView(model, "index.hbs");
         }, new HandlebarsTemplateEngine());
 
+        //display ALL questions
+        get("/questions", (req,res) -> {
+            Map<String, Object> model = new HashMap<String, Object>();
+            List<Question> foundQuestions = questionDao.getAll();
+            model.put("foundquestions", foundQuestions);
+            return new ModelAndView(model, "questions.hbs");
+        }, new HandlebarsTemplateEngine());
 
         //READ ALL QUESTIONS ANSWERED BY SPECIFIC USER
         get("users/:id/questions", (req, res) -> {
