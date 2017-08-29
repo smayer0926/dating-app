@@ -1,19 +1,18 @@
-# Dating Website API project
+# Dating Website Java Group Project
 
-#### Exploring APIs through RESTFUL routing, August 2017
+#### Dating Application, August 2017
 
-#### By Trevor Gill
+#### By Kim Lu, Shaymal Punekar, Stephanie Mayer and Trevor Gill
 
 ## Description
 
-RESTful routing to allow for accessing of dating website API. Users can access information about users, questions asked to to users, and date reviews through the API.
+_An Application that will allow users to be matched with eachother based on their compatibility. This application uses Java and techniques such as RESTful routing._
 
 ## Setup/Installation Requirements
-
 * Clone the repo
 * Run App.java
-* Run Postman
-* Enter REST routes as defined in App.java
+* Go to 'localhost:4567/' to launch the application
+* Use the application to find the perfect match.
 
 ## Specifications
 
@@ -31,32 +30,34 @@ RESTful routing to allow for accessing of dating website API. Users can access i
 
 ## Screenshots
 _Create new user_
-![Create new user](images/new-user.jpg)
+![Create new user](images/)
 _Create new question_
-![Create new question](images/new-question.JPG)
+![Create new question](images/)
 _Create new date review_
-![Create new date review](images/new-date-review.JPG)
+![Create new date review](images/)
 _Link user and question_
-![Link user and question](images/link-user-and-question.JPG)
+![Link user and question](images/)
 _Get all users_
-![Get all users](images/get-all-users.JPG)
+![Get all users](images/)
 _Get all date reviews_
-![Get all date reviews](images/get-all-date-reviews.JPG)
+![Get all date reviews](images/)
 _Get specific user_
-![Get specific user](images/get-specific-user.JPG?)
+![Get specific user](images/)
 _Get all users who answered specific question_
-![Get all users who answered specific question](images/get-all-users-who-answered-question.JPG)
+![Get all users who answered specific question](images/)
 _Get all questions answered by specific user_
-![Get all questions answered by specific user](images/get-all-questions-answered-by-user.JPG)
+![Get all questions answered by specific user](images/)
 
 # Known Bugs
+_There are no known bugs at this time!_
 
-Date review "content" property currently not showing up in JSON get requests.
 
 ## Technologies Used
 
-Java, IntelliJ, Postman, H2 mode-postgreSql
+* Java
+* IntelliJ
+* Spark
 
 ### License
 
-Copyright &copy; 2017 Trevor Gill
+Copyright &copy; 2017 Kim Lu, Shaymal Punekar, Stephanie Mayer and Trevor Gill

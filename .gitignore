@@ -36,6 +36,8 @@ Thumbs.db
 ############
 build/
 .gradle/
+.iml/
+.iml
 Gradlew
 Gradlew.bat
 settings.gradle
