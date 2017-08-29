@@ -110,4 +110,24 @@ public class Sql2oUserDao implements UserDao {
                     .executeAndFetchFirst(User.class);
         }
     }
+    @Override
+    public void update(int id, String newName, int newAge, String newGender, String newGenderPreference, int newMinAge, int newMaxAge, String newZip, String newEmail, String newPassword){
+        String sql = "UPDATE users SET (name, age, gender, genderPreference, minAge, maxAge, zip, email, password) = (:name, :age, :gender, :genderPreference, :minAge, :maxAge, :zip, :email, :password ) WHERE id = :id";
+        try(Connection con = sql2o.open()) {
+            con.createQuery(sql)
+                    .addParameter("name", newName)
+                    .addParameter("age", newAge)
+                    .addParameter("gender", newGender)
+                    .addParameter("genderPreference", newGenderPreference)
+                    .addParameter("minAge", newMinAge)
+                    .addParameter("maxAge", newMaxAge)
+                    .addParameter("zip", newZip)
+                    .addParameter("email", newEmail)
+                    .addParameter("password", newPassword)
+                    .addParameter("id", id)
+                    .executeUpdate();
+        } catch (Sql2oException ex){
+            System.out.println(ex);
+        }
+    }
 }

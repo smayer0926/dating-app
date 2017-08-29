@@ -15,7 +15,12 @@ public interface UserDao {
     List<User> getAll();
     List<Question> getAllQuestionsAnsweredByUser(int userId);
 
-    //find
+    //update
+     void update(int id, String newName, int newAge, String newGender, String newGenderPreference, int newMinAge, int newMaxAge, String newZip, String newEmail, String newPassword);
+
+
+
+        //find
     User findById(int id);
 
     //find matching user
