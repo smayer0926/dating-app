@@ -1,7 +1,6 @@
 package dao;
 
 import models.Question;
-import models.QuestionOption;
 import models.User;
 
 import java.util.List;

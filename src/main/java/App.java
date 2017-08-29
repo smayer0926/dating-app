@@ -1,7 +1,4 @@
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import dao.*;
 
 import dao.Sql2oQuestionDao;
@@ -9,7 +6,6 @@ import dao.Sql2oUserDao;
 
 import exceptions.ApiException;
 import models.Question;
-import models.QuestionOption;
 import models.User;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
