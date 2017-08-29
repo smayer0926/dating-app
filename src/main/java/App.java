@@ -36,24 +36,24 @@ public class App {
             return new ModelAndView(model, "user-registration-form.hbs"); //new
         }, new HandlebarsTemplateEngine());
 
-//        //process new team form
-//        post("/users/new", (request, response) -> { //new
-//            Map<String, Object> model = new HashMap<>();
-//            String name = request.queryParams("inputName");
-//            int age = Integer.parseInt(request.queryParams("inputAge"));
-//            String gender = request.queryParams("gender");
-//            String genderPreference = request.queryParams("genderPreference");
-//            int minAge = Integer.parseInt(request.queryParams("inputMinimumAge"));
-//            int maxAge = Integer.parseInt(request.queryParams("inputMaximumAge"));
-//            String zip = request.queryParams("inputZip");
-//            String email = request.queryParams("inputEmailAddress");
-//            String password = request.queryParams("inputPassword");
-//            User newUser = new User(name, age, gender, genderPreference, minAge, maxAge, zip, email, password);
-//            userDao.add(newUser);
-//            List<User> users = userDao.getAll(); //refresh list of links for navbar.
-//            model.put("users", users);
-//            return new ModelAndView(model, "success.hbs");
-//        }, new HandlebarsTemplateEngine());
+        //process new user form
+        post("/users/new", (request, response) -> { //new
+            Map<String, Object> model = new HashMap<>();
+            String name = request.queryParams("inputName");
+            int age = Integer.parseInt(request.queryParams("inputAge"));
+            String gender = request.queryParams("gender");
+            String genderPreference = request.queryParams("genderPreference");
+            int minAge = Integer.parseInt(request.queryParams("inputMinimumAge"));
+            int maxAge = Integer.parseInt(request.queryParams("inputMaximumAge"));
+            String zip = request.queryParams("inputZip");
+            String email = request.queryParams("inputEmailAddress");
+            String password = request.queryParams("inputPassword");
+            User newUser = new User(name, age, gender, genderPreference, minAge, maxAge, zip, email, password);
+            userDao.add(newUser);
+            List<User> users = userDao.getAll();
+            model.put("users", users);
+            return new ModelAndView(model, "success.hbs");
+        }, new HandlebarsTemplateEngine());
 
 
 //        //READ SPECIFIC USER
