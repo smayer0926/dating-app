@@ -52,12 +52,10 @@ public class App {
         get("/users/:id/matches", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
             User user = userDao.findById(Integer.parseInt(req.params("id")));
-            int id = Integer.parseInt(req.params("id"));
             int minAge = user.getMatchMinAge();
             int maxAge = user.getMatchMaxAge();
-
-
-            List<User> allMatches = userDao.getAllMatches(minAge, maxAge);
+            List<User> matches = userDao.getAllMatches(minAge, maxAge);
+            model.put("matches", matches);
             return new ModelAndView(model, "matched-users.hbs");
         }, new HandlebarsTemplateEngine());
 
