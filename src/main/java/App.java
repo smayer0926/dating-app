@@ -48,10 +48,19 @@ public class App {
             return gson.toJson(user);
         });
 
-        //READ ALL USERS
-        get("/users", "application/json", (req, res) -> {
-            return gson.toJson(userDao.getAll());
-        });
+        //READ ALL potential matches
+        get("/users/:id/matches", (req, res) -> {
+            Map<String, Object> model = new HashMap<String, Object>();
+            User user = userDao.findById(Integer.parseInt(req.params("id")));
+            int id = Integer.parseInt(req.params("id"));
+            int minAge = user.getMatchMinAge();
+            int maxAge = user.getMatchMaxAge();
+
+
+            List<User> allMatches = userDao.getAllMatches(minAge, maxAge);
+            return new ModelAndView(model, "matched-users.hbs");
+        }, new HandlebarsTemplateEngine());
+
 
         //READ SPECIFIC USER
         get("/users/:id", "application/json", (req, res) -> {

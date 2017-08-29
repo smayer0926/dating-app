@@ -72,13 +72,24 @@ public class Sql2oUserDaoTest {
 
         assertEquals(userDao.getAllQuestionsAnsweredByUser(testUser.getId()), Arrays.asList(questions));
     }
+    @Test
+    public void getAllMatchesReturnsCorrectly() throws Exception {
+        User test1 = setupTestUser();
+        User test2 = setupTestUser2();
+        userDao.add(test1);
+        userDao.add(test2);
+
+
+
+        assertEquals(2 ,userDao.getAllMatches(24,50).size());
+    }
 
     //helper method
     public static User setupTestUser (){
         return new User("Trevor Gill", 30, "male", 24, 32);
     }
     public static User setupTestUser2 (){
-        return new User("Stuart Gill", 34, "male", 26, 35);
+        return new User("Stuart Gill", 31, "male", 26, 35);
     }
     public static Question setupTestQuestion(){
         return new Question("Flight or invisibility?","none","flight", "invisibility", "both");
