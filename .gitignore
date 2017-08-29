@@ -42,9 +42,9 @@ gradlew*
 settings.gradle
 gradle/wrapper/gradle-wrapper.properties
 
-#Idea and Iml #
-#############
-
+# IntelliJ #
+############
+>>>>>>> questionBranch
 .idea
 .idea/
 .iml

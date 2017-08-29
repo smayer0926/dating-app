@@ -15,8 +15,7 @@ import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
-
-
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +40,38 @@ public class App {
         conn = sql2o.open();
 
 
+        //CREATE USER
+        post("/users/new", "application/json", (req, res) -> {
+            User user = gson.fromJson(req.body(), User.class);
+            userDao.add(user);
+            res.status(201);
+            return gson.toJson(user);
+        });
+
+        //READ ALL potential matches
+        get("/users/:id/matches", (req, res) -> {
+            Map<String, Object> model = new HashMap<String, Object>();
+            User user = userDao.findById(Integer.parseInt(req.params("id")));
+            int minAge = user.getMatchMinAge();
+            int maxAge = user.getMatchMaxAge();
+            List<User> matches = userDao.getAllMatches(minAge, maxAge);
+            model.put("matches", matches);
+            return new ModelAndView(model, "matched-users.hbs");
+        }, new HandlebarsTemplateEngine());
+
+
+//        //READ SPECIFIC USER
+//        get("/users/:id", "application/json", (req, res) -> {
+//            res.type("application/json");
+//            int userId = Integer.parseInt(req.params("id"));
+//            User foundUser = userDao.findById(userId);
+//            if (foundUser == null){
+//                throw new ApiException(404, String.format("No user with the id: %s exists", req.params("id")));
+//            }
+//            return gson.toJson(foundUser);
+//        });
+
+
         //LOAD FORM TO ADD NEW QUESTION
         get("/questions/new", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
@@ -63,23 +94,34 @@ public class App {
             return null;
         });
 
+        //Create QUESTION ANSWER from users response to question
+        post("users/:userId/questions/:id", (req,res)->{
+            User user = userDao.findById(Integer.parseInt(req.params("userId")));
+            String questionId = req.params(":id");
+            Question question = questionDao.findById(Integer.parseInt(req.params("id")));
+            String response = req.queryParams("responseTo"+ questionId);
+            String acceptableResponse = Arrays.toString(req.queryParamsValues("acceptable" + questionId));
+            questionDao.addQuestionToUser(user,question);
+            res.status(201);
+            return gson.toJson(questionDao.getAllUsersThatAnsweredQuestion(Integer.parseInt(req.params("questionid"))));
+        });
 
-
-
-
-
-        //Get ALL questions (temporary-testing)
+        //display index
         get("/index", (req,res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
-            List<Question> foundQuestions = questionDao.getAll();
-            model.put("foundquestions", foundQuestions);
             return new ModelAndView(model, "index.hbs");
         }, new HandlebarsTemplateEngine());
 
+        //display ALL questions
+        get("/questions", (req,res) -> {
+            Map<String, Object> model = new HashMap<String, Object>();
+            List<Question> foundQuestions = questionDao.getAll();
+            model.put("foundquestions", foundQuestions);
+            return new ModelAndView(model, "questions.hbs");
+        }, new HandlebarsTemplateEngine());
 
         //READ ALL QUESTIONS ANSWERED BY SPECIFIC USER
         get("users/:id/questions", (req, res) -> {
-
             int userId = Integer.parseInt(req.params("id"));
             List<Question> foundQuestions = userDao.getAllQuestionsAnsweredByUser(userId);
             if (userDao.countNumberOfUserIdMatches(userId) == 0){
