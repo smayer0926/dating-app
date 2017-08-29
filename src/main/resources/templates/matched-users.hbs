@@ -1,22 +1,19 @@
 {{#partial "content"}}
     {{#if matches}}
+        {{#each matches}}
         <div class = "row">
-            <h3>Name: {{matches.name}}</h3>
-            <h3>Age: {{matches.age}}</h3>
-            <h3>Gender: {{matches.gender}}</h3>
-            <h3>Looking for: {{matches.matchGender}} between ages of {{matches.matchMinAge}} - {{matches.matchMaxAge}}</h3>
+            <h5>Name: {{name}}</h5>
+            <h5>Age: {{age}}</h5>
+            <h5>Gender: {{gender}}</h5>
+            <h5>Looking for: {{genderPreference}} between ages of {{matchMinAge}} - {{matchMaxAge}}</h5>
         </div>
+    {{/each}}
+    {{else}}
+        <h3>No matches found</h3>
     {{/if}}
 
 
 
-    <footer class="footer">
-        <div class="container">
-            <p class="text-muted"><a class="btn" href="/teams/{{members.teamId}}/members/{{members.id}}/update">Edit this Member!</a></p>
-            <p class="text-muted"><a class="btn" href="/teams/{{members.teamId}}/members/{{members.id}}/delete">Delete this Member!</a></p>
-
-        </div>
-    </footer>
 {{/partial}}
 
 {{> layout.hbs}}

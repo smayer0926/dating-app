@@ -13,7 +13,7 @@ public interface UserDao {
 
     //get all
     List<User> getAll();
-    List<User> getAllMatches(int minAge, int maxAge);
+    List<User> getAllMatches(int userId, int minAge, int maxAge, String genderPreference);
     List<Question> getAllQuestionsAnsweredByUser(int userId);
 
     //find

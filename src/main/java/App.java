@@ -40,21 +40,15 @@ public class App {
         conn = sql2o.open();
 
 
-        //CREATE USER
-        post("/users/new", "application/json", (req, res) -> {
-            User user = gson.fromJson(req.body(), User.class);
-            userDao.add(user);
-            res.status(201);
-            return gson.toJson(user);
-        });
-
         //READ ALL potential matches
         get("/users/:id/matches", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
             User user = userDao.findById(Integer.parseInt(req.params("id")));
+            int userId = Integer.parseInt(req.params("id"));
             int minAge = user.getMatchMinAge();
             int maxAge = user.getMatchMaxAge();
-            List<User> matches = userDao.getAllMatches(minAge, maxAge);
+            String genderPreference = user.getGenderPreference();
+            List<User> matches = userDao.getAllMatches(userId, minAge, maxAge, genderPreference);
             model.put("matches", matches);
             return new ModelAndView(model, "matched-users.hbs");
         }, new HandlebarsTemplateEngine());
@@ -86,7 +80,7 @@ public class App {
             String choice2 = req.queryParams("choice2");
             String choice3 = req.queryParams("choice3");
             String choice4 = req.queryParams("choice4");
-            Question question = new Question(prompt,choice1, choice2, choice3, choice4);
+            Question question = new Question(prompt, choice1, choice2, choice3, choice4);
             int questionId = question.getId();
             question.setId(questionId);
             questionDao.add(question);
@@ -95,25 +89,25 @@ public class App {
         });
 
         //Create QUESTION ANSWER from users response to question
-        post("users/:userId/questions/:id", (req,res)->{
+        post("users/:userId/questions/:id", (req, res) -> {
             User user = userDao.findById(Integer.parseInt(req.params("userId")));
             String questionId = req.params(":id");
             Question question = questionDao.findById(Integer.parseInt(req.params("id")));
-            String response = req.queryParams("responseTo"+ questionId);
+            String response = req.queryParams("responseTo" + questionId);
             String acceptableResponse = Arrays.toString(req.queryParamsValues("acceptable" + questionId));
-            questionDao.addQuestionToUser(user,question);
+            questionDao.addQuestionToUser(user, question);
             res.status(201);
             return gson.toJson(questionDao.getAllUsersThatAnsweredQuestion(Integer.parseInt(req.params("questionid"))));
         });
 
         //display index
-        get("/index", (req,res) -> {
+        get("/index", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
             return new ModelAndView(model, "index.hbs");
         }, new HandlebarsTemplateEngine());
 
         //display ALL questions
-        get("/questions", (req,res) -> {
+        get("/questions", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
             List<Question> foundQuestions = questionDao.getAll();
             model.put("foundquestions", foundQuestions);
@@ -124,31 +118,17 @@ public class App {
         get("users/:id/questions", (req, res) -> {
             int userId = Integer.parseInt(req.params("id"));
             List<Question> foundQuestions = userDao.getAllQuestionsAnsweredByUser(userId);
-            if (userDao.countNumberOfUserIdMatches(userId) == 0){
+            if (userDao.countNumberOfUserIdMatches(userId) == 0) {
                 throw new ApiException(404, "This user doesn't exist");
             }
-            if (foundQuestions.size() == 0){
+            if (foundQuestions.size() == 0) {
                 throw new ApiException(404, "This user hasn't answered any questions");
             }
             return gson.toJson(foundQuestions);
         });
 
 
-
-
-
-
-        exception(ApiException.class, (exc, req, res) -> {
-            ApiException err = (ApiException) exc;
-            Map<String, Object> jsonMap = new HashMap<>();
-            jsonMap.put("status", err.getStatusCode());
-            jsonMap.put("errorMessage", err.getMessage());
-            res.type("application/json"); //after does not run in case of an exception.
-            res.status(err.getStatusCode()); //set the status
-            res.body(gson.toJson(jsonMap));  //set the output.
-        });
-
-
+        //SHY+KIM
 
         get("/", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
@@ -193,6 +173,21 @@ public class App {
             return new ModelAndView(model, "user-login.hbs"); //new
         }, new HandlebarsTemplateEngine());
 
+
+
+
+
+
+
+        exception(ApiException.class, (exc, req, res) -> {
+            ApiException err = (ApiException) exc;
+            Map<String, Object> jsonMap = new HashMap<>();
+            jsonMap.put("status", err.getStatusCode());
+            jsonMap.put("errorMessage", err.getMessage());
+            res.type("application/json"); //after does not run in case of an exception.
+            res.status(err.getStatusCode()); //set the status
+            res.body(gson.toJson(jsonMap));  //set the output.
+        });
 
 
     }

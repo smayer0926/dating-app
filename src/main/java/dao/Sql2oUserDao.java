@@ -80,11 +80,13 @@ public class Sql2oUserDao implements UserDao {
     }
 
     @Override
-    public List<User> getAllMatches(int minAge, int maxAge){
+    public List<User> getAllMatches(int userId, int minAge, int maxAge, String genderPreference){
         try(Connection con = sql2o.open()) {
-            return con.createQuery("SELECT * FROM users WHERE age >= :matchminage and age <= :matchmaxage")
+            return con.createQuery("SELECT * FROM users WHERE age >= :matchminage and age <= :matchmaxage and gender = :genderPreference and id != :id")
                     .addParameter("matchminage", minAge)
                     .addParameter("matchmaxage", maxAge)
+                    .addParameter("genderPreference", genderPreference)
+                    .addParameter("id", userId)
                     .executeAndFetch(User.class);
         }
     }
