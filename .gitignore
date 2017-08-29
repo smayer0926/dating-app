@@ -42,8 +42,9 @@ gradlew*
 settings.gradle
 gradle/wrapper/gradle-wrapper.properties
 
-# IntelliJ #
-############
+#Idea and Iml #
+#############
+
 .idea
 .idea/
 .iml

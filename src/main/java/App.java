@@ -3,8 +3,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import dao.*;
+
+import dao.Sql2oQuestionDao;
+import dao.Sql2oUserDao;
+
 import exceptions.ApiException;
-import models.DateReview;
 import models.Question;
 import models.QuestionOption;
 import models.User;
@@ -13,19 +16,18 @@ import org.sql2o.Sql2o;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static spark.Spark.exception;
-import static spark.Spark.get;
-import static spark.Spark.post;
+import static spark.Spark.*;
 
 public class App {
     public static void main(String[] args) {
+        staticFileLocation("/public");
         Sql2oUserDao userDao;
         Sql2oQuestionDao questionDao;
-        Sql2oDateReviewDao dateReviewDao;
         Sql2oQuestionOptionDao questionOptionDao;
         Connection conn;
         Gson gson = new Gson();
@@ -35,33 +37,9 @@ public class App {
         Sql2o sql2o = new Sql2o(connectionString, "", "");
         userDao = new Sql2oUserDao(sql2o);
         questionDao = new Sql2oQuestionDao(sql2o);
-        dateReviewDao = new Sql2oDateReviewDao(sql2o);
         questionOptionDao = new Sql2oQuestionOptionDao(sql2o);
         conn = sql2o.open();
 
-        //CREATE USER
-        post("/users/new", "application/json", (req, res) -> {
-            User user = gson.fromJson(req.body(), User.class);
-            userDao.add(user);
-            res.status(201);
-            return gson.toJson(user);
-        });
-
-        //READ ALL USERS
-        get("/users", "application/json", (req, res) -> {
-            return gson.toJson(userDao.getAll());
-        });
-
-        //READ SPECIFIC USER
-        get("/users/:id", "application/json", (req, res) -> {
-            res.type("application/json");
-            int userId = Integer.parseInt(req.params("id"));
-            User foundUser = userDao.findById(userId);
-            if (foundUser == null){
-                throw new ApiException(404, String.format("No user with the id: %s exists", req.params("id")));
-            }
-            return gson.toJson(foundUser);
-        });
 
         //LOAD FORM TO ADD NEW QUESTION
         get("/questions/new", (request, response) -> {
@@ -86,54 +64,15 @@ public class App {
         });
 
 
-        //READ ALL QUESTIONS
-        get("/questions", "application/json", (req, res) -> {
-            return gson.toJson(questionDao.getAll());
-        });
 
-        //READ SPECIFIC QUESTION
-        get("/questions/:id", "application/json", (req, res) -> {
-            res.type("application/json");
-            int questionId = Integer.parseInt(req.params("id"));
-            Question foundQuestion = questionDao.findById(questionId);
-            if (foundQuestion == null){
-                throw new ApiException(404, String.format("No question with the id: %s exists", req.params("id")));
-            }
-            return gson.toJson(foundQuestion);
-        });
 
-        //Create joiner table record
-        post("users/:id/questions/:questionid", "application/json", (req,res)->{
-            User user = userDao.findById(Integer.parseInt(req.params("id")));
-            Question question = questionDao.findById(Integer.parseInt(req.params("questionid")));
-            questionDao.addQuestionToUser(user,question);
-            res.status(201);
-            return gson.toJson(questionDao.getAllUsersThatAnsweredQuestion(Integer.parseInt(req.params("questionid"))));
-        });
+
 
         //Get ALL questions (temporary-testing)
-//        get("users/:id/questions", (req, res) -> {
         get("/index", (req,res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
             List<Question> foundQuestions = questionDao.getAll();
-//            List<QuestionOption> allQuestionOptions = questionOptionDao.getAll();
-//            List<String> questionPrompts = new List<String>();
-//
-//            for(Question question : foundQuestions){
-//                int questionId = question.getId();
-//                for(QuestionOption questionOption: allQuestionOptions){
-//                    if(questionOption.getQuestionId() == questionId){
-//                        return null;
-//                    }
-//                }
-//            }
-//            List<QuestionOption> foundQuestionOptions = questionOptionDao.getAllForSpecificQuestion(1);
-//
             model.put("foundquestions", foundQuestions);
-//            model.put("allquestionoptions", allQuestionOptions);
-//            model.put("foundquestionoptions", foundQuestionOptions);
-
-
             return new ModelAndView(model, "index.hbs");
         }, new HandlebarsTemplateEngine());
 
@@ -152,33 +91,9 @@ public class App {
             return gson.toJson(foundQuestions);
         });
 
-        //Display all users that answered a question
-        get("questions/:id/users", "application/json", (req,res)->{
-            res.type("application/json");
-            int questionId = Integer.parseInt(req.params("id"));
-            List<User> foundUsers = questionDao.getAllUsersThatAnsweredQuestion(questionId);
-            if (foundUsers.size() == 0){
-                throw new ApiException(404, "No users have answered this question");
-            }
-            return gson.toJson(foundUsers);
-        });
 
-        //CREATE DATE REVIEW
-        post("/users/:id/reviewuser/:dateid/new", "application/json", (req, res) -> {
-            int userId = Integer.parseInt(req.params("id"));
-            int dateUserId = Integer.parseInt(req.params("dateid"));
-            DateReview dateReview = gson.fromJson(req.body(), DateReview.class);
-            dateReview.setUserId(userId);
-            dateReview.setDateUserId(dateUserId);
-            dateReviewDao.add(dateReview);
-            res.status(201);
-            return gson.toJson(dateReview);
-        });
 
-        //READ ALL DATE REVIEWS
-        get("/datereviews", "application/json", (req, res) -> {
-            return gson.toJson(dateReviewDao.getAll());
-        });
+
 
 
         exception(ApiException.class, (exc, req, res) -> {
@@ -190,6 +105,51 @@ public class App {
             res.status(err.getStatusCode()); //set the status
             res.body(gson.toJson(jsonMap));  //set the output.
         });
+
+
+
+        get("/", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            List<User> users = userDao.getAll();
+            model.put("users", users);
+            return new ModelAndView(model, "index2.hbs");
+        }, new HandlebarsTemplateEngine());
+
+        //show new user registration form
+        get("/users/new", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            List<User> users = userDao.getAll();
+            model.put("users", users);
+            return new ModelAndView(model, "user-registration-form.hbs"); //new
+        }, new HandlebarsTemplateEngine());
+
+        //process new user form
+        post("/users/new", (request, response) -> { //new
+            Map<String, Object> model = new HashMap<>();
+            String name = request.queryParams("inputName");
+            int age = Integer.parseInt(request.queryParams("inputAge"));
+            String gender = request.queryParams("gender");
+            String genderPreference = request.queryParams("genderPreference");
+            int minAge = Integer.parseInt(request.queryParams("inputMinimumAge"));
+            int maxAge = Integer.parseInt(request.queryParams("inputMaximumAge"));
+            String zip = request.queryParams("inputZip");
+            String email = request.queryParams("inputEmailAddress");
+            String password = request.queryParams("inputPassword");
+            User newUser = new User(name, age, gender, genderPreference, minAge, maxAge, zip, email, password);
+            userDao.add(newUser);
+            List<User> users = userDao.getAll();
+            model.put("users", users);
+            return new ModelAndView(model, "success.hbs");
+        }, new HandlebarsTemplateEngine());
+
+
+        //show new user registration form
+        get("/users/login", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            List<User> users = userDao.getAll();
+            model.put("users", users);
+            return new ModelAndView(model, "user-login.hbs"); //new
+        }, new HandlebarsTemplateEngine());
 
 
 

@@ -1,0 +1,19 @@
+{{#partial "content"}}
+    <h1>User Login</h1>
+
+    <form action="/users/login" method="post">
+
+
+        <label for="inputUserLogin">Email</label>
+        <input id="inputUserLogin" name="inputUserLogin" type="text">
+
+        <label for="inputUserPassword">Password</label>
+        <input id="inputUserPassword" name="inputUserPassword" type="password">
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+
+
+    </form>
+{{/partial}}
+
+{{> layout.hbs}}
