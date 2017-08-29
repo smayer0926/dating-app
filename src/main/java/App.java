@@ -60,16 +60,16 @@ public class App {
         }, new HandlebarsTemplateEngine());
 
 
-        //READ SPECIFIC USER
-        get("/users/:id", "application/json", (req, res) -> {
-            res.type("application/json");
-            int userId = Integer.parseInt(req.params("id"));
-            User foundUser = userDao.findById(userId);
-            if (foundUser == null){
-                throw new ApiException(404, String.format("No user with the id: %s exists", req.params("id")));
-            }
-            return gson.toJson(foundUser);
-        });
+//        //READ SPECIFIC USER
+//        get("/users/:id", "application/json", (req, res) -> {
+//            res.type("application/json");
+//            int userId = Integer.parseInt(req.params("id"));
+//            User foundUser = userDao.findById(userId);
+//            if (foundUser == null){
+//                throw new ApiException(404, String.format("No user with the id: %s exists", req.params("id")));
+//            }
+//            return gson.toJson(foundUser);
+//        });
 
         //LOAD FORM TO ADD NEW QUESTION
         get("/questions/new", (request, response) -> {
@@ -93,13 +93,6 @@ public class App {
             return null;
         });
 
-
-//        //READ ALL QUESTIONS
-//        get("/questions", "application/json", (req, res) -> {
-//            return gson.toJson(questionDao.getAll());
-//        });
-
-
         //Create QUESTION ANSWER from users response to question
         post("users/:userId/questions/:id", (req,res)->{
             User user = userDao.findById(Integer.parseInt(req.params("userId")));
@@ -113,7 +106,7 @@ public class App {
             return gson.toJson(questionDao.getAllUsersThatAnsweredQuestion(Integer.parseInt(req.params("questionid"))));
         });
 
-        //display ALL questions
+        //display index
         get("/index", (req,res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
             return new ModelAndView(model, "index.hbs");
