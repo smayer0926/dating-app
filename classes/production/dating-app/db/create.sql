@@ -13,9 +13,9 @@ CREATE TABLE IF NOT EXISTS users (
  password VARCHAR
 );
 
-CREATE TABLE IF NOT EXISTS authentications (
+CREATE TABLE IF NOT EXISTS authentication (
  id int PRIMARY KEY auto_increment,
- username VARCHAR UNIQUE,
+ email VARCHAR,
   password VARCHAR
 );
 
@@ -24,6 +24,20 @@ CREATE TABLE IF NOT EXISTS questions (
  prompt VARCHAR,
 );
 
+CREATE TABLE IF NOT EXISTS journalentries (
+ id int PRIMARY KEY auto_increment,
+ userid INTEGER,
+ postname VARCHAR,
+ postcontent VARCHAR,
+);
+
+CREATE TABLE IF NOT EXISTS datereviews (
+ id int PRIMARY KEY auto_increment,
+ userid INTEGER,
+ dateuserid INTEGER,
+ postcontent VARCHAR,
+ rating INTEGER,
+);
 
 CREATE TABLE IF NOT EXISTS userquestions (
  id int PRIMARY KEY auto_increment,

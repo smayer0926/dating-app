@@ -56,6 +56,15 @@ public class App {
         }, new HandlebarsTemplateEngine());
 
 
+        //show new user registration form
+        get("/users/login", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            List<User> users = userDao.getAll();
+            model.put("users", users);
+            return new ModelAndView(model, "user-login.hbs"); //new
+        }, new HandlebarsTemplateEngine());
+
+
 //        //READ SPECIFIC USER
 //        get("/users/:id", "application/json", (req, res) -> {
 //            res.type("application/json");
