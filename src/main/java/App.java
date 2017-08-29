@@ -2,15 +2,16 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import dao.Sql2oDateReviewDao;
-import dao.Sql2oQuestionDao;
-import dao.Sql2oUserDao;
+import dao.*;
 import exceptions.ApiException;
 import models.DateReview;
 import models.Question;
+import models.QuestionOption;
 import models.User;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
+import spark.ModelAndView;
+import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,15 +26,17 @@ public class App {
         Sql2oUserDao userDao;
         Sql2oQuestionDao questionDao;
         Sql2oDateReviewDao dateReviewDao;
+        Sql2oQuestionOptionDao questionOptionDao;
         Connection conn;
         Gson gson = new Gson();
 
-        String connectionString = "jdbc:h2:~/datingapp8;INIT=RUNSCRIPT from 'classpath:db/create.sql'"; //check me!
+        String connectionString = "jdbc:h2:~/datingapp9;INIT=RUNSCRIPT from 'classpath:db/create.sql'"; //check me!
 
         Sql2o sql2o = new Sql2o(connectionString, "", "");
         userDao = new Sql2oUserDao(sql2o);
         questionDao = new Sql2oQuestionDao(sql2o);
         dateReviewDao = new Sql2oDateReviewDao(sql2o);
+        questionOptionDao = new Sql2oQuestionOptionDao(sql2o);
         conn = sql2o.open();
 
         //CREATE USER
@@ -60,13 +63,28 @@ public class App {
             return gson.toJson(foundUser);
         });
 
+        //LOAD FORM TO ADD NEW QUESTION
+        get("/questions/new", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            return new ModelAndView(model, "question-form.hbs");
+        }, new HandlebarsTemplateEngine());
+
         //CREATE QUESTION
-        post("/questions/new", "application/json", (req, res) -> {
-            Question question = gson.fromJson(req.body(), Question.class);
+        post("/questions/new", (req, res) -> {
+            Map<String, Object> model = new HashMap<String, Object>();
+            String prompt = req.queryParams("questionPrompt");
+            String choice1 = req.queryParams("choice1");
+            String choice2 = req.queryParams("choice2");
+            String choice3 = req.queryParams("choice3");
+            String choice4 = req.queryParams("choice4");
+            Question question = new Question(prompt,choice1, choice2, choice3, choice4);
+            int questionId = question.getId();
+            question.setId(questionId);
             questionDao.add(question);
-            res.status(201);
-            return gson.toJson(question);
+            res.redirect("/questions/new");
+            return null;
         });
+
 
         //READ ALL QUESTIONS
         get("/questions", "application/json", (req, res) -> {
@@ -93,9 +111,36 @@ public class App {
             return gson.toJson(questionDao.getAllUsersThatAnsweredQuestion(Integer.parseInt(req.params("questionid"))));
         });
 
+        //Get ALL questions (temporary-testing)
+//        get("users/:id/questions", (req, res) -> {
+        get("/index", (req,res) -> {
+            Map<String, Object> model = new HashMap<String, Object>();
+            List<Question> foundQuestions = questionDao.getAll();
+//            List<QuestionOption> allQuestionOptions = questionOptionDao.getAll();
+//            List<String> questionPrompts = new List<String>();
+//
+//            for(Question question : foundQuestions){
+//                int questionId = question.getId();
+//                for(QuestionOption questionOption: allQuestionOptions){
+//                    if(questionOption.getQuestionId() == questionId){
+//                        return null;
+//                    }
+//                }
+//            }
+//            List<QuestionOption> foundQuestionOptions = questionOptionDao.getAllForSpecificQuestion(1);
+//
+            model.put("foundquestions", foundQuestions);
+//            model.put("allquestionoptions", allQuestionOptions);
+//            model.put("foundquestionoptions", foundQuestionOptions);
+
+
+            return new ModelAndView(model, "index.hbs");
+        }, new HandlebarsTemplateEngine());
+
+
         //READ ALL QUESTIONS ANSWERED BY SPECIFIC USER
-        get("users/:id/questions", "application/json", (req, res) -> {
-            res.type("application/json");
+        get("users/:id/questions", (req, res) -> {
+
             int userId = Integer.parseInt(req.params("id"));
             List<Question> foundQuestions = userDao.getAllQuestionsAnsweredByUser(userId);
             if (userDao.countNumberOfUserIdMatches(userId) == 0){

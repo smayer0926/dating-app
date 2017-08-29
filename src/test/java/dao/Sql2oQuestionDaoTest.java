@@ -81,10 +81,10 @@ public class Sql2oQuestionDaoTest {
         return new User("Stuart Gill", 34, "male", 26, 35);
     }
     public static Question setupTestQuestion(){
-        return new Question("Flight or invisibility?");
+        return new Question("Flight or invisibility?","none","flight", "invisibility", "both");
     }
     public static Question setupTestQuestion2 (){
-        return new Question("Snickers or Twix?");
+        return new Question("Snickers or Twix?", "none", "snickers", "twix", "both");
     }
 
 }
