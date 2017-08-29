@@ -24,6 +24,7 @@ public class App {
         staticFileLocation("/public");
         Sql2oUserDao userDao;
         Sql2oQuestionDao questionDao;
+        Sql2oAnswerDao answerDao;
         Connection conn;
         Gson gson = new Gson();
 
@@ -32,6 +33,7 @@ public class App {
         Sql2o sql2o = new Sql2o(connectionString, "", "");
         userDao = new Sql2oUserDao(sql2o);
         questionDao = new Sql2oQuestionDao(sql2o);
+        answerDao = new Sql2oAnswerDao(sql2o);
         conn = sql2o.open();
 
         //display index
@@ -92,6 +94,7 @@ public class App {
         get("/users/:id/questions", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
             List<Question> foundQuestions = questionDao.getAll();
+            int userId = Integer.parseInt(req.params("id"));
             model.put("foundquestions", foundQuestions);
             return new ModelAndView(model, "questions.hbs");
         }, new HandlebarsTemplateEngine());
