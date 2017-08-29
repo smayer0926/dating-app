@@ -2,21 +2,21 @@ package models;
 
 public class Authentication {
 
-    private String email;
+    private String username;
     private String password;
     private int id;
 
-    public Authentication(String email, String password) {
-        this.email = email;
+    public Authentication(String username, String password) {
+        this.username = username;
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -43,14 +43,14 @@ public class Authentication {
         Authentication that = (Authentication) o;
 
         if (id != that.id) return false;
-        if (!email.equals(that.email)) return false;
+        if (!username.equals(that.username)) return false;
         return password != null ? password.equals(that.password) : that.password == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = email.hashCode();
+        int result = username.hashCode();
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + id;
         return result;

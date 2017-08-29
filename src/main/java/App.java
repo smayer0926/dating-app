@@ -92,10 +92,6 @@ public class App {
         });
 
 
-
-
-
-
         exception(ApiException.class, (exc, req, res) -> {
             ApiException err = (ApiException) exc;
             Map<String, Object> jsonMap = new HashMap<>();
@@ -112,7 +108,7 @@ public class App {
             Map<String, Object> model = new HashMap<>();
             List<User> users = userDao.getAll();
             model.put("users", users);
-            return new ModelAndView(model, "index2.hbs");
+            return new ModelAndView(model, "user-login.hbs");
         }, new HandlebarsTemplateEngine());
 
         //show new user registration form
@@ -137,18 +133,8 @@ public class App {
             String password = request.queryParams("inputPassword");
             User newUser = new User(name, age, gender, genderPreference, minAge, maxAge, zip, email, password);
             userDao.add(newUser);
-            List<User> users = userDao.getAll();
-            model.put("users", users);
-            return new ModelAndView(model, "success.hbs");
-        }, new HandlebarsTemplateEngine());
-
-
-        //show new user registration form
-        get("/users/login", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            List<User> users = userDao.getAll();
-            model.put("users", users);
-            return new ModelAndView(model, "user-login.hbs"); //new
+            model.put("user", newUser);
+            return new ModelAndView(model, "my-profile.hbs");
         }, new HandlebarsTemplateEngine());
 
 
