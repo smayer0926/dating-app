@@ -2,10 +2,13 @@
     <h1>##### App </h1>
     <hr>
 
-<div class = "row">
-<div class = "col-md-6">
-        {{#each foundquestions}}
 
+
+
+        {{#each foundquestions}}
+            <div class = "row">
+                <div class = "col-md-6">
+            <form action="/users/1/questions/{{id}}" method="post">
 
             <div class="panel panel-info">
                 <div class="panel-heading">
@@ -15,35 +18,36 @@
             {{prompt}}<br>
             <div class="radio">
                 <label>
-                    <input type="radio" name={{id}} value="1">
+                    <input type="radio" name="responseTo{{id}}" value="1">
                     {{choice1}}
                 </label>
             </div>
             <div class="radio">
                 <label>
-                    <input type="radio" name={{id}} value="2">
+                    <input type="radio" name="responseTo{{id}}" value="2">
                     {{choice2}}
                 </label>
             </div>
             <div class="radio">
                 <label>
-                    <input type="radio" name={{id}} value="3">
+                    <input type="radio" name="responseTo{{id}}" value="3">
                     {{choice3}}
                 </label>
             </div>
             <div class="radio">
                 <label>
-                    <input type="radio" name={{id}} value="4">
+                    <input type="radio" name="responseTo{{id}}" value="4">
                     {{choice4}}
                 </label>
             </div>
             </div>
             </div>
-
-        {{/each}}
 </div>
+
+
+
     <div class = "col-md-6">
-        {{#each foundquestions}}
+
             <div class="panel panel-info">
                 <div class="panel-heading">
                     <h2 class="panel-title">Answers You'll Accept</h2>
@@ -52,33 +56,40 @@
                     {{prompt}}<br>
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" name={{id}} value="1">
+                            <input type="checkbox" name="acceptable{{id}}" value="1">
                             {{choice1}}
                         </label>
                     </div>
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" name={{id}} value="2">
+                            <input type="checkbox" name="acceptable{{id}}" value="2">
                             {{choice2}}
                         </label>
                     </div>
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" name={{id}} value="3">
+                            <input type="checkbox" name="acceptable{{id}}" value="3">
                             {{choice3}}
                         </label>
                     </div>
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" name={{id}} value="4">
+                            <input type="checkbox" name="acceptable{{id}}" value="4">
                             {{choice4}}
                         </label>
                     </div>
                 </div>
             </div>
-
+    </div>
+            </div>
+            <div class = "row">
+                <button class="btn btn-success" type="submit">Submit</button>
+            </div>
+            </form>
         {{/each}}
-</div>
+
+
+
 
 
         <footer class="footer">

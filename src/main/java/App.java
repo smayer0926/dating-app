@@ -13,6 +13,7 @@ import org.sql2o.Sql2o;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -86,26 +87,20 @@ public class App {
         });
 
 
-        //READ ALL QUESTIONS
-        get("/questions", "application/json", (req, res) -> {
-            return gson.toJson(questionDao.getAll());
-        });
+//        //READ ALL QUESTIONS
+//        get("/questions", "application/json", (req, res) -> {
+//            return gson.toJson(questionDao.getAll());
+//        });
 
-        //READ SPECIFIC QUESTION
-        get("/questions/:id", "application/json", (req, res) -> {
-            res.type("application/json");
-            int questionId = Integer.parseInt(req.params("id"));
-            Question foundQuestion = questionDao.findById(questionId);
-            if (foundQuestion == null){
-                throw new ApiException(404, String.format("No question with the id: %s exists", req.params("id")));
-            }
-            return gson.toJson(foundQuestion);
-        });
 
-        //Create joiner table record
-        post("users/:id/questions/:questionid", "application/json", (req,res)->{
-            User user = userDao.findById(Integer.parseInt(req.params("id")));
-            Question question = questionDao.findById(Integer.parseInt(req.params("questionid")));
+        //Create QUESTION ANSWER from users response to question
+        post("users/:userId/questions/:id", (req,res)->{
+            User user = userDao.findById(Integer.parseInt(req.params("userId")));
+            String questionId = req.params(":id");
+            Question question = questionDao.findById(Integer.parseInt(req.params("id")));
+            String response = req.queryParams("responseTo"+ questionId);
+            String acceptableResponse = Arrays.toString(req.queryParamsValues("acceptable" + questionId));
+
             questionDao.addQuestionToUser(user,question);
             res.status(201);
             return gson.toJson(questionDao.getAllUsersThatAnsweredQuestion(Integer.parseInt(req.params("questionid"))));
