@@ -36,6 +36,7 @@ public class App {
         answerDao = new Sql2oAnswerDao(sql2o);
         conn = sql2o.open();
 
+
         //display index
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
@@ -58,12 +59,12 @@ public class App {
         }, new HandlebarsTemplateEngine());
 
 
-
         //LOAD FORM TO ADD NEW QUESTION
         get("/questions/new", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             return new ModelAndView(model, "question-form.hbs");
         }, new HandlebarsTemplateEngine());
+
 
         //CREATE QUESTION
         post("/questions/new", (req, res) -> {
@@ -80,15 +81,17 @@ public class App {
             res.redirect("/questions/new");
             return null;
         });
+
+
         //display ALL questions
         get("/users/:id/questions", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
-
             int userId = Integer.parseInt(req.params("id"));
             List<Question> foundQuestions = questionDao.getAll();
             model.put("foundquestions", foundQuestions);
             return new ModelAndView(model, "questions.hbs");
         }, new HandlebarsTemplateEngine());
+
 
         //Create ANSWER from users response to question
         post("users/:userId/questions/:id", (req, res) -> {
@@ -113,6 +116,7 @@ public class App {
             return null;
         });
 
+
         //evaluate compatibility
         get("users/:userId/matches/:matchid", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
@@ -135,6 +139,7 @@ public class App {
             model.put("users", users);
             return new ModelAndView(model, "user-registration-form.hbs"); //new
         }, new HandlebarsTemplateEngine());
+
 
         //process new user form
         post("/users/new", (request, response) -> { //new
@@ -164,10 +169,6 @@ public class App {
             model.put("users", users);
             return new ModelAndView(model, "user-login.hbs"); //new
         }, new HandlebarsTemplateEngine());
-
-
-
-
 
 
 
