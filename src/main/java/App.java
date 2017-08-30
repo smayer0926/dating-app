@@ -58,17 +58,6 @@ public class App {
         }, new HandlebarsTemplateEngine());
 
 
-//        //READ SPECIFIC USER
-//        get("/users/:id", "application/json", (req, res) -> {
-//            res.type("application/json");
-//            int userId = Integer.parseInt(req.params("id"));
-//            User foundUser = userDao.findById(userId);
-//            if (foundUser == null){
-//                throw new ApiException(404, String.format("No user with the id: %s exists", req.params("id")));
-//            }
-//            return gson.toJson(foundUser);
-//        });
-
 
         //LOAD FORM TO ADD NEW QUESTION
         get("/questions/new", (request, response) -> {

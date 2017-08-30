@@ -19,7 +19,7 @@ public class Sql2oUserDao implements UserDao {
 
     @Override
     public void add (User user){
-        String sql = "INSERT INTO users (name, age, gender,genderPreference, matchminage, matchmaxage, zip, email, password) VALUES (:name, :age, :gender,:genderPreference, :matchminage, :matchmaxage, :zip, :email, :password)";
+        String sql = "INSERT INTO users (name, age, gender,genderPreference, matchminage, matchmaxage, zip, bio, email, password) VALUES (:name, :age, :gender,:genderPreference, :matchminage, :matchmaxage, :zip, :bio,:email, :password)";
         try(Connection con = sql2o.open()) {
             int id = (int) con.createQuery(sql)
                     .addParameter("name", user.getName())
@@ -29,6 +29,7 @@ public class Sql2oUserDao implements UserDao {
                     .addParameter("matchminage", user.getMatchMinAge())
                     .addParameter("matchmaxage", user.getMatchMaxAge())
                     .addParameter("zip", user.getZip())
+                    .addParameter("bio", user.getBio())
                     .addParameter("email", user.getEmail())
                     .addParameter("password", user.getPassword())
 
@@ -39,6 +40,7 @@ public class Sql2oUserDao implements UserDao {
                     .addColumnMapping("MATCHMINAGE", "matchminage")
                     .addColumnMapping("MATCHMAXAGE", "matchmaxage")
                     .addColumnMapping("ZIP", "zip")
+                    .addColumnMapping("BIO", "bio")
                     .addColumnMapping("EMAIL", "email")
                     .addColumnMapping("PASSWORD", "password")
                     .executeUpdate()

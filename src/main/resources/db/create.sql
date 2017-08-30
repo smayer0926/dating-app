@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS users (
  matchminage INTEGER,
  matchmaxage INTEGER,
  zip VARCHAR,
+ bio VARCHAR,
  email VARCHAR,
  password VARCHAR
 );
