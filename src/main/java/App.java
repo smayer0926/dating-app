@@ -63,11 +63,6 @@ public class App {
             return null;
         });
 
-
-
-
-
-
         //Get ALL questions (temporary-testing)
         get("/index", (req,res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
@@ -109,6 +104,24 @@ public class App {
             List<User> users = userDao.getAll();
             model.put("users", users);
             return new ModelAndView(model, "user-login.hbs");
+        }, new HandlebarsTemplateEngine());
+
+
+        //process user login form
+        post("/users/login", (request, response) -> { //new
+            Map<String, Object> model = new HashMap<>();
+            String userName = request.queryParams("inputUserLogin");
+            String password = request.queryParams("inputUserPassword");
+            User user = userDao.getUser(userName);
+            boolean isAuthenticated = false;
+            if (user.getPassword().equals(password)){
+                isAuthenticated = true;
+                model.put("validUser" , "validUser");
+            }
+            if (!isAuthenticated) {
+                model.put("invalidUser", "invalidUser");
+            }
+            return new ModelAndView(model, "my-profile.hbs");
         }, new HandlebarsTemplateEngine());
 
         //show new user registration form
@@ -162,5 +175,8 @@ public class App {
             return new ModelAndView(model, "my-profile.hbs");
         }, new HandlebarsTemplateEngine());
     }
+
+
+
 
 }

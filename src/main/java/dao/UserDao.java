@@ -19,7 +19,7 @@ public interface UserDao {
      void update(int id, String newName, int newAge, String newGender, String newGenderPreference, int newMinAge, int newMaxAge, String newZip, String newEmail, String newPassword);
 
 
-
+    public User getUser(String email);
         //find
     User findById(int id);
 

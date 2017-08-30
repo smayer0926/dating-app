@@ -1,0 +1,15 @@
+{{#partial "content"}}
+
+
+    {{#if validUser}}
+            <div class="emphasized well">
+
+                <p>Login Successful</p>
+            </div>
+    {{else}}
+        <p>Login Unsuccessful. Please try again.</p>
+    {{/if}}
+
+{{/partial}}
+
+{{> layout.hbs}}

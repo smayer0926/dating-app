@@ -130,4 +130,16 @@ public class Sql2oUserDao implements UserDao {
             System.out.println(ex);
         }
     }
+
+    @Override
+    public User getUser(String email){
+        List<User> users = getAll();
+        String sql = "SELECT * FROM users where email = :email";
+        try(Connection con = sql2o.open()) {
+            return con.createQuery(sql)
+                    .addParameter("email", email)
+                    .executeAndFetchFirst(User.class);
+        }
+    }
+
 }
