@@ -84,10 +84,10 @@ public class Sql2oAnswerDaoTest {
         return new User("Stuart Gill", 34, "male","female", 26, 35, "97456", "og@gmail.com", "lover");
     }
     public static Question setupTestQuestion(){
-        return new Question("Flight or invisibility?","none","flight", "invisibility", "both", false, false, false, false );
+        return new Question("Flight or invisibility?","none","flight", "invisibility", "both", false, false, false, false , "");
     }
     public static Question setupTestQuestion2 (){
-        return new Question("Snickers or Twix?", "none", "snickers", "twix", "both", false, false, false, false);
+        return new Question("Snickers or Twix?", "none", "snickers", "twix", "both", false, false, false, false,"");
     }
     public static Answer setupTestAnswer(){
         return new Answer(1,1,"1","124");

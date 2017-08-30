@@ -1,10 +1,12 @@
 package dao;
 
+import models.Answer;
 import models.Question;
 import models.User;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,26 +96,13 @@ public class Sql2oUserDao implements UserDao {
 
 
     @Override
-    public List<Question> getAllQuestionsAnsweredByUser(int userId){
-        ArrayList<Question> questions = new ArrayList<>();
-
-        String joinQuery = "SELECT questionid FROM userquestions WHERE userid = :userId";
-
+    public List<Answer> getAllAnswers(int userId) {
+        ArrayList<Answer> answers = new ArrayList<>();
         try (Connection con = sql2o.open()) {
-            List<Integer> allQuestionIds = con.createQuery(joinQuery)
-                    .addParameter("userId", userId)
-                    .executeAndFetch(Integer.class);
-            for (Integer questionId : allQuestionIds){
-                String questionQuery = "SELECT * FROM questions WHERE id = :questionId";
-                questions.add(
-                        con.createQuery(questionQuery)
-                                .addParameter("questionId", questionId)
-                                .executeAndFetchFirst(Question.class));
-            }
-        } catch (Sql2oException ex){
-            System.out.println(ex);
+            return con.createQuery("SELECT * FROM answers WHERE userid = :userid")
+                    .addParameter("userid", userId)
+                    .executeAndFetch(Answer.class);
         }
-        return questions;
     }
 
     @Override
@@ -123,5 +112,38 @@ public class Sql2oUserDao implements UserDao {
                     .addParameter("id", id)
                     .executeAndFetchFirst(User.class);
         }
+    }
+    @Override
+    public  Answer findAnswerByQuestionId(int questionId, int userId){
+        try(Connection con = sql2o.open()){
+            return con.createQuery("SELECT * FROM answers WHERE userid = :userid AND questionid = :questionid")
+                    .addParameter("userid", userId)
+                    .addParameter("questionid", questionId)
+                    .executeAndFetchFirst(Answer.class);
+        }
+    }
+//    @Override
+//    public List<Integer> getQuestionIdOfAnswersForSpecificUser(int userId){
+//        ArrayList<Answer> answersForSpecificUser = new ArrayList<>();
+//
+//    }
+
+    @Override
+    public int evaluateCompatibility(List<Integer> user1QuestionIds, List<Answer> user2Answers, int userId){
+    int compatibilityScore = 0;
+    int countOfQuestionsShared = 0;
+    int countOfCompatibilities= 0;
+        for(Answer user2Answer : user2Answers){
+            if(user1QuestionIds.contains(user2Answer.getQuestionId())){
+                countOfQuestionsShared ++;
+                Answer user1Answer = findAnswerByQuestionId(user2Answer.getQuestionId(), userId);
+                if(user1Answer.getAcceptableAnswer().contains(user2Answer.getAnswer()) && user2Answer.getAcceptableAnswer().contains(user1Answer.getAnswer())){
+                    countOfCompatibilities ++;
+                }
+            }
+            compatibilityScore = (countOfCompatibilities * 100 / countOfQuestionsShared)  ;
+        }
+
+        return compatibilityScore;
     }
 }

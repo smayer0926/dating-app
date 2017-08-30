@@ -57,4 +57,15 @@ public class Sql2oAnswerDao implements AnswerDao {
             question.setAnswerIs4(true);
         }
     }
+
+    @Override
+    public List<Integer> getQuestionIdsFromUsersAnsweredQuestions (int userId){
+        List<Integer> listOfQuestionIds = new ArrayList<Integer>();
+        List<Answer> listOfAnswers = getAllForAnswersSpecificUser(userId);
+        for(Answer answer : listOfAnswers) {
+            int questionId = answer.getQuestionId();
+            listOfQuestionIds.add(questionId);
+        }
+        return listOfQuestionIds;
+    }
 }

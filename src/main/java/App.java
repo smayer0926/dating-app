@@ -123,7 +123,16 @@ public class App {
             return null;
         });
 
-
+        //evaluate compatibility
+        get("users/:userId/matches/:matchid", (req, res) -> {
+                    Map<String, Object> model = new HashMap<String, Object>();
+                    int userId = Integer.parseInt(req.params("usedId"));
+                    List<Integer> questionIdsOfViewingUsersAnswers = answerDao.getQuestionIdsFromUsersAnsweredQuestions(userId);
+                    List<Answer> matchedUserAnswers = userDao.getAllAnswers(userId);
+                    int compScore = userDao.evaluateCompatibility(questionIdsOfViewingUsersAnswers, matchedUserAnswers, userId);
+                    res.redirect("/");
+                    return null;
+                });
 
 
 

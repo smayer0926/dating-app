@@ -1,5 +1,6 @@
 package dao;
 
+import models.Answer;
 import models.Question;
 import models.User;
 
@@ -13,12 +14,20 @@ public interface UserDao {
 
     //get all
     List<User> getAll();
+
     List<User> getAllMatches(int userId, int minAge, int maxAge, String genderPreference);
-    List<Question> getAllQuestionsAnsweredByUser(int userId);
+
+//    List<Integer> getQuestionIdOfAnswersForSpecificUser(int userId);
+
+
+    List<Answer> getAllAnswers(int userId);
 
     //find
     User findById(int id);
+    Answer findAnswerByQuestionId(int questionId, int userId);
 
     //find matching user
     int countNumberOfUserIdMatches(int userId);
+
+    int evaluateCompatibility(List<Integer> user1QuestionIds, List<Answer> user2Answers, int userId);
 }

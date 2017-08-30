@@ -1,5 +1,6 @@
 package dao;
 
+import models.Answer;
 import models.Question;
 import models.User;
 import org.junit.After;
@@ -9,12 +10,14 @@ import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
 public class Sql2oUserDaoTest {
     private Sql2oUserDao userDao;
     private Sql2oQuestionDao questionDao;
+    private Sql2oAnswerDao answerDao;
     private Connection conn; //must be sql2o class conn
 
     @Before
@@ -23,6 +26,7 @@ public class Sql2oUserDaoTest {
         Sql2o sql2o = new Sql2o(connectionString, "", "");
         userDao = new Sql2oUserDao(sql2o);
         questionDao = new Sql2oQuestionDao(sql2o);
+        answerDao = new Sql2oAnswerDao(sql2o);
         conn = sql2o.open();
     }
 
@@ -55,22 +59,17 @@ public class Sql2oUserDaoTest {
     }
 
     @Test
-    public void getAllQuestionsAnsweredByUserReturnsCorrectly() throws Exception {
-        Question testQuestion  = setupTestQuestion();
+    public void findAnswerByQuestionId() throws Exception {
+        Question testQuestion = setupTestQuestion();
         questionDao.add(testQuestion);
-
-        Question testQuestion2  = setupTestQuestion2();
-        questionDao.add(testQuestion2);
 
         User testUser = setupTestUser();
         userDao.add(testUser);
 
-        userDao.addUserToQuestion(testUser,testQuestion);
-        userDao.addUserToQuestion(testUser,testQuestion2);
+        Answer answer = setupTestAnswer();
+        answerDao.add(answer);
 
-        Question[] questions = {testQuestion, testQuestion2};
-
-        assertEquals(userDao.getAllQuestionsAnsweredByUser(testUser.getId()), Arrays.asList(questions));
+        assertEquals(answer,userDao.findAnswerByQuestionId(testQuestion.getId(), testUser.getId()));
     }
     @Test
     public void getAllMatchesReturnsCorrectly() throws Exception {
@@ -78,10 +77,40 @@ public class Sql2oUserDaoTest {
         User test2 = setupTestUser2();
         userDao.add(test1);
         userDao.add(test2);
-
-
-
         assertEquals(0 ,userDao.getAllMatches(1,24,50, "female").size());
+    }
+
+    @Test
+    public void evaluateCompatibility() throws Exception{
+        User userTest1 = setupTestUser();
+        User userTest2 = setupTestUser2();
+
+        userDao.add(userTest1);
+        userDao.add(userTest2);
+
+        Question questionTest = setupTestQuestion();
+        Question questionTest1 = setupTestQuestion2();
+
+        questionDao.add(questionTest);
+        questionDao.add(questionTest1);
+
+        Answer userOneQuestionOne = setupTestAnswer();
+        Answer userTwoQuestionOne = setupTestAnswer2();
+
+        Answer userOneQuestionTwo = setupTestAnswer3();
+        Answer userTwoQuestionTwo = setupTestAnswer4();
+
+        answerDao.add(userOneQuestionOne);
+        answerDao.add(userOneQuestionTwo);
+        answerDao.add(userTwoQuestionOne);
+        answerDao.add(userTwoQuestionTwo);
+
+        List<Answer> answerList = userDao.getAllAnswers(userTest2.getId());
+        List<Integer> integerList = answerDao.getQuestionIdsFromUsersAnsweredQuestions(userTest1.getId());
+
+
+
+        assertEquals(50, userDao.evaluateCompatibility(integerList, answerList,1));
     }
 
     //helper method
@@ -92,10 +121,22 @@ public class Sql2oUserDaoTest {
         return new User("Stuart Gill", 34, "male", "female", 26, 35, "97456", "og@gmail.com", "lover");
     }
     public static Question setupTestQuestion(){
-        return new Question("Flight or invisibility?","none","flight", "invisibility", "both", false, false, false, false);
+        return new Question("Flight or invisibility?","none","flight", "invisibility", "both", false, false, false, false,"");
     }
     public static Question setupTestQuestion2 (){
-        return new Question("Snickers or Twix?", "none", "snickers", "twix", "both",false, false, false, false);
+        return new Question("Snickers or Twix?", "none", "snickers", "twix", "both",false, false, false, false,"");
     }
 
+    public static Answer setupTestAnswer(){
+        return new Answer(1,1,"1","124");
+    }
+    public static Answer setupTestAnswer2(){
+        return new Answer(2,1,"3","3");
+    }
+    public static Answer setupTestAnswer3(){
+        return new Answer(1,2,"1","124");
+    }
+    public static Answer setupTestAnswer4(){
+        return new Answer(2,2,"1","124");
+    }
 }
