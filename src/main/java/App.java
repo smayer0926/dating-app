@@ -116,13 +116,25 @@ public class App {
             boolean isAuthenticated = false;
             if (user.getPassword().equals(password)){
                 isAuthenticated = true;
+                int myId = user.getId();
                 model.put("validUser" , "validUser");
+                model.put("id", myId);
             }
             if (!isAuthenticated) {
                 model.put("invalidUser", "invalidUser");
             }
+            return new ModelAndView(model, "user-login-success.hbs");
+        }, new HandlebarsTemplateEngine());
+
+        get("/users/:id/profile", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            int myId = Integer.parseInt(request.params("id"));
+            User foundUser = userDao.findById(myId);
+            model.put("user", foundUser);
+            model.put("id", myId);
             return new ModelAndView(model, "my-profile.hbs");
         }, new HandlebarsTemplateEngine());
+
 
         //show new user registration form
         get("/users/new", (req, res) -> {
