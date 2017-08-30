@@ -1,4 +1,8 @@
 h1 {
-color: red;
-text-align: center;
+    text-align: center;
+}
+
+.btn {
+    margin: 5px;
+    background: #c4e5ed;
 }
