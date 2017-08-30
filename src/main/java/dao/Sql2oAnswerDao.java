@@ -2,6 +2,7 @@ package dao;
 
 
 import models.Answer;
+import models.Question;
 import org.sql2o.Connection;
 import org.sql2o.Sql2oException;
 import org.sql2o.Connection;
@@ -41,6 +42,19 @@ public class Sql2oAnswerDao implements AnswerDao {
             return con.createQuery("SELECT * FROM answers WHERE userid = :userid")
                     .addParameter("userid", userId)
                     .executeAndFetch(Answer.class);
+        }
+    }
+
+    @Override
+    public void setAnswerBooleans (Question question, String answer){
+        if (answer.equals("1")) {
+            question.setAnswerIs1(true);
+        } else if (answer.equals("2")) {
+            question.setAnswerIs2(true);
+        } else if (answer.equals("3")) {
+            question.setAnswerIs3(true);
+        } else if (answer.equals("4")) {
+            question.setAnswerIs4(true);
         }
     }
 }

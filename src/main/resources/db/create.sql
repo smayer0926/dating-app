@@ -23,9 +23,10 @@ CREATE TABLE IF NOT EXISTS questions (
  id int PRIMARY KEY auto_increment,
  prompt VARCHAR,
  choice1 VARCHAR,
-  choice2 VARCHAR,
-  choice3 VARCHAR,
-  choice4 VARCHAR
+ choice2 VARCHAR,
+ choice3 VARCHAR,
+ choice4 VARCHAR,
+ userswhohaveanswered VARCHAR
 );
 
 

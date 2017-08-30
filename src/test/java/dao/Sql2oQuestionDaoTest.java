@@ -43,7 +43,7 @@ public class Sql2oQuestionDaoTest {
         questionDao.add(testQuestion);
         Question testQuestion2  = setupTestQuestion2();
         questionDao.add(testQuestion2);
-        assertEquals(2,questionDao.getAll().size());
+        assertEquals(2,questionDao.getAllUnanswered(1).size());
     }
 
     @Test
@@ -52,24 +52,6 @@ public class Sql2oQuestionDaoTest {
         questionDao.add(testQuestion2);
         Question foundQuestion = questionDao.findById(1);
         assertEquals("Snickers or Twix?",foundQuestion.getPrompt());
-    }
-
-    @Test
-    public void getAllUsersThatAnsweredQuestionReturnsCorrectly() throws Exception {
-        Question testQuestion  = setupTestQuestion();
-        questionDao.add(testQuestion);
-
-        User testUser = setupTestUser();
-        userDao.add(testUser);
-        User testUser2 = setupTestUser2();
-        userDao.add(testUser2);
-
-        questionDao.addQuestionToUser(testUser,testQuestion);
-        questionDao.addQuestionToUser(testUser2,testQuestion);
-
-        User[] users = {testUser, testUser2};
-
-        assertEquals(questionDao.getAllUsersThatAnsweredQuestion(testQuestion.getId()), Arrays.asList(users));
     }
 
 
@@ -81,10 +63,10 @@ public class Sql2oQuestionDaoTest {
         return new User("Stuart Gill", 34, "male","female", 26, 35, "97456", "og@gmail.com", "lover");
     }
     public static Question setupTestQuestion(){
-        return new Question("Flight or invisibility?","none","flight", "invisibility", "both");
+        return new Question("Flight or invisibility?","none","flight", "invisibility", "both", false, false, false, false, "");
     }
     public static Question setupTestQuestion2 (){
-        return new Question("Snickers or Twix?", "none", "snickers", "twix", "both");
+        return new Question("Snickers or Twix?", "none", "snickers", "twix", "both",false, false, false, false, "");
     }
 
 }

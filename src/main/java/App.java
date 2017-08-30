@@ -83,7 +83,7 @@ public class App {
             String choice2 = req.queryParams("choice2");
             String choice3 = req.queryParams("choice3");
             String choice4 = req.queryParams("choice4");
-            Question question = new Question(prompt, choice1, choice2, choice3, choice4);
+            Question question = new Question(prompt, choice1, choice2, choice3, choice4, false, false, false, false,"");
             int questionId = question.getId();
             question.setId(questionId);
             questionDao.add(question);
@@ -93,22 +93,32 @@ public class App {
         //display ALL questions
         get("/users/:id/questions", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
-            List<Question> foundQuestions = questionDao.getAll();
+
             int userId = Integer.parseInt(req.params("id"));
+            List<Question> foundQuestions = questionDao.getAllUnanswered(userId);
             model.put("foundquestions", foundQuestions);
             return new ModelAndView(model, "questions.hbs");
         }, new HandlebarsTemplateEngine());
 
-        //Create QUESTION ANSWER from users response to question
+        //Create ANSWER from users response to question
         post("users/:userId/questions/:id", (req, res) -> {
+            Map<String, Object> model = new HashMap<String, Object>();
             User user = userDao.findById(Integer.parseInt(req.params("userId")));
             int userId = Integer.parseInt(req.params("userId"));
             int questionId = Integer.parseInt(req.params(":id"));
             Question question = questionDao.findById(Integer.parseInt(req.params("id")));
             String answer = req.queryParams("responseTo" + questionId);
             String acceptableAnswer = Arrays.toString(req.queryParamsValues("acceptable" + questionId));
-            questionDao.addQuestionToUser(user, question);
-            Answer newAnswer = new Answer(userId, questionId, answer, acceptableAnswer);
+            questionDao.addUsertoUsersWhoHaveAnsweredThisQuestion(userId,question);
+            Answer answerObject = new Answer(userId, questionId, answer, acceptableAnswer);
+            answerDao.add(answerObject);
+            answerDao.setAnswerBooleans(question, answer);
+
+            System.out.println(question.getAnswerIs1());
+            System.out.println(question.isAnswerIs2());
+            System.out.println(question.isAnswerIs3());
+            System.out.println(question.isAnswerIs4());
+
             res.redirect("/users/" + userId + "/questions");
             return null;
         });

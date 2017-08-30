@@ -60,6 +60,21 @@ public class Sql2oAnswerDaoTest {
         assertEquals(2,answerDao.getAllForAnswersSpecificUser(testUser.getId()).size());
     }
 
+    @Test
+    public void setAnswerBooleans_BooleansReturnCorrectValues() throws Exception {
+        Question testQuestion  = setupTestQuestion();
+        questionDao.add(testQuestion);
+
+        User testUser = setupTestUser();
+        userDao.add(testUser);
+
+        Answer testAnswer = setupTestAnswer2();
+        answerDao.add(testAnswer);
+
+        answerDao.setAnswerBooleans(testQuestion, testAnswer.getAnswer());
+        assertEquals(true,testQuestion.isAnswerIs3 ());
+    }
+
 
     //helper method
     public static User setupTestUser (){
@@ -69,10 +84,10 @@ public class Sql2oAnswerDaoTest {
         return new User("Stuart Gill", 34, "male","female", 26, 35, "97456", "og@gmail.com", "lover");
     }
     public static Question setupTestQuestion(){
-        return new Question("Flight or invisibility?","none","flight", "invisibility", "both");
+        return new Question("Flight or invisibility?","none","flight", "invisibility", "both", false, false, false, false );
     }
     public static Question setupTestQuestion2 (){
-        return new Question("Snickers or Twix?", "none", "snickers", "twix", "both");
+        return new Question("Snickers or Twix?", "none", "snickers", "twix", "both", false, false, false, false);
     }
     public static Answer setupTestAnswer(){
         return new Answer(1,1,"1","124");

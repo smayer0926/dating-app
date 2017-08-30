@@ -5,6 +5,7 @@ import models.User;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
+import java.lang.StringBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,21 +50,28 @@ public class Sql2oQuestionDao implements QuestionDao {
         }
     }
 
-    @Override
-    public int countNumberOfQuestionIdMatches(int questionId) {
-        int matchCount = 0;
-        for (Question eachQuestion : getAll()) {
-            if (eachQuestion.getId() == questionId) {
-                matchCount++;
-            }
-        }
-        return matchCount;
+//    @Override
+//    public int countNumberOfQuestionIdMatches(int questionId) {
+//        int matchCount = 0;
+//        for (Question eachQuestion : getAll()) {
+//            if (eachQuestion.getId() == questionId) {
+//                matchCount++;
+//            }
+//        }
+//        return matchCount;
+//    }
+
+    public void addUsertoUsersWhoHaveAnsweredThisQuestion (int userId, Question question){
+        StringBuilder str = new StringBuilder(question.getUsersWhoHaveAnswered());
+        str.append("," + userId);
     }
 
     @Override
-    public List<Question> getAll() {
+    public List<Question> getAllUnanswered(int userId) {
+
         try (Connection con = sql2o.open()) {
-            return con.createQuery("SELECT * FROM questions")
+            return con.createQuery("SELECT * FROM questions WHERE NOT userswhohaveanswered LIKE '%:userid%'")
+                    .addParameter("userid", userId)
                     .executeAndFetch(Question.class);
         }
     }
@@ -76,28 +84,7 @@ public class Sql2oQuestionDao implements QuestionDao {
 //        }
 //    }
 
-    @Override
-    public List<User> getAllUsersThatAnsweredQuestion ( int questionId){
-        ArrayList<User> users = new ArrayList<>();
-
-        String joinQuery = "SELECT userId FROM userquestions WHERE questionId = :questionId";
-
-        try (Connection con = sql2o.open()) {
-            List<Integer> allUserIds = con.createQuery(joinQuery)
-                    .addParameter("questionId", questionId)
-                    .executeAndFetch(Integer.class);
-            for (Integer userId : allUserIds) {
-                String questionQuery = "SELECT * FROM users WHERE id = :userId";
-                users.add(
-                        con.createQuery(questionQuery)
-                                .addParameter("userId", userId)
-                                .executeAndFetchFirst(User.class));
-            }
-        } catch (Sql2oException ex) {
-            System.out.println(ex);
-        }
-        return users;
-    }
+//
     @Override
     public void deleteById(int id) {
         String sql = "DELETE from questions WHERE id=:id";

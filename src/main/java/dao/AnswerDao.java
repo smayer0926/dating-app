@@ -2,6 +2,8 @@ package dao;
 
 
 import models.Answer;
+import models.Question;
+
 import java.util.List;
 
 public interface AnswerDao {
@@ -9,4 +11,5 @@ public interface AnswerDao {
 
     List<Answer> getAllForAnswersSpecificUser(int userId);
 
+    void setAnswerBooleans (Question question, String answer);
 }

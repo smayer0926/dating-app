@@ -1,6 +1,8 @@
 {{#partial "content"}}
 
     {{#each foundquestions}}
+
+
         <div class = "row">
             <div class = "col-md-6">
                 <form action="/users/1/questions/{{id}}" method="post">
@@ -13,31 +15,36 @@
                             {{prompt}}<br>
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="responseTo{{id}}" value="1">
+                                    <input type="radio" name="responseTo{{id}}" value="1" {{#if answerIs1}} checked{{/if}}>
                                     {{choice1}}
                                 </label>
                             </div>
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="responseTo{{id}}" value="2">
+                                    <input type="radio" name="responseTo{{id}}" value="2" {{#if answerIs2}} checked {{/if}}>
                                     {{choice2}}
                                 </label>
                             </div>
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="responseTo{{id}}" value="3">
+                                    <input type="radio" name="responseTo{{id}}" value="3" {{#if answerIs3}} checked {{/if}}>
                                     {{choice3}}
                                 </label>
                             </div>
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="responseTo{{id}}" value="4">
+                                    <input type="radio" name="responseTo{{id}}" value="4" {{#if answerIs4}} checked {{/if}}>
                                     {{choice4}}
                                 </label>
                             </div>
                         </div>
                     </div>
             </div>
+
+
+
+
+
 
 
             <div class = "col-md-6">
@@ -80,6 +87,7 @@
             <button class="btn btn-success" type="submit">Submit</button>
         </div>
         </form>
+
     {{/each}}
 
 
