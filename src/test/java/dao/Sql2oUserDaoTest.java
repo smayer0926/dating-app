@@ -81,7 +81,7 @@ public class Sql2oUserDaoTest {
 
 
 
-        assertEquals(2 ,userDao.getAllMatches(1,24,50, "female").size());
+        assertEquals(0 ,userDao.getAllMatches(1,24,50, "female").size());
     }
 
     //helper method
