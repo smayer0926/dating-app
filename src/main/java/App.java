@@ -52,6 +52,7 @@ public class App {
             int maxAge = user.getMatchMaxAge();
             String genderPreference = user.getGenderPreference();
             List<User> matches = userDao.getAllMatches(userId, minAge, maxAge, genderPreference);
+            model.put("userId", userId);
             model.put("matches", matches);
             return new ModelAndView(model, "matched-users.hbs");
         }, new HandlebarsTemplateEngine());
@@ -95,7 +96,7 @@ public class App {
             Map<String, Object> model = new HashMap<String, Object>();
 
             int userId = Integer.parseInt(req.params("id"));
-            List<Question> foundQuestions = questionDao.getAllUnanswered(userId);
+            List<Question> foundQuestions = questionDao.getAll();
             model.put("foundquestions", foundQuestions);
             return new ModelAndView(model, "questions.hbs");
         }, new HandlebarsTemplateEngine());
@@ -109,7 +110,7 @@ public class App {
             Question question = questionDao.findById(Integer.parseInt(req.params("id")));
             String answer = req.queryParams("responseTo" + questionId);
             String acceptableAnswer = Arrays.toString(req.queryParamsValues("acceptable" + questionId));
-            questionDao.addUsertoUsersWhoHaveAnsweredThisQuestion(userId,question);
+//            questionDao.addUsertoUsersWhoHaveAnsweredThisQuestion(userId,question);
             Answer answerObject = new Answer(userId, questionId, answer, acceptableAnswer);
             answerDao.add(answerObject);
             answerDao.setAnswerBooleans(question, answer);
@@ -125,40 +126,18 @@ public class App {
 
         //evaluate compatibility
         get("users/:userId/matches/:matchid", (req, res) -> {
-                    Map<String, Object> model = new HashMap<String, Object>();
-                    int userId = Integer.parseInt(req.params("usedId"));
-                    List<Integer> questionIdsOfViewingUsersAnswers = answerDao.getQuestionIdsFromUsersAnsweredQuestions(userId);
-                    List<Answer> matchedUserAnswers = userDao.getAllAnswers(userId);
-                    int compScore = userDao.evaluateCompatibility(questionIdsOfViewingUsersAnswers, matchedUserAnswers, userId);
-                    res.redirect("/");
-                    return null;
-                });
+            Map<String, Object> model = new HashMap<String, Object>();
+            int userId = Integer.parseInt(req.params("userId"));
+            int matchId = Integer.parseInt(req.params("matchId"));
+            User matchedUser = userDao.findById(matchId);
+            List<Integer> questionIdsOfViewingUsersAnswers = answerDao.getQuestionIdsFromUsersAnsweredQuestions(userId);
+            List<Answer> matchedUserAnswers = userDao.getAllAnswers(matchId);
+            int compScore = userDao.evaluateCompatibility(questionIdsOfViewingUsersAnswers, matchedUserAnswers, userId);
+            model.put("matchedUser",matchedUser);
+            model.put("compScore",compScore);
+            return new ModelAndView(model, "match-detail.hbs");
+        }, new HandlebarsTemplateEngine());
 
-
-
-
-//        //READ ALL QUESTIONS ANSWERED BY SPECIFIC USER
-//        get("users/:id/questions", (req, res) -> {
-//            int userId = Integer.parseInt(req.params("id"));
-//            List<Question> foundQuestions = userDao.getAllQuestionsAnsweredByUser(userId);
-//            if (userDao.countNumberOfUserIdMatches(userId) == 0) {
-//                throw new ApiException(404, "This user doesn't exist");
-//            }
-//            if (foundQuestions.size() == 0) {
-//                throw new ApiException(404, "This user hasn't answered any questions");
-//            }
-//            return gson.toJson(foundQuestions);
-//        });
-
-
-        //SHY+KIM
-
-//        get("/", (request, response) -> {
-//            Map<String, Object> model = new HashMap<>();
-//            List<User> users = userDao.getAll();
-//            model.put("users", users);
-//            return new ModelAndView(model, "index2.hbs");
-//        }, new HandlebarsTemplateEngine());
 
         //show new user registration form
         get("/users/new", (req, res) -> {
@@ -180,7 +159,8 @@ public class App {
             String zip = request.queryParams("inputZip");
             String email = request.queryParams("inputEmailAddress");
             String password = request.queryParams("inputPassword");
-            User newUser = new User(name, age, gender, genderPreference, minAge, maxAge, zip, email, password);
+            String bio = request.queryParams("inputBio");
+            User newUser = new User(name, age, gender, genderPreference, minAge, maxAge, zip, email, password, bio);
             userDao.add(newUser);
             List<User> users = userDao.getAll();
             model.put("users", users);

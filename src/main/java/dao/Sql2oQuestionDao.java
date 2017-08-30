@@ -66,25 +66,26 @@ public class Sql2oQuestionDao implements QuestionDao {
         str.append("," + userId);
     }
 
+//    @Override
+//    public List<Question> getAllUnanswered(int userId) {
+//
+//        try (Connection con = sql2o.open()) {
+//            return con.createQuery("SELECT * FROM questions WHERE NOT userswhohaveanswered LIKE '%:userid%'")
+//                    .addParameter("userid", userId)
+//                    .executeAndFetch(Question.class);
+//        }
+//    }
+
     @Override
-    public List<Question> getAllUnanswered(int userId) {
+    public List<Question> getAll() {
 
         try (Connection con = sql2o.open()) {
-            return con.createQuery("SELECT * FROM questions WHERE NOT userswhohaveanswered LIKE '%:userid%'")
-                    .addParameter("userid", userId)
+            return con.createQuery("SELECT * FROM questions")
                     .executeAndFetch(Question.class);
         }
     }
 
-//    @Override
-//    public List<QuestionOption> getAllForSpecificQuestion(int questionId) {
-//        try (Connection con = sql2o.open()) {
-//            return con.createQuery("SELECT * FROM questionoptions WHERE questionid = :questionId")
-//                    .executeAndFetch(QuestionOption.class);
-//        }
-//    }
 
-//
     @Override
     public void deleteById(int id) {
         String sql = "DELETE from questions WHERE id=:id";
@@ -96,6 +97,16 @@ public class Sql2oQuestionDao implements QuestionDao {
             System.out.println(ex);
         }
     }
+
+    @Override
+    public Question findById(int id){
+        try(Connection con = sql2o.open()) {
+            return con.createQuery("SELECT * FROM questions WHERE id = :id")
+                    .addParameter("id", id)
+                    .executeAndFetchFirst(Question.class);
+        }
+    }
+}
 
 
 //    @Override
@@ -113,14 +124,13 @@ public class Sql2oQuestionDao implements QuestionDao {
 //        }
 //    }
 
+    //    @Override
+//    public List<QuestionOption> getAllForSpecificQuestion(int questionId) {
+//        try (Connection con = sql2o.open()) {
+//            return con.createQuery("SELECT * FROM questionoptions WHERE questionid = :questionId")
+//                    .executeAndFetch(QuestionOption.class);
+//        }
+//    }
 
+//
 
-    @Override
-    public Question findById(int id){
-        try(Connection con = sql2o.open()) {
-            return con.createQuery("SELECT * FROM questions WHERE id = :id")
-                    .addParameter("id", id)
-                    .executeAndFetchFirst(Question.class);
-        }
-    }
-    }

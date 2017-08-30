@@ -2,7 +2,7 @@
     {{#if matches}}
         {{#each matches}}
         <div class = "row">
-            <h5>Name: {{name}}</h5>
+            <h5>Name: <a href = "/users/{{userId}}/matches/{{id}}">{{name}}</a></h5>
             <h5>Age: {{age}}</h5>
             <h5>Gender: {{gender}}</h5>
             <h5>Looking for: {{genderPreference}} between ages of {{matchMinAge}} - {{matchMaxAge}}</h5>

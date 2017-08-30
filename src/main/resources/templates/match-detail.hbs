@@ -1,16 +1,17 @@
 {{#partial "content"}}
-    {{#if matches}}
-        {{#each matches}}
+
             <div class = "row">
-                <h5>Name: {{name}}</h5>
-                <h5>Age: {{age}}</h5>
-                <h5>Gender: {{gender}}</h5>
-                <h5>Looking for: {{genderPreference}} between ages of {{matchMinAge}} - {{matchMaxAge}}</h5>
+                <h5>Name: {{matchedUser.name}}</h5>
+                <h5>Age: {{matchedUser.age}}</h5>
+                <h5>Gender: {{matchedUser.gender}}</h5>
+                <h5>Looking for: {{matchedUser.genderPreference}} between ages of {{matchedUser.matchMinAge}} - {{matchedUser.matchMaxAge}}</h5>
+                <h5>Bio: {{matchedUser.bio}}</h5>
+                <h5>Compatibility: {{compScore}}</h5>
             </div>
-        {{/each}}
+
     {{else}}
         <h3>No matches found</h3>
-    {{/if}}
+
 
 
 

@@ -11,8 +11,8 @@ public interface QuestionDao {
 
     void addQuestionToUser(User user, Question question);
 
-    //get all
-    List<Question> getAllUnanswered(int userId);
+    List<Question> getAll();
+//    List<Question> getAllUnanswered(int userId);
 
 //    List<QuestionOption> getAllForSpecificQuestion(int questionId);
 //    List<Question> getAllAnswered();

@@ -11,8 +11,9 @@ public class User {
     private String zip;
     private String email;
     private String password;
+    private String bio;
 
-    public User(String name, int age, String gender, String genderPreference, int matchMinAge, int matchMaxAge, String zip, String email, String password){
+    public User(String name, int age, String gender, String genderPreference, int matchMinAge, int matchMaxAge, String zip, String email, String password, String bio){
         this.name = name;
         this.age = age;
         this.gender = gender;
@@ -22,6 +23,15 @@ public class User {
         this.setZip(zip);
         this.setEmail(email);
         this.setPassword(password);
+        this.bio = bio;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 
     public int getId() {
