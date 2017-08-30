@@ -163,27 +163,32 @@ public class App {
         }, new HandlebarsTemplateEngine());
 
 
-        get("/users/update", (req, res) -> {
+        get("/users/:id/update", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            int idOfUserToEdit = Integer.parseInt(req.params("id"));
             model.put("editUser", true);
+            model.put("id", idOfUserToEdit);
             return new ModelAndView(model, "user-registration-form.hbs");
         }, new HandlebarsTemplateEngine());
 
-        post("/users/update", (request, response) -> {
+        post("/users/:id/update", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
-            int idOfUserToEdit = Integer.parseInt(request.queryParams("editUserId"));
-            String newName = request.queryParams("inputName");
+            int idOfUserToEdit = Integer.parseInt(request.params("id"));
+
+            String newName = request.queryParams("newName");
             int newAge = Integer.parseInt(request.queryParams("inputAge"));
             String newGender = request.queryParams("gender");
-            String newGgenderPreference = request.queryParams("genderPreference");
+            String newGenderPreference = request.queryParams("genderPreference");
             int newMinAge = Integer.parseInt(request.queryParams("inputMinimumAge"));
             int newMaxAge = Integer.parseInt(request.queryParams("inputMaximumAge"));
             String newZip = request.queryParams("inputZip");
             String newEmail = request.queryParams("inputEmailAddress");
             String newPassword = request.queryParams("inputPassword");
-            userDao.update(userDao.findById(idOfUserToEdit).getId(), newName, newAge, newGender, newGgenderPreference, newMinAge, newMaxAge, newZip, newEmail, newPassword);
-            List<User> users = userDao.getAll(); //refresh list of links for navbar.
-            model.put("users", users);
+            userDao.update(userDao.findById(idOfUserToEdit).getId(), newName, newAge, newGender, newGenderPreference, newMinAge, newMaxAge, newZip, newEmail, newPassword);
+            List<User> users = userDao.getAll();
+            User user1 = userDao.findById(idOfUserToEdit);
+            model.put("users", user1);
+            model.put("newName",user1.getId() );
             return new ModelAndView(model, "my-profile.hbs");
         }, new HandlebarsTemplateEngine());
     }
