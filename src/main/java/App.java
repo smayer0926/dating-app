@@ -166,7 +166,8 @@ public class App {
         get("/users/:id/update", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             int idOfUserToEdit = Integer.parseInt(req.params("id"));
-            model.put("editUser", true);
+            User editUser = userDao.findById(idOfUserToEdit);
+            model.put("editUser", editUser);
             model.put("id", idOfUserToEdit);
             return new ModelAndView(model, "user-registration-form.hbs");
         }, new HandlebarsTemplateEngine());
@@ -174,21 +175,20 @@ public class App {
         post("/users/:id/update", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             int idOfUserToEdit = Integer.parseInt(request.params("id"));
-
             String newName = request.queryParams("newName");
-            int newAge = Integer.parseInt(request.queryParams("inputAge"));
-            String newGender = request.queryParams("gender");
-            String newGenderPreference = request.queryParams("genderPreference");
-            int newMinAge = Integer.parseInt(request.queryParams("inputMinimumAge"));
-            int newMaxAge = Integer.parseInt(request.queryParams("inputMaximumAge"));
-            String newZip = request.queryParams("inputZip");
-            String newEmail = request.queryParams("inputEmailAddress");
-            String newPassword = request.queryParams("inputPassword");
-            userDao.update(userDao.findById(idOfUserToEdit).getId(), newName, newAge, newGender, newGenderPreference, newMinAge, newMaxAge, newZip, newEmail, newPassword);
+            int newAge = Integer.parseInt(request.queryParams("newAge"));
+            String newGender = request.queryParams("newGender");
+            String newGenderPreference = request.queryParams("newGenderPreference");
+            int newMinAge = Integer.parseInt(request.queryParams("newMinimumAge"));
+            int newMaxAge = Integer.parseInt(request.queryParams("newMaximumAge"));
+            String newZip = request.queryParams("newZip");
+            String newEmail = request.queryParams("newEmailAddress");
+            String newPassword = request.queryParams("newPassword");
+            userDao.update(idOfUserToEdit, newName, newAge, newGender, newGenderPreference, newMinAge, newMaxAge, newZip, newEmail, newPassword);
             List<User> users = userDao.getAll();
-            User user1 = userDao.findById(idOfUserToEdit);
-            model.put("users", user1);
-            model.put("newName",user1.getId() );
+            User aUser = userDao.findById(idOfUserToEdit);
+            model.put("users", users);
+            model.put("user", aUser);
             return new ModelAndView(model, "my-profile.hbs");
         }, new HandlebarsTemplateEngine());
     }
