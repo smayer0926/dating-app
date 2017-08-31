@@ -145,6 +145,7 @@ public class App {
         post("/users/new", (request, response) -> { //new
             Map<String, Object> model = new HashMap<>();
             String name = request.queryParams("inputName");
+            String photo = request.queryParams("photo");
             int age = Integer.parseInt(request.queryParams("inputAge"));
             String gender = request.queryParams("gender");
             String genderPreference = request.queryParams("genderPreference");
@@ -154,7 +155,7 @@ public class App {
             String email = request.queryParams("inputEmailAddress");
             String password = request.queryParams("inputPassword");
             String bio = request.queryParams("inputBio");
-            User newUser = new User(name, age, gender, genderPreference, minAge, maxAge, zip, email, password, bio);
+            User newUser = new User(name, age, gender, genderPreference, minAge, maxAge, zip, email, password, bio, photo);
             userDao.add(newUser);
             List<User> users = userDao.getAll();
             model.put("users", users);
@@ -169,19 +170,6 @@ public class App {
             model.put("users", users);
             return new ModelAndView(model, "user-login.hbs"); //new
         }, new HandlebarsTemplateEngine());
-
-
-
-        exception(ApiException.class, (exc, req, res) -> {
-            ApiException err = (ApiException) exc;
-            Map<String, Object> jsonMap = new HashMap<>();
-            jsonMap.put("status", err.getStatusCode());
-            jsonMap.put("errorMessage", err.getMessage());
-            res.type("application/json"); //after does not run in case of an exception.
-            res.status(err.getStatusCode()); //set the status
-            res.body(gson.toJson(jsonMap));  //set the output.
-        });
-
 
     }
 }

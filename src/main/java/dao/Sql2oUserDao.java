@@ -19,7 +19,7 @@ public class Sql2oUserDao implements UserDao {
 
     @Override
     public void add (User user){
-        String sql = "INSERT INTO users (name, age, gender,genderPreference, matchminage, matchmaxage, zip, bio, email, password) VALUES (:name, :age, :gender,:genderPreference, :matchminage, :matchmaxage, :zip, :bio,:email, :password)";
+        String sql = "INSERT INTO users (name, age, gender,genderPreference, matchminage, matchmaxage, zip, bio, email, password, photo) VALUES (:name, :age, :gender,:genderPreference, :matchminage, :matchmaxage, :zip, :bio,:email, :password, :photo)";
         try(Connection con = sql2o.open()) {
             int id = (int) con.createQuery(sql)
                     .addParameter("name", user.getName())
@@ -32,6 +32,7 @@ public class Sql2oUserDao implements UserDao {
                     .addParameter("bio", user.getBio())
                     .addParameter("email", user.getEmail())
                     .addParameter("password", user.getPassword())
+                    .addParameter("photo", user.getPhoto())
 
                     .addColumnMapping("NAME", "name")
                     .addColumnMapping("AGE", "age")
@@ -43,6 +44,7 @@ public class Sql2oUserDao implements UserDao {
                     .addColumnMapping("BIO", "bio")
                     .addColumnMapping("EMAIL", "email")
                     .addColumnMapping("PASSWORD", "password")
+                    .addColumnMapping("PHOTO", "photo")
                     .executeUpdate()
                     .getKey();
             user.setId(id);
