@@ -89,6 +89,7 @@ public class App {
             int userId = Integer.parseInt(req.params("id"));
             List<Question> foundQuestions = questionDao.getAll();
             model.put("foundquestions", foundQuestions);
+            model.put("userId", userId);
             return new ModelAndView(model, "questions.hbs");
         }, new HandlebarsTemplateEngine());
 
@@ -105,27 +106,33 @@ public class App {
 //            questionDao.addUsertoUsersWhoHaveAnsweredThisQuestion(userId,question);
             Answer answerObject = new Answer(userId, questionId, answer, acceptableAnswer);
             answerDao.add(answerObject);
-            answerDao.setAnswerBooleans(question, answer);
+//            answerDao.setAnswerBooleans(question, answer);
 
             System.out.println(question.getAnswerIs1());
             System.out.println(question.isAnswerIs2());
             System.out.println(question.isAnswerIs3());
             System.out.println(question.isAnswerIs4());
 
-            res.redirect("/users/" + userId + "/questions");
+//            res.redirect("/users/" + userId + "/questions");
+            res.redirect("/questions");
             return null;
         });
 
 
         //evaluate compatibility
-        get("users/:userId/matches/:matchid", (req, res) -> {
+        get("users/:userId/matches/:matchId", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
             int userId = Integer.parseInt(req.params("userId"));
             int matchId = Integer.parseInt(req.params("matchId"));
             User matchedUser = userDao.findById(matchId);
             List<Integer> questionIdsOfViewingUsersAnswers = answerDao.getQuestionIdsFromUsersAnsweredQuestions(userId);
             List<Answer> matchedUserAnswers = userDao.getAllAnswers(matchId);
+            System.out.println("user's id: " + userId);
+            System.out.println("match's id: " + matchId);
+            System.out.println("viewing user question IDs: " + questionIdsOfViewingUsersAnswers);
+            System.out.println("all answer objects of matched user: " + matchedUserAnswers);
             int compScore = userDao.evaluateCompatibility(questionIdsOfViewingUsersAnswers, matchedUserAnswers, userId);
+            System.out.println(compScore);
             model.put("matchedUser",matchedUser);
             model.put("compScore",compScore);
             return new ModelAndView(model, "match-detail.hbs");
@@ -171,7 +178,6 @@ public class App {
         }, new HandlebarsTemplateEngine());
 
 
-
         exception(ApiException.class, (exc, req, res) -> {
             ApiException err = (ApiException) exc;
             Map<String, Object> jsonMap = new HashMap<>();
@@ -181,7 +187,5 @@ public class App {
             res.status(err.getStatusCode()); //set the status
             res.body(gson.toJson(jsonMap));  //set the output.
         });
-
-
     }
 }

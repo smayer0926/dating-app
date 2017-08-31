@@ -98,11 +98,11 @@ public class Sql2oUserDao implements UserDao {
 
 
     @Override
-    public List<Answer> getAllAnswers(int userId) {
+    public List<Answer> getAllAnswers(int matchId) {
         ArrayList<Answer> answers = new ArrayList<>();
         try (Connection con = sql2o.open()) {
             return con.createQuery("SELECT * FROM answers WHERE userid = :userid")
-                    .addParameter("userid", userId)
+                    .addParameter("userid", matchId)
                     .executeAndFetch(Answer.class);
         }
     }
@@ -145,7 +145,6 @@ public class Sql2oUserDao implements UserDao {
             }
             compatibilityScore = (countOfCompatibilities * 100 / countOfQuestionsShared)  ;
         }
-
         return compatibilityScore;
     }
 }
