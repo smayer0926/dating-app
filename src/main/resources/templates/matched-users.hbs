@@ -9,6 +9,7 @@
 {{#partial "content"}}
     {{#if matches}}
         {{#each matches}}
+            <div class="well">
         <div class = "row">
             <h5>Name: <a href = "/users/{{userId}}/matches/{{id}}">{{name}}</a></h5>
             <h5>Age: {{age}}</h5>
@@ -18,6 +19,7 @@
     {{/each}}
     {{else}}
         <h3>No matches found</h3>
+        </div>
     {{/if}}
 
 

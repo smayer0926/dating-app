@@ -2,8 +2,12 @@
     <li role="presentation" class="active"><a href="/">Home</a></li>
 </ul>
 {{#partial "content"}}
-    <h1>User Login</h1>
 
+
+<div class="row">
+<div class="well">
+        <div class="yellow">
+            <h1>User Login</h1>
     <form action="/users/login" method="post">
 
 
@@ -13,10 +17,14 @@
         <label for="inputUserPassword">Password</label>
         <input id="inputUserPassword" name="inputUserPassword" type="password" class="form-control">
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn">Submit</button>
 
 
     </form>
+        </div>
+        </div>
+    </div>
+
 {{/partial}}
 
 {{> layout.hbs}}

@@ -158,6 +158,13 @@ public class App {
         }, new HandlebarsTemplateEngine());
 
 
+        //LOAD FORM TO ADD NEW QUESTION
+        get("/users/login", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            return new ModelAndView(model, "user-login.hbs");
+        }, new HandlebarsTemplateEngine());
+
+
         //process user login form
         post("/users/login", (request, response) -> { //new
             Map<String, Object> model = new HashMap<>();
