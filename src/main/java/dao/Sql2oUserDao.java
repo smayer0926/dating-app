@@ -145,7 +145,11 @@ public class Sql2oUserDao implements UserDao {
                     countOfCompatibilities ++;
                 }
             }
-            compatibilityScore = (countOfCompatibilities * 100 / countOfQuestionsShared)  ;
+            if(countOfQuestionsShared == 0){
+                compatibilityScore = 0;
+            } else {
+                compatibilityScore = (countOfCompatibilities * 100 / countOfQuestionsShared);
+            }
         }
         return compatibilityScore;
     }

@@ -20,9 +20,12 @@
 
    {{#if editUser}}
 
-
        <form action="/users/{{id}}/update" method="post">
-
+           <div class="panel">
+               <div class="panel-heading">
+                   <h2 class="panel-title">Enter Your Information</h2>
+               </div>
+               <div class="panel-body">
            <div class ="row">
                <div class = "col-md-7">
                    <div class = "form-group">
@@ -30,7 +33,6 @@
                        <input id="newName" name="newName" class = "form-control" type="text" value ="{{editUser.name}}">
                    </div>
                </div>
-           </div>
 
            <div class ="row">
                <div class = "col-md-7">
@@ -41,14 +43,14 @@
 
            <div class="row">
                <div class="col-md-3">
-                   <p>I'm a
-                       <label><input type="radio" name="newGender" value="male" >Male</label>
+                   <p>I'm a<br>
+                       <label><input type="radio" name="newGender" value="male" >Male&nbsp</label>
                        <label><input type="radio" name="newGender" value="female" >Female</label>
                    </p>
                </div>
                <div class="col-md-3">
-                   <p>Interested in
-                       <label><input type="radio" name="newGenderPreference" value="male">Male</label>
+                   <p>Interested in<br>
+                       <label><input type="radio" name="newGenderPreference" value="male">Male&nbsp</label>
                        <label><input type="radio" name="newGenderPreference" value="female">Female</label>
                    </p>
                </div>
@@ -109,17 +111,23 @@
                    </p>
                </div>
            </div>
-           <button type="submit" class="btn">Update</button>
+           <button type="submit" class="btn registerButton">Update</button>
+        </div>
        </form>
+
 
    {{else}}
 
-<h2>Add a User</h2>
 
 
 <div class="container">
 <form action="/users/new" method="post">
 
+<div class="panel">
+    <div class="panel-heading newUser">
+        <h2 class="panel-title">Enter Your Information</h2>
+    </div>
+<div class="panel-body">
     <div class ="row">
         <div class = "col-md-7">
             <div class = "form-group">
@@ -138,14 +146,14 @@
 
     <div class="row">
         <div class="col-md-3">
-            <p>I'm a
-                <label><input type="radio" name="gender" value="male" >Male</label>
+            <p>I'm a<br>
+                <label><input type="radio" name="gender" value="male" >Male&nbsp</label>
                 <label><input type="radio" name="gender" value="female" >Female</label>
             </p>
         </div>
         <div class="col-md-3">
-            <p>Interested in
-                <label><input type="radio" name="genderPreference" value="male">Male</label>
+            <p>Interested in<br>
+                <label><input type="radio" name="genderPreference" value="male">Male&nbsp</label>
                 <label><input type="radio" name="genderPreference" value="female">Female</label>
             </p>
         </div>
@@ -204,9 +212,10 @@
             </p>
         </div>
     </div>
-    <button type="submit" class="btn">Submit</button>
+    <button type="submit" class="btn registerButton">Submit</button>
 
    {{/if}}
+   </div>
 </form>
 </div>
 {{/partial}}
