@@ -37,14 +37,14 @@ public class Sql2oQuestionDaoTest {
         assertTrue(test1 instanceof Question);
     }
 
-    @Test
-    public void getAll_RetrieveAllQuestions_2() throws Exception {
-        Question testQuestion  = setupTestQuestion();
-        questionDao.add(testQuestion);
-        Question testQuestion2  = setupTestQuestion2();
-        questionDao.add(testQuestion2);
-        assertEquals(2,questionDao.getAllUnanswered(1).size());
-    }
+//    @Test
+//    public void getAll_RetrieveAllQuestions_2() throws Exception {
+//        Question testQuestion  = setupTestQuestion();
+//        questionDao.add(testQuestion);
+//        Question testQuestion2  = setupTestQuestion2();
+//        questionDao.add(testQuestion2);
+//        assertEquals(2,questionDao.getAllUnanswered(1).size());
+//    }
 
     @Test
     public void findById_FindASpecificQuestion_SnickersOrTwix() throws Exception {
@@ -57,10 +57,10 @@ public class Sql2oQuestionDaoTest {
 
     //helper method
     public static User setupTestUser (){
-        return new User("Trevor Gill", 30, "male", "female" , 24, 32, "97214", "ph@gmail.com", "smoothtalker");
+        return new User("Trevor Gill", 30, "male", "female" , 24, 32, "97214", "ph@gmail.com", "smoothtalker","");
     }
     public static User setupTestUser2 (){
-        return new User("Stuart Gill", 34, "male","female", 26, 35, "97456", "og@gmail.com", "lover");
+        return new User("Stuart Gill", 34, "male","female", 26, 35, "97456", "og@gmail.com", "lover","");
     }
     public static Question setupTestQuestion(){
         return new Question("Flight or invisibility?","none","flight", "invisibility", "both", false, false, false, false, "");
