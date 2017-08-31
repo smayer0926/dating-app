@@ -236,7 +236,8 @@ public class App {
             String newZip = request.queryParams("newZip");
             String newEmail = request.queryParams("newEmailAddress");
             String newPassword = request.queryParams("newPassword");
-            userDao.update(idOfUserToEdit, newName, newAge, newGender, newGenderPreference, newMinAge, newMaxAge, newZip, newEmail, newPassword);
+            String newBio = request.queryParams("inputBio");
+            userDao.update(idOfUserToEdit, newName, newAge, newGender, newGenderPreference, newMinAge, newMaxAge, newZip, newEmail, newPassword, newBio);
             List<User> users = userDao.getAll();
             User aUser = userDao.findById(idOfUserToEdit);
             model.put("users", users);

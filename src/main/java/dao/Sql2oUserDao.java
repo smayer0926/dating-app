@@ -150,8 +150,8 @@ public class Sql2oUserDao implements UserDao {
         return compatibilityScore;
     }
 
-    public void update(int id, String newName, int newAge, String newGender, String newGenderPreference, int newMinAge, int newMaxAge, String newZip, String newEmail, String newPassword){
-        String sql = "UPDATE users SET (name, age, gender, genderPreference, matchminage, matchmaxage, zip, email, password) = (:name, :age, :gender, :genderPreference, :matchminage, :matchmaxage, :zip, :email, :password ) WHERE id = :id";
+    public void update(int id, String newName, int newAge, String newGender, String newGenderPreference, int newMinAge, int newMaxAge, String newZip, String newEmail, String newPassword, String newBio){
+        String sql = "UPDATE users SET (name, age, gender, genderPreference, matchminage, matchmaxage, zip, email, password, bio) = (:name, :age, :gender, :genderPreference, :matchminage, :matchmaxage, :zip, :email, :password, :bio) WHERE id = :id";
         try(Connection con = sql2o.open()) {
             con.createQuery(sql)
                     .addParameter("name", newName)
@@ -164,6 +164,7 @@ public class Sql2oUserDao implements UserDao {
                     .addParameter("email", newEmail)
                     .addParameter("password", newPassword)
                     .addParameter("id", id)
+                    .addParameter("bio", newBio)
                     .executeUpdate();
         } catch (Sql2oException ex){
             System.out.println(ex);
