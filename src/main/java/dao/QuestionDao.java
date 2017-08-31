@@ -1,5 +1,6 @@
 package dao;
 
+import models.Answer;
 import models.Question;
 import models.User;
 
@@ -12,11 +13,9 @@ public interface QuestionDao {
     void addQuestionToUser(User user, Question question);
 
     List<Question> getAll();
-//    List<Question> getAllUnanswered(int userId);
 
 //    List<QuestionOption> getAllForSpecificQuestion(int questionId);
-//    List<Question> getAllAnswered();
-    List<Question> getAllUnanswered(int userId);
+
 //    List<User> getAllUsersThatAnsweredQuestion(int questionId);
 
     //find
@@ -27,6 +26,8 @@ public interface QuestionDao {
 
     //delete by id
     void deleteById(int id);
+
+    List<Question> getAllUnanswered(int userId, List<Answer>allAnswers);
 
     String addUserToUsersWhoHaveAnsweredThisQuestion (int userId, Question question);
 

@@ -87,7 +87,8 @@ public class App {
         get("/users/:id/questions", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
             int userId = Integer.parseInt(req.params("id"));
-            List<Question> foundQuestions = questionDao.getAllUnanswered(userId);
+            List<Answer> allAnswers = userDao.getAllAnswers(userId);
+            List<Question> foundQuestions = questionDao.getAllUnanswered(userId,allAnswers);
             model.put("foundquestions", foundQuestions);
             model.put("userId", userId);
             return new ModelAndView(model, "questions.hbs");

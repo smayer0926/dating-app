@@ -1,0 +1,39 @@
+{{#partial "content"}}
+
+        <div class="well">
+            <h1>Add a New Compatibility Question</h1>
+
+            <form action="/questions/new" method="post">
+                <div class="form-group">
+                    <label for="questionPrompt">Question</label>
+                    <input id="questionPrompt" name="questionPrompt" type="text" class="form-control" required>
+                </div>
+
+
+                <div class ="form-group">
+                    <label for="choice1">Choice 1</label>
+                    <input id="choice1" name="choice1" type="text" class="form-control" required>
+                </div>
+                <div class ="form-group">
+                    <label for="choice2">Choice 2</label>
+                    <input id="choice2" name="choice2" type="text" class="form-control" required>
+                </div>
+                <div class ="form-group">
+                    <label for="choice3">Choice 3</label>
+                    <input id="choice3" name="choice3" type="text" class="form-control" required>
+                </div>
+                <div class ="form-group">
+                    <label for="choice4">Choice 4</label>
+                    <input id="choice4" name="choice4" type="text" class="form-control" required>
+                </div>
+
+
+
+                <button type="submit" class="btn">Submit new question</button>
+            </form>
+        </div>
+
+
+{{/partial}}
+
+{{> layout.hbs}}

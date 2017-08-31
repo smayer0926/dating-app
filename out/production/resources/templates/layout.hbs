@@ -1,0 +1,42 @@
+{{#block "header"}}
+    <!doctype html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Some Dating App</title>
+        <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
+        <link rel="stylesheet" href="/app.css">
+    </head>
+    <body>
+    <ul class="nav nav-tabs">
+        <li role="presentation"><a href="/">Home</a></li>
+        <!--<li role="presentation"><a href="/users/{{id}}/profile">My Profile</a></li>-->
+        <!--<li role="presentation"><a href="/users/{{id}}/questions">View Questions</a></li>-->
+        <!--<li role="presentation"><a href="/users/{{id}}/matches">Browse Matches</a></li>-->
+    </ul>
+    <div class="container">
+        <div class="page-header">
+            <div class="jumbotron">
+                <h1>The Dating App</h1>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            {{#block "content"}}
+
+            {{/block}}
+
+        </div>
+    </div>
+
+{{/block}}
+
+{{#block "footer"}}
+    </body>
+    </html>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+{{/block}}

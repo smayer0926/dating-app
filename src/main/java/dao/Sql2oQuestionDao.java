@@ -1,5 +1,6 @@
 package dao;
 
+import models.Answer;
 import models.Question;
 import models.User;
 import org.sql2o.Connection;
@@ -60,21 +61,27 @@ public class Sql2oQuestionDao implements QuestionDao {
 
     public void addUserToUsersWhoHaveAnsweredThisQuestion2 (int userId, Question question, int questionId, String usersWhoHaveAnswered){
         try(Connection con = sql2o.open()){
-            con.createQuery("UPDATE questions SET (userswhohaveanswered) = (:userswhohaveanswered) WHERE questionid = :questionid")
-                    .addParameter("questionid", questionId)
+            con.createQuery("UPDATE questions SET (userswhohaveanswered) = (:userswhohaveanswered) WHERE id = :id")
+                    .addParameter("id", questionId)
                     .addParameter("userswhohaveanswered", usersWhoHaveAnswered)
-                    .executeAndFetch(Question.class);
+                    .executeUpdate();
         }
     }
 
     @Override
-    public List<Question> getAllUnanswered(int userId, List<Integer>gitquestionAnsweredIds) {
-        for(int questionId : questionsAnswered)
-        try (Connection con = sql2o.open()) {
-            return con.createQuery("SELECT * FROM questions WHERE NOT userswhohaveanswered LIKE '%:userid%'")
-                    .addParameter("userid", userId)
-                    .executeAndFetch(Question.class);
+    public List<Question> getAllUnanswered(int userId, List<Answer>allAnswers) {
+
+        List<Question> allQuestions = getAll();
+        for(Answer answer : allAnswers){
+            int questionId = answer.getQuestionId();
+            allQuestions.remove(findById(questionId));
         }
+        return allQuestions;
+//        try (Connection con = sql2o.open()) {
+//            return con.createQuery("SELECT * FROM questions WHERE NOT userswhohaveanswered LIKE '%:userid%'")
+//                    .addParameter("userid", userId)
+//                    .executeAndFetch(Question.class);
+//        }
     }
 
     @Override

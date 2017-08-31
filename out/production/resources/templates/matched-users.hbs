@@ -1,0 +1,19 @@
+{{#partial "content"}}
+    {{#if matches}}
+        {{#each matches}}
+        <div class = "row">
+            <h5>Name: <a href = "/users/{{userId}}/matches/{{id}}">{{name}}</a></h5>
+            <h5>Age: {{age}}</h5>
+            <h5>Gender: {{gender}}</h5>
+            <h5>Looking for: {{genderPreference}} between ages of {{matchMinAge}} - {{matchMaxAge}}</h5>
+        </div>
+    {{/each}}
+    {{else}}
+        <h3>No matches found</h3>
+    {{/if}}
+
+
+
+{{/partial}}
+
+{{> layout.hbs}}
