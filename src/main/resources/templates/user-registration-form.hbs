@@ -17,7 +17,7 @@
            <div class ="row">
                <div class = "col-md-6">
                    <label for="newAge">Age</label>
-                   <input id="newAge" name="newAge" class = "form-control" type="text" value ="{{editUser.age}}">
+                   <input id="newAge" name="newAge" class = "form-control" type="number" value ="{{editUser.age}}">
                </div>
            </div><br>
 
@@ -39,28 +39,28 @@
            <div class="row">
                <div class="col-md-6">
                    <label for="newMinimumAge">Minimum Age Preference</label>
-                   <input id="newMinimumAge" name="newMinimumAge" type="text" class = "form-control" value ="{{editUser.matchMinAge}}">
+                   <input id="newMinimumAge" name="newMinimumAge" type="number" min="0" class = "form-control" value ="{{editUser.matchMinAge}}">
                </div>
            </div>
 
            <div class="row">
                <div class="col-md-6">
                    <label for="newMaximumAge">Maximum Age Preference</label>
-                   <input id="newMaximumAge" name="newMaximumAge" type="text" class = "form-control" value ="{{editUser.matchMaxAge}}">
+                   <input id="newMaximumAge" name="newMaximumAge" type="number" min="0" class = "form-control" value ="{{editUser.matchMaxAge}}">
                </div>
            </div>
 
            <div class="row">
                <div class="col-md-6">
                    <label for="newZip">Zip Code</label>
-                   <input id="newZip" name="newZip" type="text" class = "form-control" value ="{{editUser.zip}}">
+                   <input id="newZip" name="newZip" type="number" class = "form-control" value ="{{editUser.zip}}">
                </div>
            </div>
 
            <div class="row">
                <div class="col-md-6">
                    <label for="newEmailAddress">Your Email Address</label>
-                   <input id="newEmailAddress" name="newEmailAddress" type="text" class = "form-control" value ="{{editUser.email}}">
+                   <input id="newEmailAddress" name="newEmailAddress" type="email" class = "form-control" value ="{{editUser.email}}">
                </div>
            </div>
 
@@ -99,7 +99,7 @@
         <div class = "col-md-6">
             <div class = "form-group">
             <label for="inputName">Name</label>
-            <input id="inputName" name="inputName" class = "form-control" type="text">
+            <input id="inputName" name="inputName" class = "form-control" type="text" required value="">
             </div>
         </div>
     </div>
@@ -107,7 +107,7 @@
     <div class ="row">
         <div class = "col-md-6">
             <label for="inputAge">Age</label>
-            <input id="inputAge" name="inputAge" class = "form-control" type="text">
+            <input id="inputAge" name="inputAge" class = "form-control" type="number" min="0">
         </div>
     </div><br>
 
@@ -129,21 +129,21 @@
     <div class="row">
         <div class="col-md-6">
             <label for="inputMinimumAge">Minimum Age Preference</label>
-            <input id="inputMinimumAge" name="inputMinimumAge" type="text" class = "form-control">
+            <input id="inputMinimumAge" name="inputMinimumAge" type="number" class = "form-control" min="0">
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-6">
             <label for="inputMaximumAge">Maximum Age Preference</label>
-            <input id="inputMaximumAge" name="inputMaximumAge" type="text" class = "form-control">
+            <input id="inputMaximumAge" name="inputMaximumAge" type="number" class = "form-control" min="0">
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-6">
             <label for="inputZip">Zip Code</label>
-            <input id="inputZip" name="inputZip" type="text" class = "form-control">
+            <input id="inputZip" name="inputZip" type="number" class = "form-control" min="0">
         </div>
     </div>
     <div class="row">
@@ -162,7 +162,7 @@
     <div class="row">
         <div class="col-md-6">
             <label for="inputPassword">Password</label>
-            <input id="inputPassword" name="inputPassword" type="password" class = "form-control">
+            <input id="inputPassword" name="inputPassword" type="password" class = "form-control" required value="">
         </div>
     </div><br>
     <div class="row">
