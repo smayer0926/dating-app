@@ -1,6 +1,9 @@
 {{#partial "content"}}
     <h1>User Login</h1>
 
+<div class="row">
+
+        <div class="yellow">
     <form action="/users/login" method="post">
 
 
@@ -10,10 +13,13 @@
         <label for="inputUserPassword">Password</label>
         <input id="inputUserPassword" name="inputUserPassword" type="password" class="form-control">
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn">Submit</button>
 
 
     </form>
+        </div>
+    </div>
+
 {{/partial}}
 
 {{> layout.hbs}}

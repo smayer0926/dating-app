@@ -2,7 +2,60 @@ h1 {
     text-align: center;
 }
 
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  background: url("/images/couple1.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  color: grey;
+}
+.nice {
+    display: block;
+    margin-right: 20px;
+    padding-right: 20px;
+}
+
 .btn {
-    margin: 5px;
-    background: #c4e5ed;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background: #93a4bf;
+    display: block;
+    color: white;
+}
+a{
+    color: white;
+}
+
+ .jumbotron, .col-md-12, well {
+     background-color: rgba(255,255,255, 0.6);
+     color: black;
+ }
+
+ #pretty {
+    text-align: center;
+    color: green;
+ }
+
+.nav {
+  background: #c9d7ef;
+  font-size: 20px;
+}
+
+#size {
+}
+
+.yellow {
+    display: block;
+    margin: auto;
+    text-align: center;
+    width: 500px;
+}
+.form-control {
+    margin-bottom: 20px;
 }
