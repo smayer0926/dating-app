@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS users (
  bio VARCHAR,
  email VARCHAR,
  password VARCHAR,
- photo BLOB
+ photo VARCHAR
 );
 
 CREATE TABLE IF NOT EXISTS authentications (

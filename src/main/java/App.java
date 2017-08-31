@@ -144,21 +144,23 @@ public class App {
         //process new user form
         post("/users/new", (request, response) -> { //new
             Map<String, Object> model = new HashMap<>();
-            String name = request.queryParams("inputName");
+//            String name = request.queryParams("inputName");
             String photo = request.queryParams("photo");
-            int age = Integer.parseInt(request.queryParams("inputAge"));
-            String gender = request.queryParams("gender");
-            String genderPreference = request.queryParams("genderPreference");
-            int minAge = Integer.parseInt(request.queryParams("inputMinimumAge"));
-            int maxAge = Integer.parseInt(request.queryParams("inputMaximumAge"));
-            String zip = request.queryParams("inputZip");
-            String email = request.queryParams("inputEmailAddress");
-            String password = request.queryParams("inputPassword");
-            String bio = request.queryParams("inputBio");
-            User newUser = new User(name, age, gender, genderPreference, minAge, maxAge, zip, email, password, bio, photo);
-            userDao.add(newUser);
-            List<User> users = userDao.getAll();
-            model.put("users", users);
+            System.out.println(photo);
+//            int age = Integer.parseInt(request.queryParams("inputAge"));
+//            String gender = request.queryParams("gender");
+//            String genderPreference = request.queryParams("genderPreference");
+//            int minAge = Integer.parseInt(request.queryParams("inputMinimumAge"));
+//            int maxAge = Integer.parseInt(request.queryParams("inputMaximumAge"));
+//            String zip = request.queryParams("inputZip");
+//            String email = request.queryParams("inputEmailAddress");
+//            String password = request.queryParams("inputPassword");
+//            String bio = request.queryParams("inputBio");
+//            User newUser = new User(name, age, gender, genderPreference, minAge, maxAge, zip, email, password, bio, photo);
+//            userDao.add(newUser);
+//            List<User> users = userDao.getAll();
+//            model.put("users", users);
+            model.put("photoSource", photo);
             return new ModelAndView(model, "success.hbs");
         }, new HandlebarsTemplateEngine());
 
