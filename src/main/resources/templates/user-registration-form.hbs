@@ -1,4 +1,95 @@
 {{#partial "content"}}
+
+   {{#if editUser}}
+
+       <h1>Edit this user:</h1>
+
+       <form action="/users/{{id}}/update" method="post">
+           <div class ="row">
+               <div class = "col-md-6">
+                   <div class = "form-group">
+                       <label for="newName">What is your Name?</label>
+                       <input id="newName" name="newName" class = "form-control" type="text" value ="{{editUser.name}}">
+                   </div>
+               </div>
+           </div>
+
+           <div class ="row">
+               <div class = "col-md-6">
+                   <label for="newAge">Age</label>
+                   <input id="newAge" name="newAge" class = "form-control" type="text" value ="{{editUser.age}}">
+               </div>
+           </div><br>
+
+           <div class="row">
+               <div class="col-md-3">
+                   <p>I'm a
+                       <label><input type="radio" name="newGender" value="male" >Male</label>
+                       <label><input type="radio" name="newGender" value="female" >Female</label>
+                   </p>
+               </div>
+               <div class="col-md-3">
+                   <p>Interested in
+                       <label><input type="radio" name="newGenderPreference" value="male">Male</label>
+                       <label><input type="radio" name="newGenderPreference" value="female">Female</label>
+                   </p>
+               </div>
+           </div>
+
+           <div class="row">
+               <div class="col-md-6">
+                   <label for="newMinimumAge">Minimum Age Preference</label>
+                   <input id="newMinimumAge" name="newMinimumAge" type="text" class = "form-control" value ="{{editUser.matchMinAge}}">
+               </div>
+           </div>
+
+           <div class="row">
+               <div class="col-md-6">
+                   <label for="newMaximumAge">Maximum Age Preference</label>
+                   <input id="newMaximumAge" name="newMaximumAge" type="text" class = "form-control" value ="{{editUser.matchMaxAge}}">
+               </div>
+           </div>
+
+           <div class="row">
+               <div class="col-md-6">
+                   <label for="newZip">Zip Code</label>
+                   <input id="newZip" name="newZip" type="text" class = "form-control" value ="{{editUser.zip}}">
+               </div>
+           </div>
+
+           <div class="row">
+               <div class="col-md-6">
+                   <label for="newEmailAddress">Your Email Address</label>
+                   <input id="newEmailAddress" name="newEmailAddress" type="text" class = "form-control" value ="{{editUser.email}}">
+               </div>
+           </div>
+
+           <div class="row">
+               <div class="col-md-6">
+                   <label for="newPassword">Password</label>
+                   <input id="newPassword" name="newPassword" type="text" class = "form-control" value ="{{editUser.password}}">
+               </div>
+           </div><br>
+
+           <div class="row">
+               <div class="col-md-6">
+                   <p>
+                       <label>Select city</label>
+                       <select id="city" name="city">
+                           <option value="">-- Choose City --</option>
+                           <option value="1">Portland</option>
+                           <option value="2">Salem</option>
+                           <option value="3">Gresham</option>
+                           <option value="4">Aloha</option>
+                       </select>
+                   </p>
+               </div>
+           </div>
+           <button type="submit" class="btn btn-primary">Update</button>
+       </form>
+
+   {{else}}
+
 <h2>Add a User</h2>
 
 <div class="container">
@@ -80,7 +171,7 @@
             <p>
                 <label>Select city</label>
                 <select id="city" name="city">
-                    <option value="">-- Choose Test --</option>
+                    <option value="">-- Choose City --</option>
                     <option value="1">Portland</option>
                     <option value="2">Salem</option>
                     <option value="3">Gresham</option>
@@ -91,7 +182,7 @@
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 
-
+   {{/if}}
 </form>
 </div>
 {{/partial}}

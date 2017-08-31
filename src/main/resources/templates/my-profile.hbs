@@ -1,0 +1,23 @@
+{{#partial "content"}}
+
+    <h1>Users</h1>
+
+
+            <div class="emphasized well">
+                <p>User Information</p>
+                <p>User name: {{user.name}}</p>
+                <p>age: {{user.age}}</p>
+                <p>gender: {{user.gender}}</p>
+                <p>gender preference: {{user.genderPreference}}</p>
+                <p>preferred minimum age: {{user.matchMinAge}}</p>
+                <p>preferred maximum age: {{user.matchMaxAge}}</p>
+                <p>area: {{user.zip}}</p>
+                <p>email: {{user.email}}</p>
+
+            </div>
+
+<p><a href="/users/{{id}}/update">Update information</a></p>
+
+{{/partial}}
+
+{{> layout.hbs}}

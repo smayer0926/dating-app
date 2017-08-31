@@ -1,0 +1,17 @@
+{{#partial "content"}}
+
+
+    {{#if validUser}}
+            <div class="emphasized well">
+
+                <p>Login Successful.</p>
+
+                <a href="/users/{{id}}/profile">Go To My Profile</a>
+            </div>
+    {{else}}
+        <p>Login Unsuccessful. Please try again.</p>
+    {{/if}}
+
+{{/partial}}
+
+{{> layout.hbs}}

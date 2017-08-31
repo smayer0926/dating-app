@@ -74,7 +74,7 @@ public class App {
             String choice2 = req.queryParams("choice2");
             String choice3 = req.queryParams("choice3");
             String choice4 = req.queryParams("choice4");
-            Question question = new Question(prompt, choice1, choice2, choice3, choice4, false, false, false, false,"");
+            Question question = new Question(prompt, choice1, choice2, choice3, choice4, false, false, false, false, "");
             int questionId = question.getId();
             question.setId(questionId);
             questionDao.add(question);
@@ -88,7 +88,7 @@ public class App {
             Map<String, Object> model = new HashMap<String, Object>();
             int userId = Integer.parseInt(req.params("id"));
             List<Answer> allAnswers = userDao.getAllAnswers(userId);
-            List<Question> foundQuestions = questionDao.getAllUnanswered(userId,allAnswers);
+            List<Question> foundQuestions = questionDao.getAllUnanswered(userId, allAnswers);
             model.put("foundquestions", foundQuestions);
             model.put("userId", userId);
             return new ModelAndView(model, "questions.hbs");
@@ -108,8 +108,8 @@ public class App {
             Answer answerObject = new Answer(userId, questionId, answer, acceptableAnswer);
             answerDao.add(answerObject);
 
-            String usersWhoHaveAnswered = questionDao.addUserToUsersWhoHaveAnsweredThisQuestion(userId,question);
-            questionDao.addUserToUsersWhoHaveAnsweredThisQuestion2(userId,question,questionId,usersWhoHaveAnswered);
+            String usersWhoHaveAnswered = questionDao.addUserToUsersWhoHaveAnsweredThisQuestion(userId, question);
+            questionDao.addUserToUsersWhoHaveAnsweredThisQuestion2(userId, question, questionId, usersWhoHaveAnswered);
 
 
 //            answerDao.setAnswerBooleans(question, answer);
@@ -138,9 +138,39 @@ public class App {
             System.out.println("all answer objects of matched user: " + matchedUserAnswers);
             int compScore = userDao.evaluateCompatibility(questionIdsOfViewingUsersAnswers, matchedUserAnswers, userId);
             System.out.println(compScore);
-            model.put("matchedUser",matchedUser);
-            model.put("compScore",compScore);
+            model.put("matchedUser", matchedUser);
+            model.put("compScore", compScore);
             return new ModelAndView(model, "match-detail.hbs");
+        }, new HandlebarsTemplateEngine());
+    //Getter for users/logingit a
+
+
+        //process user login form
+        post("/users/login", (request, response) -> { //new
+            Map<String, Object> model = new HashMap<>();
+            String userName = request.queryParams("inputUserLogin");
+            String password = request.queryParams("inputUserPassword");
+            User user = userDao.getUser(userName);
+            boolean isAuthenticated = false;
+            if (user.getPassword().equals(password)) {
+                isAuthenticated = true;
+                int myId = user.getId();
+                model.put("validUser", "validUser");
+                model.put("id", myId);
+            }
+            if (!isAuthenticated) {
+                model.put("invalidUser", "invalidUser");
+            }
+            return new ModelAndView(model, "user-login-success.hbs");
+        }, new HandlebarsTemplateEngine());
+
+        get("/users/:id/profile", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            int myId = Integer.parseInt(request.params("id"));
+            User foundUser = userDao.findById(myId);
+            model.put("user", foundUser);
+            model.put("id", myId);
+            return new ModelAndView(model, "my-profile.hbs");
         }, new HandlebarsTemplateEngine());
 
 
@@ -168,29 +198,40 @@ public class App {
             String bio = request.queryParams("inputBio");
             User newUser = new User(name, age, gender, genderPreference, minAge, maxAge, zip, email, password, bio);
             userDao.add(newUser);
-            List<User> users = userDao.getAll();
-            model.put("users", users);
-            return new ModelAndView(model, "success.hbs");
+            model.put("user", newUser);
+            return new ModelAndView(model, "my-profile.hbs");
         }, new HandlebarsTemplateEngine());
 
 
-        //show new user registration form
-        get("/users/login", (req, res) -> {
+        get("/users/:id/update", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            List<User> users = userDao.getAll();
-            model.put("users", users);
-            return new ModelAndView(model, "user-login.hbs"); //new
+            int idOfUserToEdit = Integer.parseInt(req.params("id"));
+            User editUser = userDao.findById(idOfUserToEdit);
+            model.put("editUser", editUser);
+            model.put("id", idOfUserToEdit);
+            return new ModelAndView(model, "user-registration-form.hbs");
         }, new HandlebarsTemplateEngine());
 
-
-        exception(ApiException.class, (exc, req, res) -> {
-            ApiException err = (ApiException) exc;
-            Map<String, Object> jsonMap = new HashMap<>();
-            jsonMap.put("status", err.getStatusCode());
-            jsonMap.put("errorMessage", err.getMessage());
-            res.type("application/json"); //after does not run in case of an exception.
-            res.status(err.getStatusCode()); //set the status
-            res.body(gson.toJson(jsonMap));  //set the output.
-        });
+        post("/users/:id/update", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            int idOfUserToEdit = Integer.parseInt(request.params("id"));
+            String newName = request.queryParams("newName");
+            int newAge = Integer.parseInt(request.queryParams("newAge"));
+            String newGender = request.queryParams("newGender");
+            String newGenderPreference = request.queryParams("newGenderPreference");
+            int newMinAge = Integer.parseInt(request.queryParams("newMinimumAge"));
+            int newMaxAge = Integer.parseInt(request.queryParams("newMaximumAge"));
+            String newZip = request.queryParams("newZip");
+            String newEmail = request.queryParams("newEmailAddress");
+            String newPassword = request.queryParams("newPassword");
+            userDao.update(idOfUserToEdit, newName, newAge, newGender, newGenderPreference, newMinAge, newMaxAge, newZip, newEmail, newPassword);
+            List<User> users = userDao.getAll();
+            User aUser = userDao.findById(idOfUserToEdit);
+            model.put("users", users);
+            model.put("user", aUser);
+            return new ModelAndView(model, "my-profile.hbs");
+        }, new HandlebarsTemplateEngine());
     }
 }
+
+

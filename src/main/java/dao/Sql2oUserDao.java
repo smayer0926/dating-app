@@ -147,4 +147,36 @@ public class Sql2oUserDao implements UserDao {
         }
         return compatibilityScore;
     }
+
+    public void update(int id, String newName, int newAge, String newGender, String newGenderPreference, int newMinAge, int newMaxAge, String newZip, String newEmail, String newPassword){
+        String sql = "UPDATE users SET (name, age, gender, genderPreference, matchminage, matchmaxage, zip, email, password) = (:name, :age, :gender, :genderPreference, :matchminage, :matchmaxage, :zip, :email, :password ) WHERE id = :id";
+        try(Connection con = sql2o.open()) {
+            con.createQuery(sql)
+                    .addParameter("name", newName)
+                    .addParameter("age", newAge)
+                    .addParameter("gender", newGender)
+                    .addParameter("genderPreference", newGenderPreference)
+                    .addParameter("matchminage", newMinAge)
+                    .addParameter("matchmaxage", newMaxAge)
+                    .addParameter("zip", newZip)
+                    .addParameter("email", newEmail)
+                    .addParameter("password", newPassword)
+                    .addParameter("id", id)
+                    .executeUpdate();
+        } catch (Sql2oException ex){
+            System.out.println(ex);
+        }
+    }
+
+    @Override
+    public User getUser(String email){
+        List<User> users = getAll();
+        String sql = "SELECT * FROM users where email = :email";
+        try(Connection con = sql2o.open()) {
+            return con.createQuery(sql)
+                    .addParameter("email", email)
+                    .executeAndFetchFirst(User.class);
+        }
+    }
+
 }
