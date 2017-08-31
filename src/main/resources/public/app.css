@@ -16,5 +16,17 @@ h1 {
 }
 
 .col-md-6 {
+    text-align : justify;
+}
+
+.questionButton {
+    display: block;
+    float : right;
+    margin-right : 16px;
+    margin-top : -10px;
+    margin-bottom : -6px;
+}
+
+h4 {
     text-align : center;
 }

@@ -1,20 +1,42 @@
 <ul class="nav nav-tabs">
-    <li role="presentation"><a href="/users/{{id}}/profile">My Profile</a></li>
-    <li role="presentation"><a href="/users/{{id}}/questions">View Questions</a></li>
-    <li role="presentation"><a href="/users/{{id}}/matches">Browse Matches</a></li>
-    <p class="loginName">Logged in as: {{name}}</p>
+    <li role="presentation"><a href="/users/{{user.id}}/profile">My Profile</a></li>
+    <li role="presentation"><a href="/users/{{user.id}}/questions">View Questions</a></li>
+    <li role="presentation"><a href="/users/{{user.id}}/matches">Browse Matches</a></li>
+    <p class="loginName">Logged in as: {{user.name}}</p>
     <li role="presentation" class="pull-right"><a href="/">Logout</a></li>
 </ul>
 {{#partial "content"}}
 
-            <div class = "row">
-                <h5>Name: {{matchedUser.name}}</h5>
-                <h5>Age: {{matchedUser.age}}</h5>
-                <h5>Gender: {{matchedUser.gender}}</h5>
-                <h5>Looking for: {{matchedUser.genderPreference}} between ages of {{matchedUser.matchMinAge}} - {{matchedUser.matchMaxAge}}</h5>
-                <h5>Bio: {{matchedUser.bio}}</h5>
-                <h5>Compatibility: {{compScore}}</h5>
+
+            <div class="well">
+                <div class = "row">
+                    <h4>Your Compatibility Score: {{compScore}}</h4>
+                </div>
             </div>
+
+            <div class="well">
+                <div class="row">
+                <div class="col-md-3">
+                    <p>Name: {{matchedUser.name}}</p>
+                    <p>Age: {{matchedUser.age}}</p>
+                    <p>Gender: {{matchedUser.gender}}</p>
+                    <p>Location: {{matchedUser.zip}}</p>
+                    <p>Email: {{matchedUser.email}}</p>
+                </div>
+                <div class="col-md-3">
+                    <p>Gender preference: {{matchedUser.genderPreference}}</p>
+                    <p>Preferred minimum age: {{matchedUser.matchMinAge}}</p>
+                    <p>Preferred maximum age: {{matchedUser.matchMaxAge}}</p>
+                </div>
+                <div class="col-md-6">
+                    <p>{{matchedUser.bio}}</p>
+                </div>
+            </div>
+            </div>
+
+
+
+
 
     {{else}}
         <h3>No matches found</h3>

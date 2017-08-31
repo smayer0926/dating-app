@@ -65,9 +65,6 @@ public class App {
         //LOAD FORM TO ADD NEW QUESTION
         get("/questions/new", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
-            int userId = Integer.parseInt(request.params("id"));
-            User user = userDao.findById(userId);
-            model.put("user", user);
             return new ModelAndView(model, "question-form.hbs");
         }, new HandlebarsTemplateEngine());
 
@@ -137,6 +134,7 @@ public class App {
             Map<String, Object> model = new HashMap<String, Object>();
             int userId = Integer.parseInt(req.params("userId"));
             int matchId = Integer.parseInt(req.params("matchId"));
+            User user = userDao.findById(userId);
             User matchedUser = userDao.findById(matchId);
             List<Integer> questionIdsOfViewingUsersAnswers = answerDao.getQuestionIdsFromUsersAnsweredQuestions(userId);
             List<Answer> matchedUserAnswers = userDao.getAllAnswers(matchId);
@@ -146,15 +144,19 @@ public class App {
             System.out.println("all answer objects of matched user: " + matchedUserAnswers);
             int compScore = userDao.evaluateCompatibility(questionIdsOfViewingUsersAnswers, matchedUserAnswers, userId);
             System.out.println(compScore);
+            model.put("user", user);
             model.put("matchedUser", matchedUser);
             model.put("compScore", compScore);
             return new ModelAndView(model, "match-detail.hbs");
         }, new HandlebarsTemplateEngine());
-    //Getter for users/logingit a
+
+
+        //Loads login form
         get("/users/login", (req, res)-> {
             Map<String, Object> model = new HashMap<>();
             return new ModelAndView(model, "user-login.hbs");
         }, new HandlebarsTemplateEngine());
+
 
         //process user login form
         post("/users/login", (request, response) -> { //new
@@ -175,6 +177,8 @@ public class App {
             return new ModelAndView(model, "user-login-success.hbs");
         }, new HandlebarsTemplateEngine());
 
+
+        //view my profile
         get("/users/:id/profile", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             int myId = Integer.parseInt(request.params("id"));
@@ -215,6 +219,7 @@ public class App {
         }, new HandlebarsTemplateEngine());
 
 
+        //go to update my profile form
         get("/users/:id/update", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             int idOfUserToEdit = Integer.parseInt(req.params("id"));
@@ -224,6 +229,8 @@ public class App {
             return new ModelAndView(model, "user-registration-form.hbs");
         }, new HandlebarsTemplateEngine());
 
+
+        //post changes to profile
         post("/users/:id/update", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             int idOfUserToEdit = Integer.parseInt(request.params("id"));
