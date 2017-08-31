@@ -1,10 +1,10 @@
 {{#if editUser}}
 <ul class="nav nav-tabs">
-    <li role="presentation"><a href="/">Home</a></li>
     <li role="presentation"><a href="/users/{{id}}/profile">My Profile</a></li>
     <li role="presentation"><a href="/users/{{id}}/questions">View Questions</a></li>
     <li role="presentation" class="active"><a href="/users/{{id}}/matches">Browse Matches</a></li>
     <p class="loginName">Logged in as: {{editUser.name}}</p>
+    <li role="presentation" class="pull-right"><a href="/">Logout</a></li>
 </ul>
 
 {{else}}
@@ -24,16 +24,16 @@
        <form action="/users/{{id}}/update" method="post">
 
            <div class ="row">
-               <div class = "col-md-6">
+               <div class = "col-md-7">
                    <div class = "form-group">
-                       <label for="newName">What is your Name?</label>
+                       <label for="newName">Name</label>
                        <input id="newName" name="newName" class = "form-control" type="text" value ="{{editUser.name}}">
                    </div>
                </div>
            </div>
 
            <div class ="row">
-               <div class = "col-md-6">
+               <div class = "col-md-7">
                    <label for="newAge">Age</label>
                    <input id="newAge" name="newAge" class = "form-control" type="text" value ="{{editUser.age}}">
                </div>
@@ -55,42 +55,47 @@
            </div>
 
            <div class="row">
-               <div class="col-md-6">
+               <div class="col-md-7">
                    <label for="newMinimumAge">Minimum Age Preference</label>
                    <input id="newMinimumAge" name="newMinimumAge" type="text" class = "form-control" value ="{{editUser.matchMinAge}}">
                </div>
            </div>
 
            <div class="row">
-               <div class="col-md-6">
+               <div class="col-md-7">
                    <label for="newMaximumAge">Maximum Age Preference</label>
                    <input id="newMaximumAge" name="newMaximumAge" type="text" class = "form-control" value ="{{editUser.matchMaxAge}}">
                </div>
            </div>
 
            <div class="row">
-               <div class="col-md-6">
+               <div class="col-md-7">
                    <label for="newZip">Zip Code</label>
                    <input id="newZip" name="newZip" type="text" class = "form-control" value ="{{editUser.zip}}">
                </div>
            </div>
-
            <div class="row">
-               <div class="col-md-6">
-                   <label for="newEmailAddress">Your Email Address</label>
-                   <input id="newEmailAddress" name="newEmailAddress" type="text" class = "form-control" value ="{{editUser.email}}">
+               <div class="col-md-7">
+                   <label for="inputBio">Bio:</label>
+                   <textarea id="inputBio" name="inputBio" type="text" class ="form-control"></textarea>
+               </div>
+           </div>
+           <div class="row">
+               <div class="col-md-7">
+                   <label for="newEmailAddress">Email Address</label>
+                   <input id="newEmailAddress" name="newEmailAddress" type="email" class = "form-control" value ="{{editUser.email}}">
                </div>
            </div>
 
            <div class="row">
-               <div class="col-md-6">
+               <div class="col-md-7">
                    <label for="newPassword">Password</label>
-                   <input id="newPassword" name="newPassword" type="text" class = "form-control" value ="{{editUser.password}}">
+                   <input id="newPassword" name="newPassword" type="password" class = "form-control" value ="{{editUser.password}}">
                </div>
            </div><br>
 
            <div class="row">
-               <div class="col-md-6">
+               <div class="col-md-7">
                    <p>
                        <label>Select city</label>
                        <select id="city" name="city">
@@ -115,7 +120,7 @@
 <form action="/users/new" method="post">
 
     <div class ="row">
-        <div class = "col-md-6">
+        <div class = "col-md-7">
             <div class = "form-group">
             <label for="inputName">Name</label>
             <input id="inputName" name="inputName" class = "form-control" type="text">
@@ -124,7 +129,7 @@
     </div>
 
     <div class ="row">
-        <div class = "col-md-6">
+        <div class = "col-md-7">
             <label for="inputAge">Age</label>
             <input id="inputAge" name="inputAge" class = "form-control" type="text">
         </div>
@@ -146,46 +151,46 @@
     </div>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-7">
             <label for="inputMinimumAge">Minimum Age Preference</label>
             <input id="inputMinimumAge" name="inputMinimumAge" type="text" class = "form-control">
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-7">
             <label for="inputMaximumAge">Maximum Age Preference</label>
             <input id="inputMaximumAge" name="inputMaximumAge" type="text" class = "form-control">
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-7">
             <label for="inputZip">Zip Code</label>
             <input id="inputZip" name="inputZip" type="text" class = "form-control">
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
-            <label for="inputBio">Enter a Bio:</label>
+        <div class="col-md-7">
+            <label for="inputBio">Bio:</label>
             <textarea id="inputBio" name="inputBio" type="text" class ="form-control"></textarea>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
-        <label for="inputEmailAddress">Your Email Address</label>
+        <div class="col-md-7">
+        <label for="inputEmailAddress">Email Address</label>
         <input id="inputEmailAddress" name="inputEmailAddress" type="email" class = "form-control">
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-7">
             <label for="inputPassword">Password</label>
             <input id="inputPassword" name="inputPassword" type="password" class = "form-control">
         </div>
     </div><br>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-7">
             <p>
                 <label>Select city</label>
                 <select id="city" name="city">

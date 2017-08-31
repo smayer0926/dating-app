@@ -1,27 +1,32 @@
 <ul class="nav nav-tabs">
-    <li role="presentation"><a href="/">Home</a></li>
     <li role="presentation" class="active"><a href="/users/{{id}}/profile">My Profile</a></li>
     <li role="presentation"><a href="/users/{{id}}/questions">View Questions</a></li>
     <li role="presentation"><a href="/users/{{id}}/matches">Browse Matches</a></li>
     <p class="loginName">Logged in as: {{user.name}}</p>
+    <li role="presentation" class="pull-right"><a href="/">Logout</a></li>
 </ul>
 
 {{#partial "content"}}
 
-    <h1>Users</h1>
-
-
             <div class="emphasized well">
-                <p>User Information</p>
-                <p>User name: {{user.name}}</p>
-                <p>age: {{user.age}}</p>
-                <p>gender: {{user.gender}}</p>
-                <p>gender preference: {{user.genderPreference}}</p>
-                <p>preferred minimum age: {{user.matchMinAge}}</p>
-                <p>preferred maximum age: {{user.matchMaxAge}}</p>
-                <p>area: {{user.zip}}</p>
-                <p>email: {{user.email}}</p>
+            <div class="row">
+                <div class="col-md-3">
+                    <p>Name: {{user.name}}</p>
+                    <p>Age: {{user.age}}</p>
+                    <p>Gender: {{user.gender}}</p>
+                    <p>Location: {{user.zip}}</p>
+                    <p>Email: {{user.email}}</p>
+                </div>
+                <div class="col-md-3">
+                    <p>Gender preference: {{user.genderPreference}}</p>
+                    <p>Preferred minimum age: {{user.matchMinAge}}</p>
+                    <p>Preferred maximum age: {{user.matchMaxAge}}</p>
+                </div>
+                <div class="col-md-6">
+                    <p>{{user.bio}}</p>
+                </div>
 
+            </div>
             </div>
 
 <p><a href="/users/{{user.id}}/update">Update information</a></p>
