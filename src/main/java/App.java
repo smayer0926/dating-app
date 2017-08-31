@@ -187,6 +187,7 @@ public class App {
         post("/users/new", (request, response) -> { //new
             Map<String, Object> model = new HashMap<>();
             String name = request.queryParams("inputName");
+            String photo = request.queryParams("photo");
             int age = Integer.parseInt(request.queryParams("inputAge"));
             String gender = request.queryParams("gender");
             String genderPreference = request.queryParams("genderPreference");
@@ -196,9 +197,10 @@ public class App {
             String email = request.queryParams("inputEmailAddress");
             String password = request.queryParams("inputPassword");
             String bio = request.queryParams("inputBio");
-            User newUser = new User(name, age, gender, genderPreference, minAge, maxAge, zip, email, password, bio);
+            User newUser = new User(name, age, gender, genderPreference, minAge, maxAge, zip, email, password, bio, photo);
             userDao.add(newUser);
             model.put("user", newUser);
+            model.put("photoSource", photo);
             return new ModelAndView(model, "my-profile.hbs");
         }, new HandlebarsTemplateEngine());
 

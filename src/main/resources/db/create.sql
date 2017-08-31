@@ -11,7 +11,8 @@ CREATE TABLE IF NOT EXISTS users (
  zip VARCHAR,
  bio VARCHAR,
  email VARCHAR,
- password VARCHAR
+ password VARCHAR,
+ photo VARCHAR
 );
 
 CREATE TABLE IF NOT EXISTS authentications (
