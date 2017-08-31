@@ -19,7 +19,7 @@ public class Sql2oQuestionDao implements QuestionDao {
 
     @Override
     public void add(Question question) {
-        String sql = "INSERT INTO questions (prompt, choice1, choice2, choice3, choice4) VALUES (:prompt, :choice1, :choice2, :choice3, :choice4)";
+        String sql = "INSERT INTO questions (prompt, choice1, choice2, choice3, choice4, userswhohaveanswered) VALUES (:prompt, :choice1, :choice2, :choice3, :choice4, :userswhohaveanswered)";
         try (Connection con = sql2o.open()) {
             int id = (int) con.createQuery(sql)
                     .addParameter("prompt", question.getPrompt())
@@ -27,6 +27,7 @@ public class Sql2oQuestionDao implements QuestionDao {
                     .addParameter("choice2", question.getChoice2())
                     .addParameter("choice3", question.getChoice3())
                     .addParameter("choice4", question.getChoice4())
+                    .addParameter("userswhohaveanswered", question.getUsersWhoHaveAnswered())
                     .bind(question)
                     .executeUpdate()
                     .getKey();
@@ -50,31 +51,31 @@ public class Sql2oQuestionDao implements QuestionDao {
         }
     }
 
-//    @Override
-//    public int countNumberOfQuestionIdMatches(int questionId) {
-//        int matchCount = 0;
-//        for (Question eachQuestion : getAll()) {
-//            if (eachQuestion.getId() == questionId) {
-//                matchCount++;
-//            }
-//        }
-//        return matchCount;
-//    }
 
-    public void addUsertoUsersWhoHaveAnsweredThisQuestion (int userId, Question question){
+    public String addUserToUsersWhoHaveAnsweredThisQuestion (int userId, Question question){
         StringBuilder str = new StringBuilder(question.getUsersWhoHaveAnswered());
         str.append("," + userId);
+        return str.toString();
     }
 
-//    @Override
-//    public List<Question> getAllUnanswered(int userId) {
-//
-//        try (Connection con = sql2o.open()) {
-//            return con.createQuery("SELECT * FROM questions WHERE NOT userswhohaveanswered LIKE '%:userid%'")
-//                    .addParameter("userid", userId)
-//                    .executeAndFetch(Question.class);
-//        }
-//    }
+    public void addUserToUsersWhoHaveAnsweredThisQuestion2 (int userId, Question question, int questionId, String usersWhoHaveAnswered){
+        try(Connection con = sql2o.open()){
+            con.createQuery("UPDATE questions SET (userswhohaveanswered) = (:userswhohaveanswered) WHERE questionid = :questionid")
+                    .addParameter("questionid", questionId)
+                    .addParameter("userswhohaveanswered", usersWhoHaveAnswered)
+                    .executeAndFetch(Question.class);
+        }
+    }
+
+    @Override
+    public List<Question> getAllUnanswered(int userId, List<Integer>gitquestionAnsweredIds) {
+        for(int questionId : questionsAnswered)
+        try (Connection con = sql2o.open()) {
+            return con.createQuery("SELECT * FROM questions WHERE NOT userswhohaveanswered LIKE '%:userid%'")
+                    .addParameter("userid", userId)
+                    .executeAndFetch(Question.class);
+        }
+    }
 
     @Override
     public List<Question> getAll() {
@@ -130,6 +131,17 @@ public class Sql2oQuestionDao implements QuestionDao {
 //            return con.createQuery("SELECT * FROM questionoptions WHERE questionid = :questionId")
 //                    .executeAndFetch(QuestionOption.class);
 //        }
+//    }
+
+//    @Override
+//    public int countNumberOfQuestionIdMatches(int questionId) {
+//        int matchCount = 0;
+//        for (Question eachQuestion : getAll()) {
+//            if (eachQuestion.getId() == questionId) {
+//                matchCount++;
+//            }
+//        }
+//        return matchCount;
 //    }
 
 //

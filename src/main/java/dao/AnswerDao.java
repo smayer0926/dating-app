@@ -11,6 +11,8 @@ public interface AnswerDao {
 
     List<Answer> getAllForAnswersSpecificUser(int userId);
 
+    List<Question> getAllQuestionsUnansweredByUser(int userId);
+
     List<Integer> getQuestionIdsFromUsersAnsweredQuestions (int userId);
 
     void setAnswerBooleans (Question question, String answer);

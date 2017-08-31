@@ -36,6 +36,16 @@ public class Sql2oAnswerDao implements AnswerDao {
             System.out.println(ex);
         }
     }
+
+    @Override
+    public List<Question> getAllQuestionsUnansweredByUser(int userId) {
+        try (Connection con = sql2o.open()) {
+            return con.createQuery("SELECT * FROM questions WHERE userid = :userid")
+                    .addParameter("userid", userId)
+                    .executeAndFetch(Question.class);
+        }
+    }
+
     @Override
     public List<Answer> getAllForAnswersSpecificUser(int userId) {
         try (Connection con = sql2o.open()) {

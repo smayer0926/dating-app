@@ -87,7 +87,7 @@ public class App {
         get("/users/:id/questions", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
             int userId = Integer.parseInt(req.params("id"));
-            List<Question> foundQuestions = questionDao.getAll();
+            List<Question> foundQuestions = questionDao.getAllUnanswered(userId);
             model.put("foundquestions", foundQuestions);
             model.put("userId", userId);
             return new ModelAndView(model, "questions.hbs");
@@ -103,9 +103,14 @@ public class App {
             Question question = questionDao.findById(Integer.parseInt(req.params("id")));
             String answer = req.queryParams("responseTo" + questionId);
             String acceptableAnswer = Arrays.toString(req.queryParamsValues("acceptable" + questionId));
-//            questionDao.addUsertoUsersWhoHaveAnsweredThisQuestion(userId,question);
+
             Answer answerObject = new Answer(userId, questionId, answer, acceptableAnswer);
             answerDao.add(answerObject);
+
+            String usersWhoHaveAnswered = questionDao.addUserToUsersWhoHaveAnsweredThisQuestion(userId,question);
+            questionDao.addUserToUsersWhoHaveAnsweredThisQuestion2(userId,question,questionId,usersWhoHaveAnswered);
+
+
 //            answerDao.setAnswerBooleans(question, answer);
 
             System.out.println(question.getAnswerIs1());
@@ -113,8 +118,7 @@ public class App {
             System.out.println(question.isAnswerIs3());
             System.out.println(question.isAnswerIs4());
 
-//            res.redirect("/users/" + userId + "/questions");
-            res.redirect("/questions");
+            res.redirect("/users/" + userId + "/questions");
             return null;
         });
 

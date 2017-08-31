@@ -16,7 +16,7 @@ public interface QuestionDao {
 
 //    List<QuestionOption> getAllForSpecificQuestion(int questionId);
 //    List<Question> getAllAnswered();
-//    List<Question> getAllUnanswered();
+    List<Question> getAllUnanswered(int userId);
 //    List<User> getAllUsersThatAnsweredQuestion(int questionId);
 
     //find
@@ -28,5 +28,7 @@ public interface QuestionDao {
     //delete by id
     void deleteById(int id);
 
-    void addUsertoUsersWhoHaveAnsweredThisQuestion (int userId, Question question);
+    String addUserToUsersWhoHaveAnsweredThisQuestion (int userId, Question question);
+
+    void addUserToUsersWhoHaveAnsweredThisQuestion2 (int userId, Question question, int questionId, String usersWhoHaveAnswered);
 }
