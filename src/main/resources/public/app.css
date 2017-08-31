@@ -6,3 +6,9 @@ h1 {
     margin: 5px;
     background: #c4e5ed;
 }
+
+.loginName {
+    text-align: right;
+    margin-right: 20px;
+    margin-top: 10px;
+}

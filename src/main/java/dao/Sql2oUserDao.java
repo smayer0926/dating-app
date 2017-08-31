@@ -8,6 +8,7 @@ import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
 
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class Sql2oUserDao implements UserDao {
 
     @Override
     public void add (User user){
-        String sql = "INSERT INTO users (name, age, gender,genderPreference, matchminage, matchmaxage, zip, bio, email, password, photo) VALUES (:name, :age, :gender,:genderPreference, :matchminage, :matchmaxage, :zip, :bio,:email, :password, :photo)";
+        String sql = "INSERT INTO users (name, age, gender,genderPreference, matchminage, matchmaxage, zip, bio, email, password) VALUES (:name, :age, :gender,:genderPreference, :matchminage, :matchmaxage, :zip, :bio,:email, :password)";
         try(Connection con = sql2o.open()) {
             int id = (int) con.createQuery(sql)
                     .addParameter("name", user.getName())
@@ -32,7 +33,6 @@ public class Sql2oUserDao implements UserDao {
                     .addParameter("bio", user.getBio())
                     .addParameter("email", user.getEmail())
                     .addParameter("password", user.getPassword())
-                    .addParameter("photo", user.getPhoto())
 
                     .addColumnMapping("NAME", "name")
                     .addColumnMapping("AGE", "age")
@@ -44,7 +44,7 @@ public class Sql2oUserDao implements UserDao {
                     .addColumnMapping("BIO", "bio")
                     .addColumnMapping("EMAIL", "email")
                     .addColumnMapping("PASSWORD", "password")
-                    .addColumnMapping("PHOTO", "photo")
+
                     .executeUpdate()
                     .getKey();
             user.setId(id);
@@ -180,5 +180,6 @@ public class Sql2oUserDao implements UserDao {
                     .executeAndFetchFirst(User.class);
         }
     }
+
 
 }

@@ -1,5 +1,13 @@
-{{#partial "content"}}
+<ul class="nav nav-tabs">
+    <li role="presentation"><a href="/">Home</a></li>
+    <li role="presentation"><a href="/users/{{userId}}/profile">My Profile</a></li>
+    <li role="presentation" class="active"><a href="/users/{{userId}}/questions">View Questions</a></li>
+    <li role="presentation"><a href="/users/{{userId}}/matches">Browse Matches</a></li>
+    <p class="loginName">Logged in as: {{user.name}}</p>
+</ul>
 
+{{#partial "content"}}
+    {{#if foundquestions}}
     {{#each foundquestions}}
 
 
@@ -11,7 +19,7 @@
                         <div class="panel-heading">
                             <h2 class="panel-title">Your Answer</h2>
                         </div>
-                        <div class="panel-body">git c
+                        <div class="panel-body">
                             {{prompt}}<br>
                             <div class="radio">
                                 <label>
@@ -40,10 +48,6 @@
                         </div>
                     </div>
             </div>
-
-
-
-
 
 
 
@@ -89,12 +93,9 @@
         </form>
 
     {{/each}}
-
-
-    <footer class="footer">
-        <div class="container">
-        </div>
-    </footer>
+    {{else}}
+        <h3>There are no more questions for you to answer.</h3>
+    {{/if}}
 
 
 {{/partial}}

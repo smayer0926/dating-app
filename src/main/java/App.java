@@ -12,6 +12,8 @@ import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
+
+import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -54,6 +56,7 @@ public class App {
             String genderPreference = user.getGenderPreference();
             List<User> matches = userDao.getAllMatches(userId, minAge, maxAge, genderPreference);
             model.put("userId", userId);
+            model.put("user", user);
             model.put("matches", matches);
             return new ModelAndView(model, "matched-users.hbs");
         }, new HandlebarsTemplateEngine());
@@ -62,6 +65,9 @@ public class App {
         //LOAD FORM TO ADD NEW QUESTION
         get("/questions/new", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
+            int userId = Integer.parseInt(request.params("id"));
+            User user = userDao.findById(userId);
+            model.put("user", user);
             return new ModelAndView(model, "question-form.hbs");
         }, new HandlebarsTemplateEngine());
 
@@ -87,6 +93,8 @@ public class App {
         get("/users/:id/questions", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
             int userId = Integer.parseInt(req.params("id"));
+            User user = userDao.findById(userId);
+            model.put("user", user);
             List<Answer> allAnswers = userDao.getAllAnswers(userId);
             List<Question> foundQuestions = questionDao.getAllUnanswered(userId, allAnswers);
             model.put("foundquestions", foundQuestions);
@@ -143,7 +151,10 @@ public class App {
             return new ModelAndView(model, "match-detail.hbs");
         }, new HandlebarsTemplateEngine());
     //Getter for users/logingit a
-
+        get("/users/login", (req, res)-> {
+            Map<String, Object> model = new HashMap<>();
+            return new ModelAndView(model, "user-login.hbs");
+        }, new HandlebarsTemplateEngine());
 
         //process user login form
         post("/users/login", (request, response) -> { //new
@@ -187,7 +198,6 @@ public class App {
         post("/users/new", (request, response) -> { //new
             Map<String, Object> model = new HashMap<>();
             String name = request.queryParams("inputName");
-            String photo = request.queryParams("photo");
             int age = Integer.parseInt(request.queryParams("inputAge"));
             String gender = request.queryParams("gender");
             String genderPreference = request.queryParams("genderPreference");
@@ -197,10 +207,10 @@ public class App {
             String email = request.queryParams("inputEmailAddress");
             String password = request.queryParams("inputPassword");
             String bio = request.queryParams("inputBio");
-            User newUser = new User(name, age, gender, genderPreference, minAge, maxAge, zip, email, password, bio, photo);
+
+            User newUser = new User(name, age, gender, genderPreference, minAge, maxAge, zip, email, password, bio);
             userDao.add(newUser);
             model.put("user", newUser);
-            model.put("photoSource", photo);
             return new ModelAndView(model, "my-profile.hbs");
         }, new HandlebarsTemplateEngine());
 

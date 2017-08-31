@@ -1,10 +1,28 @@
+{{#if editUser}}
+<ul class="nav nav-tabs">
+    <li role="presentation"><a href="/">Home</a></li>
+    <li role="presentation"><a href="/users/{{id}}/profile">My Profile</a></li>
+    <li role="presentation"><a href="/users/{{id}}/questions">View Questions</a></li>
+    <li role="presentation" class="active"><a href="/users/{{id}}/matches">Browse Matches</a></li>
+    <p class="loginName">Logged in as: {{editUser.name}}</p>
+</ul>
+
+{{else}}
+
+
+    <ul class="nav nav-tabs">
+        <li role="presentation" class="active"><a href="/">Home</a></li>
+    </ul>
+
+{{/if}}
+
 {{#partial "content"}}
 
    {{#if editUser}}
 
-       <h1>Edit this user:</h1>
 
        <form action="/users/{{id}}/update" method="post">
+
            <div class ="row">
                <div class = "col-md-6">
                    <div class = "form-group">
@@ -92,6 +110,7 @@
 
 <h2>Add a User</h2>
 
+
 <div class="container">
 <form action="/users/new" method="post">
 
@@ -163,13 +182,6 @@
         <div class="col-md-6">
             <label for="inputPassword">Password</label>
             <input id="inputPassword" name="inputPassword" type="password" class = "form-control">
-        </div>
-    </div><br>
-    <div class="row">
-        <div class="col-md-6">
-            <label for="photo">Add an Image</label>
-            <img src="" height = "200">
-            <input id="photo" name="photo" type="file" class ="photo-upload-input">
         </div>
     </div><br>
     <div class="row">

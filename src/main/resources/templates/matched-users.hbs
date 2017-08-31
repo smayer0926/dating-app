@@ -1,3 +1,11 @@
+<ul class="nav nav-tabs">
+    <li role="presentation"><a href="/">Home</a></li>
+    <li role="presentation"><a href="/users/{{userId}}/profile">My Profile</a></li>
+    <li role="presentation"><a href="/users/{{userId}}/questions">View Questions</a></li>
+    <li role="presentation" class="active"><a href="/users/{{userId}}/matches">Browse Matches</a></li>
+    <p class="loginName">Logged in as: {{user.name}}</p>
+</ul>
+
 {{#partial "content"}}
     {{#if matches}}
         {{#each matches}}

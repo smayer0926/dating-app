@@ -12,9 +12,8 @@ public class User {
     private String email;
     private String password;
     private String bio;
-    private String photo;
 
-    public User(String name, int age, String gender, String genderPreference, int matchMinAge, int matchMaxAge, String zip, String email, String password, String bio, String photo){
+    public User(String name, int age, String gender, String genderPreference, int matchMinAge, int matchMaxAge, String zip, String email, String password, String bio){
         this.name = name;
         this.age = age;
         this.gender = gender;
@@ -25,16 +24,8 @@ public class User {
         this.setEmail(email);
         this.setPassword(password);
         this.bio = bio;
-        this.photo = photo;
     }
 
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
 
     public String getBio() {
         return bio;
