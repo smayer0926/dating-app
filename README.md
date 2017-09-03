@@ -27,22 +27,22 @@ _An Application that will allow users to be matched with eachother based on thei
 | The user shall be able to find compatibility with another user by answering questions|
 
 
-## Screenshots
-#_Login_
+# Screenshots
+##Login
 ![Create new user](images/screenshot.PNG)
-#_Register new user_
+##Register new user
 ![Get all date reviews](images/register.PNG)
-#_Checkout Your Profile_
+##Checkout Your Profile
 ![Get specific user](images/profile.PNG)
-#_Create new question_
+##Create new question
 ![Create new question](images/question.PNG)
-#_Answer questions_
+##Answer questions
 ![Answer Questions](images/question.PNG)
-#_When all Questions are answered_
+##When all Questions are answered
 ![Link user and question](images/noquestions.PNG)
-#_Check out Compatibility_
+##Check out Compatibility
 ![Get all users](images/Compatability.PNG)
-#_When a person has no matches_
+##When a person has no matches
 ![No matches](images/nomatches.PNG)
 
 # Known Bugs
