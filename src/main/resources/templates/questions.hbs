@@ -10,21 +10,21 @@
     {{#if foundquestions}}
     {{#each foundquestions}}
 
-        <div class="panel panel-info">
+        <div class="panel panel">
             <div class="panel-heading">
                 <h2 class="panel-title">{{prompt}}</h2>
             </div>
             <div class="panel-body">
-        <div class = "row">
-            <div class = "col-md-6">
-                <form action="/users/{{userId}}/questions/{{id}}" method="post">
 
+                <form action="/users/{{userId}}/questions/{{id}}" method="post">
+                    <div class = "row">
+                        <div class = "col-md-6">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h2 class="panel-title">Your Answer</h2>
                         </div>
                         <div class="panel-body">
-                            {{prompt}}<br>
+                            <br>
                             <div class="radio">
                                 <label>
                                     <input type="radio" name="responseTo{{id}}" value="1" {{#if answerIs1}} checked{{/if}}>
@@ -53,16 +53,13 @@
                     </div>
             </div>
 
-
-
-            <div class = "col-md-6">
-
+            <div class ="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h2 class="panel-title">Answers You'll Accept</h2>
                     </div>
                     <div class="panel-body">
-                        {{prompt}}<br>
+                        <br>
                         <div class="checkbox">
                             <label>
                                 <input type="checkbox" name="acceptable{{id}}" value="1">

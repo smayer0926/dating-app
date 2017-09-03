@@ -102,13 +102,7 @@ a{
     color: black;
 }
 
-.panel-body{
-    display: block;
-    margin: auto;
-    text-align: center;
-    width: 800px;
-    padding-left: 200px;
-}
+
 .loginName {
     color: white;
 }

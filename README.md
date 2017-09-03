@@ -11,7 +11,7 @@ _An Application that will allow users to be matched with eachother based on thei
 ## Setup/Installation Requirements
 * Clone the repo
 * Run App.java
-* Go to 'localhost:4567/' to launch the application
+* Go to 'localhost:4567' to launch the application
 * Use the application to find the perfect match.
 
 ## Specifications
@@ -21,35 +21,32 @@ _An Application that will allow users to be matched with eachother based on thei
 | The user shall be able to create a new dating app user |
 | The user shall be able to view details of a specific dating app user |
 | The user shall be able to view details of all dating app users |
-| The user shall be able to create a new dating app question |
+| The admin shall be able to create a new dating app question |
 | The user shall be able to view details of a specific dating app question |
 | The user shall be able to view the details of all dating app questions |
-| The user shall be able to link questions and users via a many-to-many relationship |
-| The user shall be able to create a new dating app date review |
-| The user shall be able to view details of all dating app date reviews |
+| The user shall be able to find compatibility with another user by answering questions|
+
 
 ## Screenshots
-_Create new user_
-![Create new user](images/)
+_Login_
+![Create new user](images/screenshot.PNG)
+_Register new user_
+![Get all date reviews](images/register.PNG)
+_Checkout Your Profile_
+![Get specific user](images/profile.PNG)
 _Create new question_
-![Create new question](images/)
-_Create new date review_
-![Create new date review](images/)
-_Link user and question_
-![Link user and question](images/)
-_Get all users_
-![Get all users](images/)
-_Get all date reviews_
-![Get all date reviews](images/)
-_Get specific user_
-![Get specific user](images/)
-_Get all users who answered specific question_
-![Get all users who answered specific question](images/)
-_Get all questions answered by specific user_
-![Get all questions answered by specific user](images/)
+![Create new question](images/question.PNG)
+_Answer questions_
+![Answer Questions](images/question.PNG)
+_When all Questions are answered_
+![Link user and question](images/noquestions.PNG)
+_Check out Compatibility_
+![Get all users](images/Compatability.PNG)
+_When a person has no matches_
+![No matches](images/nomatches.PNG)
 
 # Known Bugs
-_There are no known bugs at this time!_
+_There are no known bugs at this time_
 
 
 ## Technologies Used
