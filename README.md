@@ -28,21 +28,21 @@ _An Application that will allow users to be matched with eachother based on thei
 
 
 ## Screenshots
-_Login_
+#_Login_
 ![Create new user](images/screenshot.PNG)
-_Register new user_
+#_Register new user_
 ![Get all date reviews](images/register.PNG)
-_Checkout Your Profile_
+#_Checkout Your Profile_
 ![Get specific user](images/profile.PNG)
-_Create new question_
+#_Create new question_
 ![Create new question](images/question.PNG)
-_Answer questions_
+#_Answer questions_
 ![Answer Questions](images/question.PNG)
-_When all Questions are answered_
+#_When all Questions are answered_
 ![Link user and question](images/noquestions.PNG)
-_Check out Compatibility_
+#_Check out Compatibility_
 ![Get all users](images/Compatability.PNG)
-_When a person has no matches_
+#_When a person has no matches_
 ![No matches](images/nomatches.PNG)
 
 # Known Bugs
