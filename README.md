@@ -37,7 +37,7 @@ _Checkout Your Profile_
 _Create new question_
 ![Create new question](images/question.PNG)
 _Answer questions_
-![Answer Questions](images/question.PNG)
+![Answer Questions](images/questions.PNG)
 _When all Questions are answered_
 ![Link user and question](images/noquestions.PNG)
 _Check out Compatibility_
