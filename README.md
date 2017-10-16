@@ -8,7 +8,7 @@
 ## Table Of Contents
 
 * [Description](#description)
-* [View Of Application](#view-of-application)
+* [Screenshots](#screenshots)
 * [Set-Up Requirements](#setup-requirements)
 * [User Stories](#user-stories)
 * [Questions or Concerns](#questions-or-concerns)
