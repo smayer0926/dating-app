@@ -4,56 +4,88 @@
 
 #### By Kim Lu, Shaymal Punekar, Stephanie Mayer and Trevor Gill
 
+
+## Table Of Contents
+
+* [Description](#description)
+* [View Of Application](#view-of-application)
+* [Set-Up Requirements](#setup-requirements)
+* [User Stories](#user-stories)
+* [Questions or Concerns](#questions-or-concerns)
+* [Known Bugs](#known-bugs)
+* [Technologies Used](#technologies-used)
+
 ## Description
 
-_An Application that will allow users to be matched with eachother based on their compatibility. This application uses Java and techniques such as RESTful routing._
+_This application allows for a user to sign up for an account. You are able to update your profile and login(validated). It allows for a user to match up with another user based on questions that are answered and the compatibility score that is given based on questions answered/accepted._
 
-## Setup/Installation Requirements
-* Clone the repo
-* Run App.java
-* Go to 'localhost:4567' to launch the application
-* Use the application to find the perfect match.
 
-## Specifications
+## Setup Requirements
+* You will need Gradle installed on your device.
 
-| Behavior      |
-| ------------- |
-| The user shall be able to create a new dating app user |
-| The user shall be able to view details of a specific dating app user |
-| The user shall be able to view details of all dating app users |
-| The admin shall be able to create a new dating app question |
-| The user shall be able to view details of a specific dating app question |
-| The user shall be able to view the details of all dating app questions |
-| The user shall be able to find compatibility with another user by answering questions|
+* Clone the repo from git hub.
+
+* Open in your favorite IDE/editor, this one was created in IntelliJ.
+  * [IntelliJ](https://www.jetbrains.com/idea/)
+
+* Run the application, using the green go button at the top.
+
+* Open your preferred browser and navigate to:
+````
+localhost:4567
+````
+* Experiment to change the application to your desire.
+
+## User Stories
+* As a user, I want to be able to create a new account for a new user.
+* As a user, I want to be able to view the details of a specific user.
+* As a user, I want to be able to view the details of all the users that I match with.
+* As a user, I want to be able to the view the details of a specific dating application question.
+* As a user, I want to be able to view the details of all dating application questions.
+* As a user, I want to be able to find the compatibility with another user, based off questions answered.
+* As an Admin, I want to be able to create new questions for users to answer.
 
 
 # Screenshots
-_Login_
+## Login
 ![Create new user](images/screenshot.PNG)
-_Register new user_
+## Register New User
 ![Get all date reviews](images/register.PNG)
-_Checkout Your Profile_
+## Checkout what your profile looks like
 ![Get specific user](images/profile.PNG)
-_Create new question_
-![Create new question](images/question.PNG)
-_Answer questions_
+
+## User can answer new question
 ![Answer Questions](images/questions.PNG)
-_When all Questions are answered_
+## What the users screen looks like when all questions are answered.
 ![Link user and question](images/noquestions.PNG)
-_Check out Compatibility_
+## Compare Compatibility with other users
 ![Get all users](images/Compatability.PNG)
-_When a person has no matches_
+## When a user has no current matches
 ![No matches](images/nomatches.PNG)
+
+## Admin is able to create a new question
+![Create new question](images/question.PNG)
 
 # Known Bugs
 _There are no known bugs at this time_
 
 
+# Questions or Concerns
+* "Stephanie Mayer" <smayer0926@gmail.com>
+* "Trevor Gill" <trevor.gill@gmail.com>
+* "Shyamal Punekar" <shyamal.Punekar@gmail.com>
+* "Kimberly Lu" <kimlu4@comcast.net>
+
+
 ## Technologies Used
 
-* Java
-* IntelliJ
-* Spark
+* _Java_
+* _IntelliJ_
+* _Spark_
+* _MySQL_
+* _Atom_
+* _HandleBars_
+
 
 ### License
 
